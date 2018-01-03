@@ -35,5 +35,8 @@ alias rgless=@rgless
 # until we fix `poetry shell`
 alias poetry_shell='. "$(dirname $(poetry run which python))/activate"'
 
+# TODO: maybe check if running in kitty?
+alias icat="kitty +kitten icat"
+
 
 export EDITOR="@emax_or_emacs"
