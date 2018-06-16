@@ -4,7 +4,7 @@ sudo apt install software-properties-common -y
 
 
 # install termite
-curl https://raw.githubusercontent.com/Corwind/termite-install/master/termite-install.sh | sh
+curl -s https://raw.githubusercontent.com/Corwind/termite-install/master/termite-install.sh | sh
 rm -rf termite vte-ng
 
 
