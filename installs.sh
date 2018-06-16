@@ -38,3 +38,12 @@ sudo apt install elementary-tweaks -y
 # sets basic git
 git config --global user.email "betafcc@gmail.com"
 git config --global user.name "Beta Faccion"
+
+
+# installs pyenv
+git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+echo '' >> ~/.bashrc
+echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
+echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
+echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$(pyenv init -)"\nfi' >> ~/.bashrc
+exec "$SHELL"
