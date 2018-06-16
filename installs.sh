@@ -23,6 +23,6 @@ sudo apt install google-chrome-stable
 
 
 # install elementary tweaks
-sudo add-apt-repository ppa:philip.scott/elementary-tweaks
+sudo add-apt-repository ppa:philip.scott/elementary-tweaks -y
 sudo apt update
 sudo apt install elementary-tweaks -y
