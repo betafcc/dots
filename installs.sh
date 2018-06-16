@@ -9,9 +9,9 @@ rm -rf termite vte-ng
 
 
 # install emacs
-sudo add-apt-repository ppa:ubuntu-elisp/ppa
+sudo add-apt-repository ppa:ubuntu-elisp/ppa -y
 sudo apt update
-sudo apt install emacs25
+sudo apt install emacs25 -y
 
 
 # install sublime text 3
