@@ -47,7 +47,9 @@ echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
 echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
 echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$(pyenv init -)"\nfi' >> ~/.bashrc
 exec "$SHELL"
-pyenv install $(pyenv install --list | grep -P '^\s+\d+\.\d+\.\d+$' | tail -1)
+last_version=$(pyenv install --list | grep -P '^\s+\d+\.\d+\.\d+$' | tail -1)
+pyenv install $last_version
+pyenv global $last_version
 
 
 # sets basic git
