@@ -1,5 +1,6 @@
 # apt misc setup
 sudo apt update
+sudo apt full-upgrade
 sudo apt install software-properties-common -y
 
 
