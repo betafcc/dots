@@ -33,3 +33,8 @@ sudo apt install google-chrome-stable
 sudo add-apt-repository ppa:philip.scott/elementary-tweaks -y
 sudo apt update
 sudo apt install elementary-tweaks -y
+
+
+# sets basic git
+git config --global user.email "betafcc@gmail.com"
+git config --global user.name "Beta Faccion"
