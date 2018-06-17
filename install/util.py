@@ -2,6 +2,7 @@ from subprocess import check_call, check_output
 
 
 def sh(command, capture=False):
+    '''Runs a shell command'''
     if capture:
         result = check_output(command, shell=True)
         
@@ -11,3 +12,8 @@ def sh(command, capture=False):
         return result
 
     check_call(command, shell=True)
+
+
+def apt(packages):
+    '''Generate apt commands'''
+    ...
