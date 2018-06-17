@@ -146,6 +146,7 @@ jabba install $last_version
 # sets my bash commands
 echo '' >> ~/.bashrc
 echo "source ~/.betafcc/bashrc" >> ~/.bashrc
+exec "$SHELL"
 
 
 # sets basic git
