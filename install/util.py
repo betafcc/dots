@@ -12,8 +12,3 @@ def sh(command, capture=False):
         return result
 
     check_call(command, shell=True)
-
-
-def apt(packages):
-    '''Generate apt commands'''
-    ...
