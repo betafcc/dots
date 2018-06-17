@@ -112,8 +112,9 @@ phpbrew init
 echo "[[ -e ~/.phpbrew/bashrc ]] && source ~/.phpbrew/bashrc" >> ~/.bashrc
 exec "$SHELL"
 phpbrew update
-last_version=$(phpbrew known | grep -oP '\d+\.\d+' | head -1)
+last_version=$(phpbrew known | grep -oP '\d+\.\d+\.\d+' | head -1)
 phpbrew install -j $(nproc) $last_version +default
+phpbrew switch $last_version
 
 
 # misc installs
