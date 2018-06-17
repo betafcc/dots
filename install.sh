@@ -1,4 +1,5 @@
 # sets this repository locally, will use it later in this very script
+sudo apt install -y git
 git clone https://github.com/betafcc/eos-bootstrapping.git ~/.betafcc
 
 
