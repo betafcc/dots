@@ -129,6 +129,10 @@ curl -sSL https://get.haskellstack.org/ | sh
 echo 'main = putStrLn "ghc installed"' | stack -j $(nproc) runghc
 
 
+# sets up java
+curl -sL https://github.com/shyiko/jabba/raw/master/install.sh | bash && . ~/.jabba/jabba.sh
+
+
 # sets basic git
 git config --global user.email "betafcc@gmail.com"
 git config --global user.name "Beta Faccion"
