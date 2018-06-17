@@ -1,3 +1,6 @@
+export EDITOR='emacs'
+
+
 # no reason why I would use simple cd
 function cd() {
     pushd > /dev/null "$*"
