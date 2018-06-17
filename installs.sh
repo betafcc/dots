@@ -96,18 +96,15 @@ sudo apt install -y \
     libmhash-dev \
     libmhash2 \
     libxslt1-dev
-
 # configure: error: To enable code coverage reporting you must have LTP installed
 sudo apt install -y lcov
-
 # configure: error: Cannot find sys/sdt.h which is required for DTrace support
 sudo apt install -y systemtap-sdt-dev
-
 # configure: error: Cannot find ldap libraries in /usr/lib:
 sudo ln -s /usr/lib/x86_64-linux-gnu/libldap* /usr/lib/
 sudo ln -s /usr/lib/x86_64-linux-gnu/liblber* /usr/lib/
+# continue
 curl -L -O https://github.com/phpbrew/phpbrew/raw/master/phpbrew
-
 chmod +x phpbrew
 sudo mv phpbrew /usr/local/bin/phpbrew
 phpbrew init
