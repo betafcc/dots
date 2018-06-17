@@ -17,6 +17,6 @@ function @mkcd() {
 # opens a temporary file then pipes the content when closed
 function @edit() {
     tempfile=$(mktemp --suffix "$*")
-    $EDITOR $tempfile
+    $EDITOR $tempfile 2>/dev/null
     cat $tempfile
 }
