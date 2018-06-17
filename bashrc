@@ -8,3 +8,11 @@ function cd() {
 function @mkcd() {
     mkdir -p "$@" && cd "$@"
 }
+
+
+# opens a temporary file then pipes the content when closed
+function @edit() {
+    tempfile=$(mktemp --suffix "$*")
+    $EDITOR $tempfile
+    echo $tempfile
+}
