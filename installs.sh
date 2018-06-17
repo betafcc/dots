@@ -52,7 +52,7 @@ last_version=$(pyenv install --list | grep -P '^\s+\d+\.\d+\.\d+$' | tail -1)
 pyenv install $last_version
 pyenv global $last_version
 python -m pip install pip --upgrade
-python -m pip install ipython
+python -m pip install ipython pipenv
 
 
 # sets basic git
