@@ -36,7 +36,7 @@ sudo apt install -y elementary-tweaks
 
 
 # sets up python
-sudo apt-get install -y \
+sudo apt install -y \
     make \
     build-essential \
     libssl-dev \
