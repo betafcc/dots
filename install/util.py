@@ -1,11 +1,11 @@
 from subprocess import check_call, check_output
 
 
-def sh(command, capture=False, lines=True):
+def sh(command, capture=False):
     if capture:
         result = check_output(command, shell=True)
         
-        if lines:
+        if capture == 'lines':
             result = result.decode('utf-8').split('\n')
 
         return result
