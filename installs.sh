@@ -131,6 +131,8 @@ echo 'main = putStrLn "ghc installed"' | stack -j $(nproc) runghc
 
 # sets up java
 curl -sL https://github.com/shyiko/jabba/raw/master/install.sh | bash && . ~/.jabba/jabba.sh
+last_version=$(jabba ls-remote | grep -P '^\d+\.\d+.\d+$' | head -1)
+jabba install $last_version
 
 
 # sets basic git
