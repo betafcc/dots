@@ -1,7 +1,7 @@
 # apt misc setup
 sudo apt update
 sudo apt full-upgrade
-sudo apt install software-properties-common -y
+sudo apt install -y software-properties-common
 
 
 # install termite
@@ -10,16 +10,16 @@ rm -rf termite vte-ng
 
 
 # install emacs
-sudo add-apt-repository ppa:ubuntu-elisp/ppa -y
+sudo add-apt-repository -y ppa:ubuntu-elisp/ppa
 sudo apt update
-sudo apt install emacs25 -y
+sudo apt install -y emacs25
 
 
 # install sublime text 3
 wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add -
 echo "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list
 sudo apt update
-sudo apt install sublime-text -y
+sudo apt install -y sublime-text
 
 
 # install chrome
@@ -30,9 +30,9 @@ sudo apt install google-chrome-stable
 
 
 # install elementary tweaks
-sudo add-apt-repository ppa:philip.scott/elementary-tweaks -y
+sudo add-apt-repository -y ppa:philip.scott/elementary-tweaks
 sudo apt update
-sudo apt install elementary-tweaks -y
+sudo apt install -y elementary-tweaks
 
 
 # installs pyenv
@@ -40,7 +40,8 @@ sudo apt-get install -y \
     make build-essential libssl-dev \
     zlib1g-dev libbz2-dev libreadline-dev \
     libsqlite3-dev wget curl llvm \
-    libncurses5-dev libncursesw5-dev xz-utils tk-dev
+    libncurses5-dev libncursesw5-dev \
+    xz-utils tk-dev
 git clone https://github.com/pyenv/pyenv.git ~/.pyenv
 echo '' >> ~/.bashrc
 echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
