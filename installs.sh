@@ -62,6 +62,9 @@ pyenv install $last_version
 pyenv global $last_version
 python -m pip install pip --upgrade
 python -m pip install ipython pipenv
+echo '' >> ~/.bashrc
+echo 'eval "$(pipenv --completion)"' >> ~/.bashrc
+exec "$SHELL"
 
 
 # sets basic git
