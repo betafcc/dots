@@ -116,6 +116,12 @@ last_version=$(phpbrew known | grep -oP '\d+\.\d+' | head -1)
 phpbrew install -j $(nproc) $last_version +default
 
 
+# misc installs
+sudo apt install -y \
+    htop \
+    mtr
+
+
 # sets basic git
 git config --global user.email "betafcc@gmail.com"
 git config --global user.name "Beta Faccion"
