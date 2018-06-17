@@ -14,5 +14,5 @@ function @mkcd() {
 function @edit() {
     tempfile=$(mktemp --suffix "$*")
     $EDITOR $tempfile
-    echo $tempfile
+    cat $tempfile
 }
