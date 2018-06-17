@@ -117,6 +117,10 @@ phpbrew install -j $(nproc) $last_version +default
 phpbrew switch $last_version
 
 
+# sets up haskell
+curl -sSL https://get.haskellstack.org/ | sh
+
+
 # misc installs
 sudo apt install -y \
     htop \
