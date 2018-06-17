@@ -100,7 +100,8 @@ sudo apt install -y \
 sudo apt install -y lcov
 # configure: error: Cannot find sys/sdt.h which is required for DTrace support
 sudo apt install -y systemtap-sdt-dev
-# configure: error: Cannot find ldap libraries in /usr/lib:
+# configure: error: Cannot find ldap.h
+sudo apt install -y libldb-dev libldap2-dev
 sudo ln -s /usr/lib/x86_64-linux-gnu/libldap* /usr/lib/
 sudo ln -s /usr/lib/x86_64-linux-gnu/liblber* /usr/lib/
 # continue
@@ -111,7 +112,8 @@ phpbrew init
 echo "[[ -e ~/.phpbrew/bashrc ]] && source ~/.phpbrew/bashrc" >> ~/.bashrc
 exec "$SHELL"
 phpbrew update
-phpbrew install -j $(nproc) 7.2 +everything
+last_version=$(phpbrew known | grep -oP '\d+\.\d+' | head -1)
+phpbrew install -j $(nproc) $last_version +default
 
 
 # sets basic git
