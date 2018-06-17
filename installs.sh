@@ -7,7 +7,8 @@ sudo apt install -y software-properties-common
 # misc installs
 sudo apt install -y \
     htop \
-    mtr
+    mtr \
+    jq
 
 
 # install termite
@@ -125,6 +126,7 @@ phpbrew switch $last_version
 
 # sets up haskell
 curl -sSL https://get.haskellstack.org/ | sh
+echo 'main = putStrLn "ghc installed"' | stack -j $(nproc) runghc
 
 
 # sets basic git
