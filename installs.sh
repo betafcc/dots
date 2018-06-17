@@ -4,6 +4,12 @@ sudo apt full-upgrade
 sudo apt install -y software-properties-common
 
 
+# misc installs
+sudo apt install -y \
+    htop \
+    mtr
+
+
 # install termite
 curl -s https://raw.githubusercontent.com/Corwind/termite-install/master/termite-install.sh | sh
 rm -rf termite vte-ng
@@ -119,12 +125,6 @@ phpbrew switch $last_version
 
 # sets up haskell
 curl -sSL https://get.haskellstack.org/ | sh
-
-
-# misc installs
-sudo apt install -y \
-    htop \
-    mtr
 
 
 # sets basic git
