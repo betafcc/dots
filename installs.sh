@@ -12,6 +12,9 @@ sudo apt install -y \
     jq
 
 
+git clone https://github.com/betafcc/eos-bootstrapping.git ~/.betafcc
+
+
 # install termite
 curl -s https://raw.githubusercontent.com/Corwind/termite-install/master/termite-install.sh | sh
 rm -rf termite vte-ng
