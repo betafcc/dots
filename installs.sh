@@ -126,6 +126,8 @@ phpbrew switch $last_version
 
 # sets up haskell
 curl -sSL https://get.haskellstack.org/ | sh
+echo '' >> ~/.bashrc
+echo 'eval "$(stack --bash-completion-script stack)"' >> ~/.bashrc
 echo 'main = putStrLn "ghc installed"' | stack -j $(nproc) runghc
 
 
