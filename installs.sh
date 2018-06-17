@@ -117,6 +117,7 @@ curl -L -O https://github.com/phpbrew/phpbrew/raw/master/phpbrew
 chmod +x phpbrew
 sudo mv phpbrew /usr/local/bin/phpbrew
 phpbrew init
+echo '' >> ~/.bashrc
 echo "[[ -e ~/.phpbrew/bashrc ]] && source ~/.phpbrew/bashrc" >> ~/.bashrc
 exec "$SHELL"
 phpbrew update
@@ -136,6 +137,11 @@ echo 'main = putStrLn "ghc installed"' | stack -j $(nproc) runghc
 curl -sL https://github.com/shyiko/jabba/raw/master/install.sh | bash && . ~/.jabba/jabba.sh
 last_version=$(jabba ls-remote | grep -P '^\d+\.\d+.\d+$' | head -1)
 jabba install $last_version
+
+
+# sets my bash commands
+echo '' >> ~/.bashrc
+echo "source ~/.betafcc/bashrc" >> ~/.bashrc
 
 
 # sets basic git
