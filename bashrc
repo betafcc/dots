@@ -5,6 +5,6 @@ function cd() {
 
 
 # creates a directory and enters it
-function mkcd() {
+function @mkcd() {
     mkdir -p "$@" && cd "$@"
 }
