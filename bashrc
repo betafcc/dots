@@ -1,4 +1,5 @@
-export EDITOR='emacs'
+alias emacs='XLIB_SKIP_ARGB_VISUALS=1 emacs -nw'
+export EDITOR='subl -w'
 
 
 # no reason why I would use simple cd
