@@ -12,6 +12,7 @@ sudo apt install -y \
     jq
 
 
+# sets this repository locally, will use it later in this very script
 git clone https://github.com/betafcc/eos-bootstrapping.git ~/.betafcc
 
 
