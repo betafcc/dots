@@ -6,6 +6,7 @@ sudo apt install -y software-properties-common
 
 # misc installs
 sudo apt install -y \
+    git \
     htop \
     mtr \
     jq
