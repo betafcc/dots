@@ -53,6 +53,10 @@ sudo apt update
 sudo apt install -y elementary-tweaks
 
 
+# install dconf
+sudo apt install dconf-tools
+
+
 # sets up python
 sudo apt install -y \
     make \
