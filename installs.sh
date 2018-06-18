@@ -167,3 +167,8 @@ dconf write $path "$new_value"
 
 # configs git
 cp ~/.betafcc/dotfiles/.gitconfig ~/
+
+
+# tweaks gtk theme
+sudo cp -r /usr/share/themes/elementary/gtk-3.0 /usr/share/themes/elementary/gtk-3.0.bak
+sudo cp misc/gtk-3.0/* /usr/share/themes/elementary/gtk-3.0/
