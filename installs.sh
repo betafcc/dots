@@ -16,9 +16,15 @@ sudo apt install -y \
 git clone https://github.com/betafcc/eos-bootstrapping.git ~/.betafcc
 
 
-# install termite
-curl -s https://raw.githubusercontent.com/Corwind/termite-install/master/termite-install.sh | sh
-rm -rf termite vte-ng
+# # install termite
+# curl -s https://raw.githubusercontent.com/Corwind/termite-install/master/termite-install.sh | sh
+# rm -rf termite vte-ng
+
+
+# install terminator
+sudo add-apt-repository ppa:gnome-terminator
+sudo apt-get update
+sudo apt-get install terminator
 
 
 # install emacs
