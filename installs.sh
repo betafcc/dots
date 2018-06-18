@@ -159,6 +159,12 @@ echo "source ~/.betafcc/bashrc" >> ~/.bashrc
 exec "$SHELL"
 
 
+# Removes plank
+path='/org/pantheon/desktop/cerbere/monitored-processes'
+new_value=$(dconf read $path | tr \' \" | jq -c '. - ["plank"]' | tr \" \')
+dconf write $path "$new_value"
+
+
 # sets basic git
 git config --global user.email "betafcc@gmail.com"
 git config --global user.name "Beta Faccion"
