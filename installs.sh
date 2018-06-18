@@ -163,7 +163,6 @@ exec "$SHELL"
 path='/org/pantheon/desktop/cerbere/monitored-processes'
 new_value=$(dconf read $path | tr \' \" | jq -c '. - ["plank"]' | tr \" \')
 dconf write $path "$new_value"
-sudo apt remove -y plank
 
 
 # sets basic git
