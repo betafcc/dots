@@ -165,6 +165,5 @@ new_value=$(dconf read $path | tr \' \" | jq -c '. - ["plank"]' | tr \" \')
 dconf write $path "$new_value"
 
 
-# sets basic git
-git config --global user.email "betafcc@gmail.com"
-git config --global user.name "Beta Faccion"
+# configs git
+cp ~/.betafcc/dotfiles/.gitconfig ~/
