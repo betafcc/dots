@@ -153,6 +153,10 @@ last_version=$(jabba ls-remote | grep -P '^\d+\.\d+.\d+$' | head -1)
 jabba install $last_version
 
 
+# sets up rust
+sh <(curl https://sh.rustup.rs -sSf) -y
+
+
 # sets my bash commands
 echo '' >> ~/.bashrc
 echo "source ~/.betafcc/bashrc" >> ~/.bashrc
