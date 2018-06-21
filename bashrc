@@ -35,6 +35,7 @@ function @monitor() {
 }
 
 
+# executes $command after every change in $files
 function @watch() {
     command="$1"
     files="${@:2}"
