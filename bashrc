@@ -24,12 +24,24 @@ function @edit() {
 
 # keep redoing $action after waiting $delay 
 function @monitor() {
-    delay="${@:1:1}"
+    delay="$1"
     action="${@:2}"
     while true
     do
             clear
             eval "$action"
             sleep "$delay"
+    done
+}
+
+
+function @watch() {
+    command="$1"
+    files="${@:2}"
+    while true
+    do
+        clear
+        eval "$command"
+        inotifywait -qqe close_write $files
     done
 }
