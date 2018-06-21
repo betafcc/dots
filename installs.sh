@@ -180,3 +180,21 @@ cp ~/.betafcc/dotfiles/.gitconfig ~/
 # tweaks gtk theme
 sudo cp -r /usr/share/themes/elementary/gtk-3.0 /usr/share/themes/elementary/gtk-3.0.bak
 sudo cp misc/gtk-3.0/* /usr/share/themes/elementary/gtk-3.0/
+
+
+# installs vlc
+sudo apt-add-repository -y ppa:videolan/stable-daily
+sudo apt update
+sudo apt install -y vlc
+
+
+# task manager
+sudo apt install -y gnome-system-monitor htop
+
+
+# Disk usage analyzer
+sudo apt install -y baobab
+
+
+## open default applications settings and wait user exit
+# switchboard settings://applications
