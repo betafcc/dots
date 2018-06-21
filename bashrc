@@ -20,3 +20,16 @@ function @edit() {
     $EDITOR $tempfile 2>/dev/null
     cat $tempfile
 }
+
+
+# keep redoing $action after waiting $delay 
+function @monitor() {
+    delay="${@:1:1}"
+    action="${@:2}"
+    while true
+    do
+            clear
+            eval "$action"
+            sleep "$delay"
+    done
+}
