@@ -169,6 +169,10 @@ new_value=$(dconf read $path | tr \' \" | jq -c '. - ["plank"]' | tr \" \')
 dconf write $path "$new_value"
 
 
+# double click to open stuff
+gsettings set org.pantheon.files.preferences single-click false
+
+
 # configs git
 cp ~/.betafcc/dotfiles/.gitconfig ~/
 
