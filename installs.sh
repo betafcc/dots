@@ -196,5 +196,9 @@ sudo apt install -y gnome-system-monitor htop
 sudo apt install -y baobab
 
 
+# Recomended swappiness is 10, default is 60 for some reason
+echo 'vm.swappiness=10' | sudo tee -a /etc/sysctl.conf
+
+
 ## open default applications settings and wait user exit
 # switchboard settings://applications
