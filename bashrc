@@ -40,7 +40,6 @@ function @watch() {
     files="${@:2}"
     while true
     do
-        clear
         eval "$command"
         inotifywait -qqe close_write $files
     done
