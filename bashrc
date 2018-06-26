@@ -28,7 +28,6 @@ function @monitor() {
     action="${@:2}"
     while true
     do
-            clear
             eval "$action"
             sleep "$delay"
     done
