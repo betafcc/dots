@@ -197,6 +197,10 @@ sudo apt update
 sudo apt install -y vlc
 
 
+# paint equivalent
+sudo apt install -y pinta
+
+
 # task manager
 sudo apt install -y gnome-system-monitor htop
 
