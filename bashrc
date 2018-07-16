@@ -8,6 +8,11 @@ function cd() {
 }
 
 
+function mkcd() {
+    @mkcd "$@"
+}
+
+
 # creates a directory and enters it
 function @mkcd() {
     mkdir -p "$@" && cd "$@"
