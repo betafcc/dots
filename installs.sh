@@ -220,6 +220,7 @@ sudo apt install -y \
 sudo convert -resize 16x16 \
     /usr/share/fcitx/mozc/icon/mozc.png \
     /usr/share/fcitx/mozc/icon/mozc.png
+cp ~/.betafcc/dotfiles/.config/fcitx/* ~/.config/fcitx/
 
 
 # Recomended swappiness is 10, default is 60 for some reason
