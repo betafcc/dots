@@ -209,9 +209,26 @@ sudo apt install -y gnome-system-monitor htop
 sudo apt install -y baobab
 
 
+# Set up japanese keyboard
+sudo apt install -y \
+    fcitx \
+    fcitx-mozc \
+    fcitx-frontend-all \
+    fcitx-frontend-gtk3 \
+    imagemagick \
+    im-config
+sudo convert -resize 16x16 \
+    /usr/share/fcitx/mozc/icon/mozc.png \
+    /usr/share/fcitx/mozc/icon/mozc.png
+
+
 # Recomended swappiness is 10, default is 60 for some reason
 echo 'vm.swappiness=10' | sudo tee -a /etc/sysctl.conf
 
 
 ## open default applications settings and wait user exit
 # switchboard settings://applications
+
+
+## open im-config to activate fcitx japanese keyboard
+# im-config
