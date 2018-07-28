@@ -66,6 +66,11 @@ sudo apt install -y elementary-tweaks
 sudo apt install dconf-tools
 
 
+# install docker
+curl -fsSL get.docker.com | sudo sh
+sudo usermod -aG docker "$USER"
+
+
 # sets up python
 sudo apt install -y \
     make \
