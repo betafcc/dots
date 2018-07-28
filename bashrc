@@ -53,6 +53,6 @@ function @watch() {
 
 # creates a IElixir project
 function @ielixir-init() {
-    cp ~/.betafcc/misc/ielixir.yml ./docker-compose.yml
+    cp ~/.betafcc/misc/docker/ielixir.yml ./docker-compose.yml
     docker-compose up
 }
