@@ -164,6 +164,24 @@ jabba alias default $last_version
 exec "$SHELL"
 
 
+# sets up asdf
+sudo apt install -y \
+    automake \
+    autoconf \
+    libreadline-dev \
+    libncurses-dev \
+    libssl-dev \
+    libyaml-dev \
+    libxslt-dev \
+    libffi-dev \
+    libtool \
+    unixodbc-dev
+git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.5.0
+echo -e '\n. $HOME/.asdf/asdf.sh' >> ~/.bashrc
+echo -e '\n. $HOME/.asdf/completions/asdf.bash' >> ~/.bashrc
+exec "$SHELL"
+
+
 # sets up rust
 sh <(curl https://sh.rustup.rs -sSf) -y
 
