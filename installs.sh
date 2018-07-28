@@ -182,6 +182,29 @@ echo -e '\n. $HOME/.asdf/completions/asdf.bash' >> ~/.bashrc
 exec "$SHELL"
 
 
+# sets up erlang
+# # optional wx (I couldn't make it work)
+# sudo apt-key adv --fetch-keys http://repos.codelite.org/CodeLite.asc
+# sudo apt-add-repository 'deb http://repos.codelite.org/wx3.0.4/ubuntu/ xenial universe'
+# sudo apt update
+# sudo apt-get install -y \
+#     libwxbase3.0-0-unofficial \
+#     libwxbase3.0-dev \
+#     libwxgtk3.0-0-unofficial \
+#     libwxgtk3.0-dev \
+#     wx3.0-headers \
+#     wx-common \
+#     libwxbase3.0-dbg \
+#     libwxgtk3.0-dbg \
+#     wx3.0-i18n \
+#     wx3.0-examples \
+#     wx3.0-doc
+asdf plugin-add erlang
+last_version=$(asdf list-all erlang | grep -oP '^\d+\.\d+\.\d+$' | tail -1)
+asdf install erlang $last_version
+asdf global erlang $last_version
+
+
 # sets up rust
 sh <(curl https://sh.rustup.rs -sSf) -y
 
