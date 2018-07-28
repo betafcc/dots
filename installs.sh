@@ -212,6 +212,17 @@ asdf install elixir $last_version
 asdf global elixir $last_version
 
 
+# sets up rebar
+asdf plugin-add rebar
+# rebar
+last_version=$(asdf list-all rebar | grep -oP '^2\.\d+\.\d+$' | tail -1)
+asdf install rebar $last_version
+# rebar3
+last_version=$(asdf list-all rebar | grep -oP '^3\.\d+\.\d+$' | tail -1)
+asdf install rebar $last_version
+asdf global rebar $last_version
+
+
 # sets up rust
 sh <(curl https://sh.rustup.rs -sSf) -y
 
