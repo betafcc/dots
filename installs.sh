@@ -160,6 +160,8 @@ echo 'main = putStrLn "ghc installed"' | stack -j $(nproc) runghc
 curl -sL https://github.com/shyiko/jabba/raw/master/install.sh | bash && . ~/.jabba/jabba.sh
 last_version=$(jabba ls-remote | grep -P '^\d+\.\d+.\d+$' | head -1)
 jabba install $last_version
+jabba alias default $last_version
+exec "$SHELL"
 
 
 # sets up rust
