@@ -27,7 +27,7 @@ function @edit() {
 }
 
 
-# keep redoing $action after waiting $delay 
+# keep redoing $action after waiting $delay
 function @monitor() {
     delay="$1"
     action="${@:2}"
@@ -48,4 +48,11 @@ function @watch() {
         eval "$command"
         inotifywait -qqe close_write $files
     done
+}
+
+
+# creates a IElixir project
+function @ielixir-init() {
+    cp ~/.betafcc/misc/ielixir.yml ./docker-compose.yml
+    docker-compose up
 }
