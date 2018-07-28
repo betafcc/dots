@@ -205,6 +205,13 @@ asdf install erlang $last_version
 asdf global erlang $last_version
 
 
+# sets up elixir
+asdf plugin-add elixir
+last_version=$(asdf list-all elixir | grep -oP '^\d+\.\d+\.\d+$' | tail -1)
+asdf install elixir $last_version
+asdf global elixir $last_version
+
+
 # sets up rust
 sh <(curl https://sh.rustup.rs -sSf) -y
 
