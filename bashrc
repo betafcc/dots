@@ -1,4 +1,4 @@
-alias emacs='XLIB_SKIP_ARGB_VISUALS=1 emacs -nw'
+alias emacs='TERM=xterm-256color XLIB_SKIP_ARGB_VISUALS=1 emacs -nw'
 export EDITOR='subl -w'
 
 
