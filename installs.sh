@@ -295,6 +295,13 @@ sudo apt install -y gnome-system-monitor htop
 sudo apt install -y baobab
 
 
+# Powerline
+pipsi install powerline-shell
+echo -e '\nfunction _update_ps1() {\n    PS1=$(powerline-shell $?)\n}\n'
+echo -e '\nif [[$TERM != linux && ! $PROMPT_COMMAND =~ _update_ps1]]; then\n    PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"\nfi'
+exec "$SHELL"
+
+
 # Set up japanese keyboard
 sudo apt install -y \
     fcitx \
