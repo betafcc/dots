@@ -105,12 +105,22 @@ python -m pip install ipython pipenv
 echo '' >> ~/.bashrc
 echo 'eval "$(pipenv --completion)"' >> ~/.bashrc
 exec "$SHELL"
+
 # non official python tools
+# need the system python until pipsi is installed
+pyenv shell system
+curl https://bootstrap.pypa.io/get-pip.py | sudo -H python
+sudo -H pip install virtualenv
+curl https://raw.githubusercontent.com/mitsuhiko/pipsi/master/get-pipsi.py | python
+pyenv shell --unset
+
 # poetry
 curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | python
 exec "$SHELL"
 poetry completions bash | sudo tee /etc/bash_completion.d/poetry.bash-completion 1>/dev/null
 exec "$SHELL"
+
+
 
 
 # sets up node
