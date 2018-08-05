@@ -120,7 +120,8 @@ exec "$SHELL"
 poetry completions bash | sudo tee /etc/bash_completion.d/poetry.bash-completion 1>/dev/null
 exec "$SHELL"
 
-
+# black
+pipsi install black
 
 
 # sets up node
