@@ -1,5 +1,5 @@
 alias emacs='TERM=xterm-256color XLIB_SKIP_ARGB_VISUALS=1 emacs -nw'
-export EDITOR='subl -w'
+export EDITOR='subl -nw'
 
 
 # no reason why I would use simple cd
@@ -33,8 +33,8 @@ function @monitor() {
     action="${@:2}"
     while true
     do
-            eval "$action"
-            sleep "$delay"
+        eval "$action"
+        sleep "$delay"
     done
 }
 
