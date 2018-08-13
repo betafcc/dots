@@ -58,3 +58,14 @@ function @ielixir-init() {
     cp ~/.betafcc/misc/docker/ielixir.yml ./docker-compose.yml
     docker-compose up
 }
+
+
+# runs elm-reactor with refresh on save
+function @selenium-elm() {
+    (elm-reactor & @selenium-watch "${1:-src}" "${2:-http://localhost:8000}")
+}
+
+
+function @selenium-watch() {
+    (@watch 'echo refresh' "$1" | @selenium-stdin "$2")
+}
