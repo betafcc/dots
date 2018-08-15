@@ -279,7 +279,7 @@ gsettings set org.pantheon.files.preferences single-click false
 # installs hub
 sudo add-apt-repository -y ppa:cpick/hub
 sudo apt update
-sudo apt install hub
+sudo apt install -y hub
 
 
 # configs git
