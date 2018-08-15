@@ -276,6 +276,12 @@ dconf write $path "$new_value"
 gsettings set org.pantheon.files.preferences single-click false
 
 
+# installs hub
+sudo add-apt-repository -y ppa:cpick/hub
+sudo apt update
+sudo apt install hub
+
+
 # configs git
 cp ~/.betafcc/dotfiles/.gitconfig ~/
 
