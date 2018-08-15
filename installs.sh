@@ -12,6 +12,13 @@ sudo apt install -y \
     jq
 
 
+# installs rq
+sudo curl \
+     https://s3-eu-west-1.amazonaws.com/record-query/record-query/x86_64-unknown-linux-gnu/rq \
+     -o /usr/local/bin/rq \
+    && sudo chmod +x /usr/local/bin/rq
+
+
 # sets this repository locally, will use it later in this very script
 git clone https://github.com/betafcc/eos-bootstrapping.git ~/.betafcc
 
