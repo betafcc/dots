@@ -262,7 +262,7 @@ sh <(curl https://sh.rustup.rs -sSf) -y
 
 # sets my bash commands
 echo '' >> ~/.bashrc
-echo "source ~/.betafcc/bashrc" >> ~/.bashrc
+echo ". ~/.betafcc/bashrc" >> ~/.bashrc
 exec "$SHELL"
 
 
