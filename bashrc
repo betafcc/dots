@@ -69,3 +69,13 @@ function @selenium-elm() {
 function @selenium-watch() {
     (@watch 'echo refresh' "$1" | @selenium-stdin "$2")
 }
+
+
+function @toggle() {
+    if [ $(ps cax | grep "$1" | wc -l) -gt 0 ]
+    then
+        killall "$1"
+    else
+        $1 "${@:2}"
+    fi
+}
