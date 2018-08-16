@@ -266,10 +266,8 @@ echo "source ~/.betafcc/bashrc" >> ~/.bashrc
 exec "$SHELL"
 
 
-# Removes plank
-path='/org/pantheon/desktop/cerbere/monitored-processes'
-new_value=$(dconf read $path | tr \' \" | jq -c '. - ["plank"]' | tr \" \')
-dconf write $path "$new_value"
+# Removes plank and wingpanel from auto respawn
+dconf write '/org/pantheon/desktop/cerbere/monitored-processes' "@as []"
 
 
 # double click to open stuff
