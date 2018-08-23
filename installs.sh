@@ -338,3 +338,14 @@ echo 'vm.swappiness=10' | sudo tee -a /etc/sysctl.conf
 
 ## open im-config to activate fcitx japanese keyboard
 # im-config
+
+
+# links custom binaries to /usr/local/bin
+find \
+    $(readlink -f ~/.betafcc/misc/bin) \
+    -maxdepth 1 \
+    -type f |
+    while read -r
+    do
+        sudo ln -s "${REPLY}" /usr/local/bin
+    done
