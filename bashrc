@@ -60,6 +60,19 @@ function @ielixir-init() {
 }
 
 
+# open url in chrome app mode
+function @web-app() {
+    google-chrome --app="${1}"
+}
+
+
+# searches on youtube
+function @youtube() {
+    query=$(echo "$@" | tr ' ' '+')
+    @web-app "https://www.youtube.com/results?search_query=${query}"
+}
+
+
 # runs elm-reactor with refresh on save
 function @selenium-elm() {
     (elm-reactor & @selenium-watch "${1:-src}" "${2:-http://localhost:8000}")
