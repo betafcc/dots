@@ -73,6 +73,14 @@ function @youtube() {
 }
 
 
+# searches on google
+function @google() {
+    query=$(echo "$@" | tr ' ' '+')
+    google-chrome --new-window "https://www.google.com.br/search?q=${query}"
+
+}
+
+
 # runs elm-reactor with refresh on save
 function @selenium-elm() {
     (elm-reactor & @selenium-watch "${1:-src}" "${2:-http://localhost:8000}")
