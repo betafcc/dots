@@ -81,6 +81,12 @@ function @google() {
 }
 
 
+# just open the jupyter lab url in chrome app mode
+function @lab() {
+    @web-app "http://localhost:${1:-8888}/lab"
+}
+
+
 # runs elm-reactor with refresh on save
 function @selenium-elm() {
     (elm-reactor & @selenium-watch "${1:-src}" "${2:-http://localhost:8000}")
