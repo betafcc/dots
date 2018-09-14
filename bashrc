@@ -106,3 +106,15 @@ function @toggle() {
         $1 "${@:2}"
     fi
 }
+
+
+function @avd() {
+    select emulator in $(emulator -list-avds)
+    do
+        echo "$emulator"
+        break
+    done
+    pushd ~/Android/Sdk/tools >/dev/null
+    setsid emulator -avd $emulator </dev/null &>/dev/null
+    popd >/dev/null
+}
