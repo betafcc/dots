@@ -114,7 +114,7 @@ function @avd() {
         echo "$emulator"
         break
     done
-    pushd ~/Android/Sdk/tools >/dev/null
-    setsid emulator -avd $emulator </dev/null &>/dev/null
+    pushd "${ANDROID_HOME}/tools" >/dev/null
+    setsid emulator -avd $emulator
     popd >/dev/null
 }
