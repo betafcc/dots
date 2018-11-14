@@ -118,3 +118,15 @@ function @avd() {
     setsid emulator -avd $emulator
     popd >/dev/null
 }
+
+
+function @window-logger() {
+    delay="${1:-2}" # default delay is 2 seconds
+
+    @monitor $delay 'xdotool getactivewindow getwindowname' |
+        stdbuf -oL uniq |
+        while read line
+        do
+            echo "$(date +'%Y-%m-%d %H:%M:%S%z') > ${line}"
+        done
+}
