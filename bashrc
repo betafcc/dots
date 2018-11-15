@@ -130,3 +130,20 @@ function @window-logger() {
             echo "$(date +'%Y-%m-%d %H:%M:%S%z') > ${line}"
         done
 }
+
+
+function @screen-logger() {
+    outdir="${1}"
+    delay="${2-10}"
+    while true
+    do
+        sleep ${delay}
+        import \
+            -resize 50% \
+            -interlace Plane \
+            -quality 55% \
+            -window root \
+            -silent \
+            "${outdir}/$(date -Iseconds).jpg"
+    done
+}
