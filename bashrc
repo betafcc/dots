@@ -133,11 +133,13 @@ function @window-logger() {
 
 
 function @screen-logger() {
-    outdir="${1}"
+    basedir="${1}"
     delay="${2-10}"
     while true
     do
         sleep ${delay}
+        outdir="${basedir}/$(date -I)"
+        mkdir -p "${outdir}"
         import \
             -resize 50% \
             -interlace Plane \
