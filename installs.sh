@@ -307,6 +307,12 @@ sudo apt install -y gnome-system-monitor htop
 sudo apt install -y baobab
 
 
+# Set up .desktop file open
+# https://bugs.launchpad.net/ubuntu/+source/gvfs/+bug/378783
+sudo apt install -y dex
+sudo cp ~/.betafcc/misc/dex.desktop /usr/share/applications/
+
+
 # Powerline
 pipsi install powerline-shell
 echo -e '\nfunction _update_ps1() {\n    PS1=$(powerline-shell $?)\n}\n'

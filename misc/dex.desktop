@@ -1,0 +1,10 @@
+Version=1.0
+Type=Application
+Name=Dex Launch
+GenericName=Dex Launch
+Comment=Open .desktop file
+Exec=dex %F
+Terminal=false
+MimeType=application/x-desktop;
+Categories=Utilities;
+StartupNotify=true
