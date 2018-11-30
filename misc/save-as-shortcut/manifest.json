@@ -5,7 +5,7 @@
   "version": "1.0.0",
   "author": "Beta Faccion",
   "browser_action": {
-    "default_title": "Bear"
+    "default_title": "Save as shortcut"
   },
   "content_scripts": [
     {
