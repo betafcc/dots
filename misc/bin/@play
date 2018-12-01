@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+# Doesn't work well as a bash function or alias
+cvlc --no-repeat --play-and-exit "$@"
