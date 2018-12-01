@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
 
-eval "$(cat ~/.bashrc)"
-eval "$@"
+# Shouldn't source .bashrc
+# in Ubuntu it contains a guard
+# to check if its been run in interactive
+# preventing it from being sourced programatically
+source "$HOME/.betafcc/bashrc"
+"$@"
