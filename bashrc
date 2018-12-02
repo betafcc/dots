@@ -155,9 +155,12 @@ function @screen-logger() {
 # TODO: if $0 is zsh, use zsh -c ". $activate; zsh -i" as workaround
 # note that this doesnt play nice with pyenv
 # as the command is run before the .rc files are loaded in zsh -i
-poetry_shell() {
-    activate="$(dirname $(poetry run which python))/activate"
-    $0 -i <<EOF
-. '${activate}'; exec </dev/tty
-EOF
-}
+# poetry_shell() {
+#     activate="$(dirname $(poetry run which python))/activate"
+#     $0 -i <<EOF
+# . '${activate}'; exec </dev/tty
+# EOF
+# }
+# FIXME: doesnt work well with ipython, probably because of /dev/tty
+
+alias poetry_shell='. "$(dirname $(poetry run which python))/activate"'
