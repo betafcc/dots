@@ -164,3 +164,12 @@ function @screen-logger() {
 # FIXME: doesnt work well with ipython, probably because of /dev/tty
 
 alias poetry_shell='. "$(dirname $(poetry run which python))/activate"'
+
+# creates image and run container from pwd dockerfile,
+# removing both the container and image afterwards
+function @docker-here() {
+    local img="$(docker build -q .)"
+    local args="$@" "$img" "$CMD"
+    docker run --rm "$args"
+    docker rmi "$img"
+}
