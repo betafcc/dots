@@ -1,0 +1,90 @@
+#!/usr/bin/env python
+'''
+Exposes toolz functions to a cli interface
+example:
+> seq 1 10 | cliz -map int -sliding_window 4 -map '$, sum($)'
+((1, 2, 3, 4), 10)
+((2, 3, 4, 5), 14)
+((3, 4, 5, 6), 18)
+((4, 5, 6, 7), 22)
+((5, 6, 7, 8), 26)
+((6, 7, 8, 9), 30)
+((7, 8, 9, 10), 34)
+'''
+
+import os
+import re
+import sys
+from itertools import takewhile, dropwhile, tee
+
+from typing import Tuple
+
+import toolz.curried
+from toolz.curried import *
+from toolz.curried.operator import *
+
+
+
+
+F_PAT = re.compile(r"(?<!\\)\$")
+
+# expose rcompose to user, more convenient
+rcompose = lambda *fs: compose(*reversed(fs))
+
+
+def main():
+    for result in toolz.curried.pipe(
+        sys.stdin, *map(lambda t: eval_operation(*t), group_args(sys.argv[1:]))
+    ):
+        result = str(result)
+        print(result, end=os.linesep if result[-1] != os.linesep else "")
+        sys.stdout.flush()
+
+
+def eval_operation(fname: str, str_args: Tuple[str]):
+    f = getattr(toolz.curried, fname)
+    args = map(eval_arg, str_args)
+
+    return f(*args)
+
+
+def eval_arg(arg):
+    # .match not working dont know why
+    if F_PAT.findall(arg):
+        arg = F_PAT.sub("__f_arg", arg)
+        arg = f"lambda __f_arg: ({arg})"
+
+    return eval(arg)
+
+
+def group_args(args):
+    """
+    >>> list(consume_args(['-f', '2', '3', '-do', 'lambda x: x**2', '-foo', '-bar', '2']))
+    [('f', ('2', '3')),
+     ('do', ('lambda x: x**2',)),
+     ('foo', ()),
+     ('bar', ('2',))]
+    """
+    while args:
+        cmd, *rest = args
+        cmd_args, args = map(
+            tuple, take_drop_while(lambda c: not c.startswith("-"), rest)
+        )
+
+        yield (cmd[1:], cmd_args)
+
+
+def take_drop_while(f, it):
+    a, b = tee(it, 2)
+    return takewhile(f, a), dropwhile(f, b)
+
+
+if __name__ == "__main__":
+    # https://docs.python.org/3/library/signal.html#note-on-sigpipe
+    try:
+        main()
+        sys.stdout.flush()
+    except (BrokenPipeError, KeyboardInterrupt):
+        devnull = os.open(os.devnull, os.O_WRONLY)
+        os.dup2(devnull, sys.stdout.fileno())
+        sys.exit(1)
