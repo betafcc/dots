@@ -34,7 +34,7 @@ rcompose = lambda *fs: compose(*reversed(fs))
 
 def main():
     for result in toolz.curried.pipe(
-        sys.stdin, *map(lambda t: eval_operation(*t), group_args(sys.argv[1:]))
+        sys.stdin, map(str.rstrip), *map(lambda t: eval_operation(*t), group_args(sys.argv[1:]))
     ):
         result = str(result)
         print(result, end=os.linesep if result[-1] != os.linesep else "")
