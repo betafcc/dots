@@ -173,3 +173,52 @@ function @docker-here() {
     docker run --rm "$args"
     docker rmi "$img"
 }
+
+
+function take() {
+    if [ $1 -lt 0 ]
+    then
+        @take-last $(expr '-1' '*' $1)
+    else
+        @take-first $1
+    fi
+}
+
+function @take-first() {
+    head -$1
+}
+
+
+function @take-last() {
+    tail -$1
+}
+
+
+function drop() {
+    if [ $1 -lt 0 ]
+    then
+        @drop-last $(expr '-1' '*' $1)
+    else
+        @drop-first $1
+    fi
+}
+
+
+function @drop-first() {
+    tail -n +$(expr $1 + 1)
+}
+
+
+function @drop-last() {
+    head -n -$1
+}
+
+
+function every() {
+    if [ $1 -lt 0 ]
+    then
+        tac | every $(expr '-1' '*' $1)
+    else
+        sed -n "1~${1}p"
+    fi
+}
