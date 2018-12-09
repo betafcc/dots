@@ -5,24 +5,24 @@ export EDITOR='subl -nw'
 
 
 # no reason why I would use simple cd
-function cd() {
+cd() {
     pushd > /dev/null "$*"
 }
 
 
-function mkcd() {
+mkcd() {
     @mkcd "$@"
 }
 
 
 # creates a directory and enters it
-function @mkcd() {
+@mkcd() {
     mkdir -p "$@" && cd "$@"
 }
 
 
 # opens a temporary file then pipes the content when closed
-function @edit() {
+@edit() {
     local tempfile=$(mktemp --suffix "$*")
     $EDITOR $tempfile 2>/dev/null
     cat $tempfile
@@ -30,7 +30,7 @@ function @edit() {
 
 
 # keep redoing $action after waiting $delay
-function @monitor() {
+@monitor() {
     local delay="$1"
     local action="${@:2}"
     while true
@@ -42,7 +42,7 @@ function @monitor() {
 
 
 # executes $command after every change in $files
-function @watch() {
+@watch() {
     local command="$1"
     local files="${@:2}"
     while true
@@ -54,27 +54,27 @@ function @watch() {
 
 
 # creates a IElixir project
-function @ielixir-init() {
+@ielixir-init() {
     cp ~/.betafcc/misc/docker/ielixir.yml ./docker-compose.yml
     docker-compose up
 }
 
 
 # open url in chrome app mode
-function @web-app() {
+@web-app() {
     google-chrome --app="${1}"
 }
 
 
 # searches on youtube
-function @youtube() {
+@youtube() {
     local query=$(echo "$@" | tr ' ' '+')
     @web-app "https://www.youtube.com/results?search_query=${query}"
 }
 
 
 # searches on google
-function @google() {
+@google() {
     local query=$(echo "$@" | tr ' ' '+')
     google-chrome --new-window "https://www.google.com.br/search?q=${query}"
 
@@ -82,23 +82,23 @@ function @google() {
 
 
 # just open the jupyter lab url in chrome app mode
-function @lab() {
+@lab() {
     @web-app "http://localhost:${1:-8888}/lab"
 }
 
 
 # runs elm-reactor with refresh on save
-function @selenium-elm() {
+@selenium-elm() {
     (elm-reactor & @selenium-watch "${1:-src}" "${2:-http://localhost:8000}")
 }
 
 
-function @selenium-watch() {
+@selenium-watch() {
     (@watch 'echo refresh' "$1" | @selenium-stdin "$2")
 }
 
 
-function @toggle() {
+@toggle() {
     if [ $(ps cax | grep "$1" | wc -l) -gt 0 ]
     then
         killall "$1"
@@ -108,7 +108,7 @@ function @toggle() {
 }
 
 
-function @avd() {
+@avd() {
     local emulator
     select emulator in $(emulator -list-avds)
     do
@@ -121,7 +121,7 @@ function @avd() {
 }
 
 
-function @window-logger() {
+@window-logger() {
     local delay="${1:-2}" # default delay is 2 seconds
 
     @monitor $delay 'xdotool getactivewindow getwindowname' |
@@ -133,7 +133,7 @@ function @window-logger() {
 }
 
 
-function @screen-logger() {
+@screen-logger() {
     local basedir="${1}"
     local delay="${2-10}"
     local outdir
@@ -169,7 +169,7 @@ alias poetry_shell='. "$(dirname $(poetry run which python))/activate"'
 
 # creates image and run container from pwd dockerfile,
 # removing both the container and image afterwards
-function @docker-here() {
+@docker-here() {
     local img="$(docker build -q .)"
     local args="$@" "$img" "$CMD"
     docker run --rm "$args"
@@ -177,7 +177,7 @@ function @docker-here() {
 }
 
 
-function take() {
+take() {
     if [ $1 -lt 0 ]
     then
         @take-last $(expr '-1' '*' $1)
@@ -186,17 +186,17 @@ function take() {
     fi
 }
 
-function @take-first() {
+@take-first() {
     head -$1
 }
 
 
-function @take-last() {
+@take-last() {
     tail -$1
 }
 
 
-function drop() {
+drop() {
     if [ $1 -lt 0 ]
     then
         @drop-last $(expr '-1' '*' $1)
@@ -206,17 +206,17 @@ function drop() {
 }
 
 
-function @drop-first() {
+@drop-first() {
     tail -n +$(expr $1 + 1)
 }
 
 
-function @drop-last() {
+@drop-last() {
     head -n -$1
 }
 
 
-function every() {
+every() {
     if [ $1 -lt 0 ]
     then
         tac | every $(expr '-1' '*' $1)
