@@ -23,7 +23,7 @@ function @mkcd() {
 
 # opens a temporary file then pipes the content when closed
 function @edit() {
-    tempfile=$(mktemp --suffix "$*")
+    local tempfile=$(mktemp --suffix "$*")
     $EDITOR $tempfile 2>/dev/null
     cat $tempfile
 }
@@ -31,8 +31,8 @@ function @edit() {
 
 # keep redoing $action after waiting $delay
 function @monitor() {
-    delay="$1"
-    action="${@:2}"
+    local delay="$1"
+    local action="${@:2}"
     while true
     do
         eval "$action"
@@ -43,8 +43,8 @@ function @monitor() {
 
 # executes $command after every change in $files
 function @watch() {
-    command="$1"
-    files="${@:2}"
+    local command="$1"
+    local files="${@:2}"
     while true
     do
         eval "$command"
@@ -68,14 +68,14 @@ function @web-app() {
 
 # searches on youtube
 function @youtube() {
-    query=$(echo "$@" | tr ' ' '+')
+    local query=$(echo "$@" | tr ' ' '+')
     @web-app "https://www.youtube.com/results?search_query=${query}"
 }
 
 
 # searches on google
 function @google() {
-    query=$(echo "$@" | tr ' ' '+')
+    local query=$(echo "$@" | tr ' ' '+')
     google-chrome --new-window "https://www.google.com.br/search?q=${query}"
 
 }
@@ -109,6 +109,7 @@ function @toggle() {
 
 
 function @avd() {
+    local emulator
     select emulator in $(emulator -list-avds)
     do
         echo "$emulator"
@@ -121,7 +122,7 @@ function @avd() {
 
 
 function @window-logger() {
-    delay="${1:-2}" # default delay is 2 seconds
+    local delay="${1:-2}" # default delay is 2 seconds
 
     @monitor $delay 'xdotool getactivewindow getwindowname' |
         stdbuf -oL uniq |
@@ -133,8 +134,9 @@ function @window-logger() {
 
 
 function @screen-logger() {
-    basedir="${1}"
-    delay="${2-10}"
+    local basedir="${1}"
+    local delay="${2-10}"
+    local outdir
     while true
     do
         sleep ${delay}
