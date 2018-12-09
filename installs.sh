@@ -1,3 +1,8 @@
+#!/bin/bash
+set -euo pipefail
+IFS=$'\n\t'
+
+
 # apt misc setup
 sudo apt update
 sudo apt full-upgrade
