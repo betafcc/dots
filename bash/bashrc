@@ -1,0 +1,28 @@
+# https://stackoverflow.com/questions/59895/getting-the-source-directory-of-a-bash-script-from-within
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
+
+
+source "${DIR}/lib/os_utils.sh"
+alias cd=@cd
+alias mkcd=@mkcd
+
+source "${DIR}/lib/slicing.sh"
+alias take=@take
+alias drop=@drop
+alias every=@every
+
+source "${DIR}/lib/dev_utils.sh"
+
+source "${DIR}/lib/loggers.sh"
+
+source "${DIR}/lib/misc.sh"
+
+
+# -nw for emacs means 'no-window'
+alias emacs='TERM=xterm-256color XLIB_SKIP_ARGB_VISUALS=1 emacs -nw'
+
+# until we fix `poetry shell`
+alias poetry_shell='. "$(dirname $(poetry run which python))/activate"'
+
+# For sublime, -n is 'new window', -w is 'wait until closed'
+export EDITOR='subl -nw'
