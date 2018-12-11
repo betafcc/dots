@@ -7,7 +7,7 @@
 
 
 # keep redoing $action after waiting $delay
-@monitor() {
+@repeat() {
     local delay="$1"
     local action="${@:2}"
     while true
