@@ -49,9 +49,9 @@ sudo apt-get install -y fonts-powerline
 
 
 # install emacs
-sudo add-apt-repository -y ppa:ubuntu-elisp/ppa
+sudo add-apt-repository -y ppa:kelleyk/emacs
 sudo apt update
-sudo apt install -y emacs25
+sudo apt install -y emacs26
 
 
 # install sublime text 3
