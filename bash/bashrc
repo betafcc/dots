@@ -8,6 +8,7 @@ __BASHRC_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 source "${__BASHRC_DIR}/lib/os_utils.sh"
 alias cd=@cd
 alias mkcd=@mkcd
+alias touchp=@touchp
 
 source "${__BASHRC_DIR}/lib/slicing.sh"
 alias take=@take
