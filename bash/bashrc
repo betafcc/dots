@@ -1,21 +1,24 @@
+# shellcheck disable=SC1090
 # https://stackoverflow.com/questions/59895/getting-the-source-directory-of-a-bash-script-from-within
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
+# Note: this variable is avaiable in shell session that sourced it
+# don't know how to prevent it (`local` kw is function-only)
+# so I use this varname instead of a simple 'DIR'
+__BASHRC_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 
-
-source "${DIR}/lib/os_utils.sh"
+source "${__BASHRC_DIR}/lib/os_utils.sh"
 alias cd=@cd
 alias mkcd=@mkcd
 
-source "${DIR}/lib/slicing.sh"
+source "${__BASHRC_DIR}/lib/slicing.sh"
 alias take=@take
 alias drop=@drop
 alias every=@every
 
-source "${DIR}/lib/dev_utils.sh"
+source "${__BASHRC_DIR}/lib/dev_utils.sh"
 
-source "${DIR}/lib/loggers.sh"
+source "${__BASHRC_DIR}/lib/loggers.sh"
 
-source "${DIR}/lib/misc.sh"
+source "${__BASHRC_DIR}/lib/misc.sh"
 
 
 # -nw for emacs means 'no-window'
