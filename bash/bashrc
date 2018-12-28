@@ -20,6 +20,7 @@ source "${__BASHRC_DIR}/lib/dev_utils.sh"
 source "${__BASHRC_DIR}/lib/loggers.sh"
 
 source "${__BASHRC_DIR}/lib/misc.sh"
+alias gress=@gress
 
 
 # -nw for emacs means 'no-window'
@@ -27,6 +28,7 @@ alias emacs='TERM=xterm-256color XLIB_SKIP_ARGB_VISUALS=1 emacs -nw'
 
 # until we fix `poetry shell`
 alias poetry_shell='. "$(dirname $(poetry run which python))/activate"'
+
 
 # For sublime, -n is 'new window', -w is 'wait until closed'
 export EDITOR='subl -nw'

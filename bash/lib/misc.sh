@@ -17,3 +17,9 @@
     google-chrome --new-window "https://www.google.com.br/search?q=${query}"
 
 }
+
+
+# grep + less
+@gress() {
+    grep --color=always "$@" | less -R
+}
