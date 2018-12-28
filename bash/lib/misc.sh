@@ -29,3 +29,12 @@
 @rgless() {
     rg --color=always "$@" | less -R
 }
+
+
+@resolve_alias() {
+    local alias_
+    for alias_ in "$@"
+    do
+        echo "${BASH_ALIASES[$alias_]}"
+    done
+}
