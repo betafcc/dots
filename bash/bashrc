@@ -20,7 +20,8 @@ source "${__BASHRC_DIR}/lib/dev_utils.sh"
 source "${__BASHRC_DIR}/lib/loggers.sh"
 
 source "${__BASHRC_DIR}/lib/misc.sh"
-alias gress=@gress
+alias grepless=@grepless
+alias rgless=@rgless
 
 
 # -nw for emacs means 'no-window'

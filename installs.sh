@@ -339,6 +339,10 @@ sudo convert -resize 16x16 \
 cp ~/.betafcc/dotfiles/.config/fcitx/* ~/.config/fcitx/
 
 
+# better than grep
+cargo install ripgrep
+
+
 # Recomended swappiness is 10, default is 60 for some reason
 echo 'vm.swappiness=10' | sudo tee -a /etc/sysctl.conf
 
