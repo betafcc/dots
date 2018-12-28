@@ -21,13 +21,13 @@
 
 # grep + less
 @grepless() {
-    grep --color=always "$@" | less -R
+    grep --color=always "$@" | less -R -X
 }
 
 
 # ripgrep + less
 @rgless() {
-    rg --color=always "$@" | less -R
+    rg --color=always "$@" | less -R -X
 }
 
 
