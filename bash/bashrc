@@ -26,6 +26,7 @@ alias rgless=@rgless
 
 # -nw for emacs means 'no-window'
 alias emacs='TERM=xterm-256color XLIB_SKIP_ARGB_VISUALS=1 emacs -nw'
+alias emax='XLIB_SKIP_ARGB_VISUALS=1 emacsclient -a=""'
 
 # until we fix `poetry shell`
 alias poetry_shell='. "$(dirname $(poetry run which python))/activate"'
