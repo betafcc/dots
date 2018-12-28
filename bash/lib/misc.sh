@@ -20,6 +20,12 @@
 
 
 # grep + less
-@gress() {
+@grepless() {
     grep --color=always "$@" | less -R
+}
+
+
+# ripgrep + less
+@rgless() {
+    rg --color=always "$@" | less -R
 }
