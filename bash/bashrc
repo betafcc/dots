@@ -5,6 +5,15 @@
 # so I use this varname instead of a simple 'DIR'
 __BASHRC_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 
+
+source "${__BASHRC_DIR}/lib/emacs.sh"
+alias emacs=@emacs
+alias xemacs=@xemacs
+alias emax=@emax
+alias xemax=@xemax
+alias emax_or_emacs=@emax_or_emacs
+alias xemax_or_xemacs=@xemax_or_xemacs
+
 source "${__BASHRC_DIR}/lib/os_utils.sh"
 alias cd=@cd
 alias mkcd=@mkcd
@@ -24,13 +33,8 @@ alias grepless=@grepless
 alias rgless=@rgless
 
 
-# -nw for emacs means 'no-window'
-alias emacs='TERM=xterm-256color XLIB_SKIP_ARGB_VISUALS=1 emacs -nw'
-alias emax='XLIB_SKIP_ARGB_VISUALS=1 emacsclient -a=""'
-
 # until we fix `poetry shell`
 alias poetry_shell='. "$(dirname $(poetry run which python))/activate"'
 
 
-# For sublime, -n is 'new window', -w is 'wait until closed'
-export EDITOR='subl -nw'
+export EDITOR="@emax_or_emacs"
