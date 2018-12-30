@@ -1,8 +1,18 @@
 I remap:
-- Caps Lock to emit Left Alt
-- Left Alt to emit Left Ctrl
-- Left Ctrl to emit Caps Lock
-
+```
+	// personal remap
+	// <LCTL> (left ctrl signal)     <- 64 (left alt button)
+	// <LALT> (left alt signal)      <- 133 (left windows button)
+	// <ESC>  (esc signal)           <- 66 (caps lock button)
+	// <LWIN> (left windows signal)  <- 37 (left ctrl button)
+	// <CAPS> (caps lock signal)     <- 9 (esc button)
+	<LCTL> = 64;
+	<LALT> = 133;
+	<ESC>  = 66;
+	<LWIN> = 37;
+	<CAPS> = 9;
+	//
+```
 
 The easy way is to use Xmodmap, but that [seems to be deprecated in favor of xkb](https://askubuntu.com/questions/325272/permanent-xmodmap-in-ubuntu-13-04/858272#858272)
 
