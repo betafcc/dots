@@ -13,3 +13,7 @@ But I was already 2 hours in this endeavor so I just modifed `/usr/share/X11/xkb
 The right way to do it is clearely better as aparently it enables to quick switch to the unaltered
 
 Also, an easy way to convert from .Xmodmap seems to be simply registering the normal using `xkbcomp -xkb $DISPLAY normal-keymap` and then `xmodmap .Xmodmap` followed by `xkbcomp -xkb $DISPLAY modified-keymap` and diffing the two as noted [here](https://unix.stackexchange.com/a/202885)
+
+More info:
+- [This nice answer in stack overflow](https://askubuntu.com/a/423245)
+- [A simple, humble but comprehensive guide to XKB for linux](https://medium.com/@damko/a-simple-humble-but-comprehensive-guide-to-xkb-for-linux-6f1ad5e13450)
