@@ -11,8 +11,7 @@ alias emacs=@emacs
 alias xemacs=@xemacs
 alias emax=@emax
 alias xemax=@xemax
-alias emax_or_emacs=@emax_or_emacs
-alias xemax_or_xemacs=@xemax_or_xemacs
+alias rgx=@rgx
 
 source "${__BASHRC_DIR}/lib/os_utils.sh"
 alias cd=@cd

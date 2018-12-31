@@ -40,3 +40,24 @@
         @xemax "$@"
     fi
 }
+
+
+# Runs ripgrep and shows result in emacs rg-mode
+@rgx() {
+    # It's safer to store the command string in a tempfile
+    # than to juggle quotes on the inline lisp code
+    local tempfile
+    tempfile=$(mktemp)
+    printf "rg --color always --no-heading $@" >> $tempfile
+    @emax_or_emacs --eval "(progn
+        (when (require 'rg)
+          (let* ((file-path \"${tempfile}\")
+                 (command (with-temp-buffer
+                            (insert-file-contents file-path)
+                            (buffer-string)))
+                 (result-buffer (compilation-start command 'rg-mode)))
+            (switch-to-buffer result-buffer)
+            (delete-other-windows)
+            (beginning-of-buffer)
+            nil)))"
+}
