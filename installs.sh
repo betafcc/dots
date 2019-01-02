@@ -28,24 +28,25 @@ sudo curl \
 git clone https://github.com/betafcc/eos-bootstrapping.git ~/.betafcc
 
 
-# install termite
-curl -s https://raw.githubusercontent.com/Corwind/termite-install/master/termite-install.sh | sh
-rm -rf termite vte-ng
+# # install termite
+# curl -s https://raw.githubusercontent.com/Corwind/termite-install/master/termite-install.sh | sh
+# rm -rf termite vte-ng
+# # configs termite
+# mkdir -p ~/.config/termite
+# cp ~/.betafcc/dotfiles/.config/termite/config ~/.config/termite/
 
 
-# configs termite
-mkdir -p ~/.config/termite
-cp ~/.betafcc/dotfiles/.config/termite/config ~/.config/termite/
+# install terminator
+sudo add-apt-repository ppa:gnome-terminator
+sudo apt-get update
+sudo apt-get install terminator
+# configs terminator
+mkdir -p ~/.config/terminator
+cp -r ~/.betafcc/dotfiles/.config/terminator ~/.config/terminator
 
 
 # better terminal fonts
 sudo apt-get install -y fonts-powerline
-
-
-# # install terminator
-# sudo add-apt-repository ppa:gnome-terminator
-# sudo apt-get update
-# sudo apt-get install terminator
 
 
 # install emacs
