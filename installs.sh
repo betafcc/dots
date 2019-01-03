@@ -36,13 +36,23 @@ git clone https://github.com/betafcc/eos-bootstrapping.git ~/.betafcc
 # cp ~/.betafcc/dotfiles/.config/termite/config ~/.config/termite/
 
 
-# install terminator
-sudo add-apt-repository ppa:gnome-terminator
-sudo apt-get update
-sudo apt-get install terminator
-# configs terminator
-mkdir -p ~/.config/terminator
-cp -r ~/.betafcc/dotfiles/.config/terminator ~/.config/terminator
+# # install terminator
+# sudo add-apt-repository ppa:gnome-terminator
+# sudo apt-get update
+# sudo apt-get install terminator
+# # configs terminator
+# mkdir -p ~/.config/terminator
+# cp -r ~/.betafcc/dotfiles/.config/terminator ~/.config/terminator
+
+
+# install kitty
+KITTY_DIR=$HOME/.local/kitty.app
+curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin dest=$KITTY_DIR launch=n
+ln -s $KITTY_DIR/bin/kitty $HOME/.local/bin/
+cp $KITTY_DIR/share/applications/kitty.desktop $HOME/.local/share/applications
+__icon_dir=$HOME/.local/share/icons/hicolor/256x256/apps
+mkdir -p $__icon_dir
+cp $KITTY_DIR/share/icons/hicolor/256x256/apps/kitty.png $__icon_dir
 
 
 # better terminal fonts
