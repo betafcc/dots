@@ -6,6 +6,8 @@
 __BASHRC_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 
 
+source "${__BASHRC_DIR}/modes.bash"
+
 source "${__BASHRC_DIR}/lib/emacs.sh"
 alias emacs=@emacs
 alias xemacs=@xemacs
