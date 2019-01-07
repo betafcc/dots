@@ -34,6 +34,9 @@ alias grepless=@grepless
 alias rgless=@rgless
 
 
++prompt powerline
+
+
 # until we fix `poetry shell`
 alias poetry_shell='. "$(dirname $(poetry run which python))/activate"'
 

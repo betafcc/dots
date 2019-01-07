@@ -44,3 +44,51 @@
 -debug() {
     set +Tx
 }
+
+
+# prompt and ps1 definitions
+{
+    __DEFAULT_PS1="${PS1}"
+
+
+    # eg: `+prompt powerline`
+    +prompt() {
+        local command="$(prompt::update_command "${1}")"
+
+        if ! command -v "${command}" > /dev/null; then
+            (>&2 echo "'${1}' prompt not set up")
+            return 127
+        fi
+
+        if ! prompt::is_active "${command}"; then
+            PROMPT_COMMAND="${command};$PROMPT_COMMAND"
+        fi
+    }
+
+
+    -prompt() {
+        local command="$(prompt::update_command "${1}")"
+        if prompt::is_active "${command}"; then
+            PROMPT_COMMAND="${PROMPT_COMMAND/${command};}"
+            +ps1::default
+        fi
+    }
+
+
+    prompt::update_command() {
+        echo "+ps1::${1}"
+    }
+
+    prompt::is_active() {
+        ! [[ $TERM != linux && ! $PROMPT_COMMAND =~ "${1}" ]]
+    }
+
+
+    +ps1::default() {
+        PS1="${__DEFAULT_PS1}"
+    }
+
+    +ps1::powerline() {
+        PS1=$(powerline-rs --shell bash $?)
+    }
+}
