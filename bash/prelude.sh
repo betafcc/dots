@@ -1,13 +1,20 @@
 __BASHRC_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 
 
-prelude::__dirname() {
-    echo "$( cd "$( dirname "${BASH_SOURCE[-1]}" )" >/dev/null && pwd )"
+prelude::is_interactive() {
+    [[ $- == *i* ]]
 }
 
 
-prelude::is_interactive() {
-    [[ $- == *i* ]]
+prelude::path::source() {
+    local _dir="$( cd "$( dirname "${BASH_SOURCE[-1]}" )" >/dev/null && pwd )"
+    local _full="${_dir}/"$(basename "${BASH_SOURCE[-1]}")""
+
+    if [ $# -eq 0 ]; then
+        echo "${_full}"
+    else
+        prelude::path::parse "${1}" "${_full}"
+    fi
 }
 
 
