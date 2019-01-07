@@ -5,6 +5,8 @@
 # so I use this varname instead of a simple 'DIR'
 __BASHRC_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 
+source "${__BASHRC_DIR}/prelude.sh"
+
 
 source "${__BASHRC_DIR}/modes.sh"
 
