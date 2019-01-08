@@ -71,10 +71,10 @@ Examples:
             "'"$@"'"
         )
 
-        ${name}::__file__() {
+        ${name}::__file__() (
             echo "${resolved_reference}"
-        }
-    "
+        )
+        "
 
         if [ "${1}" = "exposing" ]; then
             shift
@@ -82,7 +82,7 @@ Examples:
                 source "${resolved_reference}"
             else
                 for el in "$@"; do
-                    eval "${el}() { "${name}" "${el}" "'"$@"'"; }"
+                    eval "${el}() ( "${name}" "${el}" "'"$@"'"; )"
                 done
             fi
         fi

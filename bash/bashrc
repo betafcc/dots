@@ -6,7 +6,7 @@
 __BASHRC_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 
 
-source "${__BASHRC_DIR}/prelude.sh"
+source "$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )/prelude.sh"
 
 
 ::import './lib/emacs.sh' as ::emacs exposing \
@@ -17,12 +17,10 @@ source "${__BASHRC_DIR}/prelude.sh"
         rgx
 
 
-# source "${__BASHRC_DIR}/lib/emacs.sh"
-# alias emacs=@emacs
-# alias xemacs=@xemacs
-# alias emax=@emax
-# alias xemax=@xemax
-# alias rgx=@rgx
+::import './lib/slicing.sh' as ::slicing exposing \
+         take \
+         drop \
+         every
 
 
 source "${__BASHRC_DIR}/lib/os_utils.sh"
@@ -30,10 +28,7 @@ alias cd=@cd
 alias mkcd=@mkcd
 alias touchp=@touchp
 
-source "${__BASHRC_DIR}/lib/slicing.sh"
-alias take=@take
-alias drop=@drop
-alias every=@every
+
 
 source "${__BASHRC_DIR}/lib/dev_utils.sh"
 
