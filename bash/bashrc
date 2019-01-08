@@ -5,17 +5,25 @@
 # so I use this varname instead of a simple 'DIR'
 __BASHRC_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 
+
 source "${__BASHRC_DIR}/prelude.sh"
 
 
-source "${__BASHRC_DIR}/modes.sh"
+# +import './lib/emacs.sh' as betafcc::emacs exposing \
+#         emacs \
+#         xemacs \
+#         emax \
+#         xemax \
+#         rgx
+
 
 source "${__BASHRC_DIR}/lib/emacs.sh"
-alias emacs=@emacs
-alias xemacs=@xemacs
-alias emax=@emax
-alias xemax=@xemax
-alias rgx=@rgx
+# alias emacs=@emacs
+# alias xemacs=@xemacs
+# alias emax=@emax
+# alias xemax=@xemax
+# alias rgx=@rgx
+
 
 source "${__BASHRC_DIR}/lib/os_utils.sh"
 alias cd=@cd
@@ -36,7 +44,11 @@ alias grepless=@grepless
 alias rgless=@rgless
 
 
-+prompt powerline
+if prelude::process::is_interactive; then
+    +import "./modes.sh" exposing '..'
+
+    +prompt powerline
+fi
 
 
 # until we fix `poetry shell`
