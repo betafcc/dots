@@ -59,7 +59,7 @@ Examples:
         if prelude::process::is_shell; then
             resolved_reference="$(pwd)/${reference}"
         else
-            resolved_reference="$(prelude::path::source dir)/${reference}"
+            resolved_reference="$(dirname "${BASH_SOURCE[1]}")/${reference}"
         fi
     else
         return 1
@@ -110,22 +110,6 @@ alias +import="prelude::import"
         local _dir="$( cd "$( dirname "${BASH_SOURCE[-1]}" )" >/dev/null && pwd )"
         local _full="${_dir}/"$(basename "${BASH_SOURCE[-1]}")""
         echo "${_full}"
-    }
-
-
-    prelude::path::source() {
-        if prelude::process::is_shell; then
-            (>&2 echo "Can't get source file path from shell")
-            return 1
-        fi
-
-        local _full="$(prelude::path::last_source)"
-
-        if [ $# -eq 0 ]; then
-            echo "${_full}"
-        else
-            prelude::path::parse "${1}" "${_full}"
-        fi
     }
 
 
