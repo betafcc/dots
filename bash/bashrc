@@ -9,15 +9,15 @@ __BASHRC_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 source "${__BASHRC_DIR}/prelude.sh"
 
 
-# +import './lib/emacs.sh' as betafcc::emacs exposing \
-#         emacs \
-#         xemacs \
-#         emax \
-#         xemax \
-#         rgx
+::import './lib/emacs.sh' as ::emacs exposing \
+        emacs \
+        xemacs \
+        emax \
+        xemax \
+        rgx
 
 
-source "${__BASHRC_DIR}/lib/emacs.sh"
+# source "${__BASHRC_DIR}/lib/emacs.sh"
 # alias emacs=@emacs
 # alias xemacs=@xemacs
 # alias emax=@emax
@@ -44,8 +44,8 @@ alias grepless=@grepless
 alias rgless=@rgless
 
 
-if prelude::process::is_interactive; then
-    +import "./modes.sh" exposing '..'
+if ::process::is_interactive; then
+    ::import "./modes.sh" exposing '..'
 
     +prompt powerline
 fi
