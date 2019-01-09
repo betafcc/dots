@@ -1,45 +1,45 @@
 # open url in chrome app mode
-@web-app() {
+web_app() {
     google-chrome --app="${1}"
 }
 
 
 # searches on youtube
-@youtube() {
-    local query=$(echo "$@" | tr ' ' '+')
-    @web-app "https://www.youtube.com/results?search_query=${query}"
-}
+youtube() (
+    query=$(echo "$@" | tr ' ' '+')
+    web_app "https://www.youtube.com/results?search_query=${query}"
+)
 
 
 # searches on google
-@google() {
-    local query=$(echo "$@" | tr ' ' '+')
+google() (
+    query=$(echo "$@" | tr ' ' '+')
     google-chrome --new-window "https://www.google.com.br/search?q=${query}"
 
-}
+)
 
 
 # grep + less
-@grepless() {
+grepless() {
     grep --color=always "$@" | less -R -X
 }
 
 
 # ripgrep + less
-@rgless() {
+rgless() {
     rg --color=always "$@" | less -R -X
 }
 
 
-@resolve_alias() {
+resolve_alias() (
     local alias_
-    for alias_ in "$@"
-    do
+    for alias_ in "$@"; do
         echo "${BASH_ALIASES[$alias_]}"
     done
-}
+)
 
-@show_colors() {
+
+show_colors() (
     awk 'BEGIN{
         s="/\\/\\/\\/\\/\\"; s=s s s s s s s s;
         for (colnum = 0; colnum<77; colnum++) {
@@ -53,4 +53,4 @@
         }
         printf "\n";
     }'
-}
+)
