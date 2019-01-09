@@ -3,7 +3,8 @@
 # in a non-interactive environment, so I ported to functions
 
 
-__emacs_env() { TERM=xterm-256color XLIB_SKIP_ARGB_VISUALS=1 "$@"; }
+# __emacs_env() { TERM=xterm-256color XLIB_SKIP_ARGB_VISUALS=1 "$@"; }
+__emacs_env() { TERM=xterm-24bit XLIB_SKIP_ARGB_VISUALS=1 "$@"; }
 __emacs_bin() { __emacs_env emacs26 "$@"; }
 __emacsclient_bin() { __emacs_env emacsclient26 "$@"; }
 

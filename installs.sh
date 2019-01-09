@@ -63,6 +63,9 @@ sudo apt-get install -y fonts-powerline
 sudo add-apt-repository -y ppa:kelleyk/emacs
 sudo apt update
 sudo apt install -y emacs26
+# set up 24 bit color capability
+# see https://github.com/syl20bnr/spacemacs/wiki/Terminal
+tic -x -o $HOME/.terminfo $HOME/.betafcc/misc/xterm-24bit.terminfo
 
 
 # install sublime text 3
