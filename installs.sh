@@ -347,6 +347,18 @@ sudo apt install -y cmake
 cargo install exa
 
 
+# Awesome file manager https://github.com/ranger/ranger
+python -m pip install pillow  # for image-preview
+python -m pip install ranger-fm
+exec "$SHELL"
+# As it says the method of configuration may change
+# Remember to set up image preview manually
+# as of now:
+#    ranger --copy-config=which all
+#
+#    then  open ~/.config/ranger/rc.conf and change image_previews to true and method to kitty
+#    also, the comments there say to put this in .bashrc
+#    export RANGER_LOAD_DEFAULT_RC=FALSE
 
 # Set up japanese keyboard
 sudo apt install -y \
