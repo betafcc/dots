@@ -57,6 +57,8 @@ cp $KITTY_DIR/share/icons/hicolor/256x256/apps/kitty.png $__icon_dir
 
 # better terminal fonts
 sudo apt-get install -y fonts-powerline
+# better yet https://github.com/tonsky/FiraCode
+sudo apt install -y fonts-firacode
 
 
 # install emacs
