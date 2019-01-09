@@ -1,4 +1,4 @@
-#!/bin/bash
+n#!/bin/bash
 set -euo pipefail
 IFS=$'\n\t'
 
@@ -340,6 +340,12 @@ sudo cp ~/.betafcc/misc/dex.desktop /usr/share/applications/
 # echo -e '\nif [[$TERM != linux && ! $PROMPT_COMMAND =~ _update_ps1]]; then\n    PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"\nfi'
 cargo install powerline-rs
 exec "$SHELL"
+
+
+# Better than ls
+sudo apt install -y cmake
+cargo install exa
+
 
 
 # Set up japanese keyboard
