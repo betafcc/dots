@@ -1,42 +1,38 @@
 # shellcheck disable=SC1090
-# https://stackoverflow.com/questions/59895/getting-the-source-directory-of-a-bash-script-from-within
-# Note: this variable is avaiable in shell session that sourced it
-# don't know how to prevent it (`local` kw is function-only)
-# so I use this varname instead of a simple 'DIR'
-__BASHRC_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
+source "$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )/prelude.sh"
 
 
-source "${__BASHRC_DIR}/lib/emacs.sh"
-alias emacs=@emacs
-alias xemacs=@xemacs
-alias emax=@emax
-alias xemax=@xemax
-alias rgx=@rgx
-
-source "${__BASHRC_DIR}/lib/os_utils.sh"
-alias cd=@cd
-alias mkcd=@mkcd
-alias touchp=@touchp
-
-source "${__BASHRC_DIR}/lib/slicing.sh"
-alias take=@take
-alias drop=@drop
-alias every=@every
-
-source "${__BASHRC_DIR}/lib/dev_utils.sh"
-
-source "${__BASHRC_DIR}/lib/loggers.sh"
-
-source "${__BASHRC_DIR}/lib/misc.sh"
-alias grepless=@grepless
-alias rgless=@rgless
+::import './lib/dev_utils.sh' as ::dev_utils
+# TODO: actually factor out a decent emacs wrapper
+::import './lib/emacs.sh'     as ::emacs     exposing \
+         emacs \
+         xemacs \
+         emax \
+         xemax \
+         rgx
+::import './lib/loggers.sh'   as ::loggers
+::import './lib/misc.sh'      as ::misc      exposing \
+         grepless \
+         rgless
+::import './lib/os_utils.sh'  as ::os_utils  exposing ..
+::import './lib/slicing.sh'   as ::slicing   exposing \
+         take \
+         drop \
+         every
 
 
-# until we fix `poetry shell`
-alias poetry_shell='. "$(dirname $(poetry run which python))/activate"'
+if ::process::is_interactive; then
+    ::import "./modes.sh" as ::modes exposing ..
 
-# TODO: maybe check if running in kitty?
-alias icat="kitty +kitten icat"
+    +prompt powerline
 
 
-export EDITOR="@emax_or_emacs"
+    # until we fix `poetry shell`
+    alias poetry_shell='. "$(dirname $(poetry run which python))/activate"'
+
+    # TODO: maybe check if running in kitty?
+    alias icat="kitty +kitten icat"
+
+
+    export EDITOR="::emacs emax_or_emacs"
+fi

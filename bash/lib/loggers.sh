@@ -1,22 +1,20 @@
-@window-logger() {
-    local delay="${1:-2}" # default delay is 2 seconds
-
-    @monitor $delay 'xdotool getactivewindow getwindowname' |
+window_logger() (
+    delay="${1:-2}" # default delay is 2 seconds
+    monitor "${delay}" 'xdotool getactivewindow getwindowname' |
         stdbuf -oL uniq |
-        while read line
-        do
+        while read line; do
             echo "$(date +'%Y-%m-%d %H:%M:%S%z') > ${line}"
         done
-}
+)
 
 
-@screen-logger() {
-    local basedir="${1}"
-    local delay="${2-10}"
-    local outdir
+screen_logger() (
+    basedir="${1}"
+    delay="${2-10}"
+    outdir
     while true
     do
-        sleep ${delay}
+        sleep "${delay}"
         outdir="${basedir}/$(date -I)"
         mkdir -p "${outdir}"
         import \
@@ -27,4 +25,4 @@
             -silent \
             "${outdir}/$(date -Iseconds).jpg"
     done
-}
+)
