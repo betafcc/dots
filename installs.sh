@@ -335,9 +335,10 @@ sudo cp ~/.betafcc/misc/dex.desktop /usr/share/applications/
 
 
 # Powerline
-pipsi install powerline-shell
-echo -e '\nfunction _update_ps1() {\n    PS1=$(powerline-shell $?)\n}\n'
-echo -e '\nif [[$TERM != linux && ! $PROMPT_COMMAND =~ _update_ps1]]; then\n    PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"\nfi'
+# pipsi install powerline-shell
+# echo -e '\nfunction _update_ps1() {\n    PS1=$(powerline-shell $?)\n}\n'
+# echo -e '\nif [[$TERM != linux && ! $PROMPT_COMMAND =~ _update_ps1]]; then\n    PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"\nfi'
+cargo install powerline-rs
 exec "$SHELL"
 
 
