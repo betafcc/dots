@@ -349,7 +349,14 @@ exec "$SHELL"
 
 # Better than ls
 sudo apt install -y cmake
-cargo install exa
+# cargo install exa
+# PR with --icons support
+git clone https://github.com/ogham/exa.git && cd exa
+git fetch origin pull/368/head:pr-368
+git checkout pr-368
+cargo install
+cd .. && rm -rf exa
+
 
 
 # Awesome file manager https://github.com/ranger/ranger
