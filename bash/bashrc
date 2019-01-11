@@ -30,6 +30,11 @@ if ::process::is_interactive; then
     # until we fix `poetry shell`
     alias poetry_shell='. "$(dirname $(poetry run which python))/activate"'
 
+
+    # default dir lister
+    _exa() { exa --color=always --icons "$@" | less -XR; }
+    alias l='_exa'
+
     # TODO: maybe check if running in kitty?
     alias icat="kitty +kitten icat"
 
