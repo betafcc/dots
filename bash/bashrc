@@ -1,3 +1,4 @@
+# -*- mode: sh; -*-
 # shellcheck disable=SC1090
 source "$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )/prelude.sh"
 
@@ -26,14 +27,17 @@ if ::process::is_interactive; then
 
     +prompt powerline
 
+    shopt -s autocd
 
     # until we fix `poetry shell`
     alias poetry_shell='. "$(dirname $(poetry run which python))/activate"'
 
-
     # default dir lister
-    _exa() { exa --color=always --icons "$@" | less -XR; }
-    alias l='_exa'
+    _l() { exa --color=always --icons "$@" | less -RXF; }
+    alias l='_l'
+    alias la='_l -a'
+
+    alias r='ranger'
 
     # TODO: maybe check if running in kitty?
     alias icat="kitty +kitten icat"
