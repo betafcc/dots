@@ -59,7 +59,11 @@ cp $KITTY_DIR/share/icons/hicolor/256x256/apps/kitty.png $__icon_dir
 sudo apt-get install -y fonts-powerline
 # better yet https://github.com/tonsky/FiraCode
 sudo apt install -y fonts-firacode
-
+# even better: patched for nerd icons
+curl -L -O https://github.com/ryanoasis/nerd-fonts/releases/download/v2.0.0/FiraCode.zip
+unzip FiraCode.zip  -d $HOME/.local/share/fonts/
+rm FiraCode.zip
+fc-cache -f -v  # cache clean
 
 
 # install emacs
