@@ -1,4 +1,4 @@
-n#!/bin/bash
+#!/bin/bash
 set -euo pipefail
 IFS=$'\n\t'
 
@@ -59,6 +59,7 @@ cp $KITTY_DIR/share/icons/hicolor/256x256/apps/kitty.png $__icon_dir
 sudo apt-get install -y fonts-powerline
 # better yet https://github.com/tonsky/FiraCode
 sudo apt install -y fonts-firacode
+
 
 
 # install emacs
@@ -359,6 +360,14 @@ exec "$SHELL"
 #    then  open ~/.config/ranger/rc.conf and change image_previews to true and method to kitty
 #    also, the comments there say to put this in .bashrc
 #    export RANGER_LOAD_DEFAULT_RC=FALSE
+
+# add devincons to it
+git clone https://github.com/alexanderjeurissen/ranger_devicons
+cd ranger_devicons
+make install
+cd ..
+rm -rf ranger_devicons
+
 
 # Set up japanese keyboard
 sudo apt install -y \
