@@ -104,3 +104,7 @@ Returning with `echo` or `printf` relies on `IFS` for separation so it's not saf
 
 Use `set -- "$@" 'other arg'` and continuation-style as much as possible
 
+#### Misc:
+
+[How to check if a variable is set in Bash?](https://stackoverflow.com/a/13864829)
+[POSIX reference](http://pubs.opengroup.org/onlinepubs/9699919799/utilities/contents.html)
