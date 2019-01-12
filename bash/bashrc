@@ -68,6 +68,8 @@ if ::process::is_interactive; then
     }
 
     bind '"\C-x\C-f": " \C-e\C-u$(🙇)\e\C-e\er\C-m"'
+    bind '"\e[1;5D": " \C-a\C-k`echo cd ..`\e\C-e\er\C-m\C-y"'
+
 
     alias r='ranger'
 
