@@ -380,6 +380,12 @@ cd ..
 rm -rf ranger_devicons
 
 
+# Awesomeness fzf + fd
+cargo install fd-find
+git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+~/.fzf/install
+
+
 # Set up japanese keyboard
 sudo apt install -y \
     fcitx \
