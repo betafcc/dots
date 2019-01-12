@@ -109,3 +109,5 @@ Use `set -- "$@" 'other arg'` and continuation-style as much as possible
 [How to check if a variable is set in Bash?](https://stackoverflow.com/a/13864829)
 
 [POSIX reference](http://pubs.opengroup.org/onlinepubs/9699919799/utilities/contents.html)
+
+[What is the exact meaning of IFS=$'\n'?](https://stackoverflow.com/a/4128305)

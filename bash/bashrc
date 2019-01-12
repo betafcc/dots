@@ -37,9 +37,9 @@ if ::process::is_interactive; then
     alias l='_l'
     alias la='_l -a'
 
-    __files_operation__() {
+    filez() {
         local old_IFS arg
-        set -- "$(fd --hidden --no-ignore --exclude '.git' | fzf --reverse --multi --exit-0 --expect=ctrl-o,alt-e,ctrl-m,ctrl-x,ctrl-c)"
+        set -- "$(fd --hidden --no-ignore --exclude '.git' --exclude '.cache' | fzf --reverse --height=60% --multi --exit-0 --expect=ctrl-o,alt-e,ctrl-m,ctrl-x,ctrl-c)"
         # POSIX string splitting into arg array
         old_IFS="${IFS}" IFS=$'\n'; set -- $@; IFS="${old_IFS}"
 
@@ -62,7 +62,12 @@ if ::process::is_interactive; then
             # 'ctrl-m') shift; printf '%q ' "$@";;
         esac
     }
-    bind '"\C-x\C-f": " \C-e\C-u`__files_operation__`\e\C-e\er\C-m"'
+
+    🙇() {
+        filez "$@"
+    }
+
+    bind '"\C-x\C-f": " \C-e\C-u$(🙇)\e\C-e\er\C-m"'
 
     alias r='ranger'
 
