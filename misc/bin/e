@@ -1,0 +1,197 @@
+#!/usr/bin/env sh
+
+
+_debug_mode() {
+    [ "${_DEBUG_MODE}" = 'TRUE' ]
+}
+
+
+# _DEBUG_MODE='TRUE'
+if _debug_mode; then
+    get_shell() {
+        ps -o cmd $$ | tail -1 | cut -f1 -d' ' | rev | cut -f1 -d'/' | rev
+    }
+
+    set -x
+    if [ get_shell = 'bash' ]; then
+        set -e
+        set -E
+        set -u
+        set -o noclobber
+        set -o pipefail
+        set -Tx
+    fi
+fi
+
+# _FRAME_MODE : TERMINAL | GUI
+_FRAME_MODE='TERMINAL'
+
+# _RUN_MODE : CLIENT | INDEPENDENT
+if ! emacsclient -e 0 > /dev/null 2>&1; then
+    _RUN_MODE='INDEPENDENT'
+else
+    _RUN_MODE='CLIENT'
+fi
+
+# _OPEN_BUFFER : FILES | INIT | STDIN (Maybe MODE)
+_OPEN_BUFFER='FILES'
+_OPEN_BUFFER_MODE='NOTHING'
+
+
+main() {
+    _RUN_MODE="${1}";         shift
+    _FRAME_MODE="${1}";       shift
+    _OPEN_BUFFER="${1}";      shift
+    _OPEN_BUFFER_MODE="${1}"; shift
+
+
+    case "${_RUN_MODE}" in
+        'INDEPENDENT')
+            case "${_FRAME_MODE}" in
+                'TERMINAL') set -- "$(which emacs26)" -nw "$@";;
+                'GUI')      set -- "$(which emacs26)" "$@";;
+            esac
+            ;;
+
+        'CLIENT')
+            case "${_FRAME_MODE}" in
+                'TERMINAL') set -- "$(which emacsclient26)" -a='' -t "$@";;
+                'GUI')      set -- "$(which emacsclient26)" -a='' -c "$@";;
+            esac
+            ;;
+    esac
+
+    case "${_OPEN_BUFFER}" in
+        'FILES') true;;
+        # TODO: mirror emacs default searching for the config
+        # maybe handle it with an --eval instead of this
+        'INIT')  set -- "$@" -- "${HOME}/.emacs.d/init.el";;
+        'STDIN')
+            if _debug_mode; then
+                tempfile='fake-file'
+            else
+                tempfile=$(mktemp); (cat - > "$tempfile")
+            fi
+            set -- "$@" --eval "$(to_eval "${_OPEN_BUFFER_MODE}" "$tempfile")"
+            ;;
+    esac
+
+
+    if _debug_mode; then
+        for arg; do echo "${arg} "; done
+        exit 0
+    fi
+
+
+    set_env
+    # Must restore input to tty under certain conditions, see:
+    # https://stackoverflow.com/questions/1690274/how-do-i-launch-an-editor-from-a-shell-script
+    if should_restore_tty "${_OPEN_BUFFER}" "${_RUN_MODE}" "${_FRAME_MODE}"; then
+        _TTY='/dev/tty'  # or $(tty) ?
+        exec "$@" < "${_TTY}" > "${_TTY}"
+    else
+        exec "$@"
+    fi
+}
+
+
+set_env() {
+    # Bug on elementary
+    # https://github.com/elementary/os/issues/31
+    export XLIB_SKIP_ARGB_VISUALS=1
+
+
+    # Optional true color support
+    # https://www.gnu.org/software/emacs/draft/manual/html_mono/efaq.html#Colors-on-a-TTY
+    # https://github.com/syl20bnr/spacemacs/wiki/Terminal
+    case "${TERM}" in
+        'xterm-kitty') export TERM='xterm-24bit';;
+        # TODO: handle other terms
+    esac
+}
+
+
+# _PATH : string
+# _MODE : Maybe string
+to_eval() ( # _PATH -> Maybe _MODE -> string
+    _PATH="${1}"; shift
+    case "$(_type "${1}")" in
+        'NOTHING') _APPEND='';;
+        'JUST'*)
+            _PAYLOAD=$(_payload ${1})  # flat arg by not quoting
+            case "${_PAYLOAD}" in
+                *'-mode') _APPEND="(${_PAYLOAD})";;
+                *) _APPEND="(${_PAYLOAD}-mode)";;
+            esac
+            ;;
+        *)
+            return 127
+            ;;
+    esac; shift
+
+    echo '(progn
+     (find-file "'"${_PATH}"'")
+     (set-visited-file-name nil)
+     (rename-buffer "*stdin*" t)
+     '"${_APPEND}"'
+     )'
+)
+
+
+_payload() {
+    shift
+    echo "${1}"
+}
+
+
+should_restore_tty() (
+    _OPEN_BUFFER="${1}";       shift
+    _RUN_MODE="${1}";   shift
+    _FRAME_MODE="${1}"; shift
+
+    [ "${_OPEN_BUFFER}" != 'STDIN' ] &&
+        [ "${_RUN_MODE}" = 'INDEPENDENT' ] &&
+        [ "${_FRAME_MODE}" = 'TERMINAL' ]
+)
+
+
+# Extra arguments handling
+# based on https://unix.stackexchange.com/a/258514
+_CONTINUE=true
+for _ARG
+do
+    shift
+    if ! "${_CONTINUE}" || ! {
+                case "${_ARG}" in
+                    -rc|--run-client)      _RUN_MODE='CLIENT';;
+                    -ri|--run-independent) _RUN_MODE='INDEPENDENT';;
+                    -ra|--run-auto) true;; # then is the default already set
+
+                    -nw|-t|--tty) _FRAME_MODE='TERMINAL';;
+                    -c|--gui)     _FRAME_MODE='GUI';;
+
+                    -oi|--open-init) _OPEN_BUFFER='INIT';;
+                    -|--stdin) _OPEN_BUFFER='STDIN';
+                               case "${1}" in
+                                   -*) _OPEN_BUFFER_MODE='NOTHING' ;;
+                                   *) _OPEN_BUFFER_MODE="JUST ${1}"; shift;;
+                               esac;;
+                    # Do not process after '--', and don't throw it away also
+                    --) _OPEN_BUFFER='FILES'; _CONTINUE=false; false;;
+
+                    # Don't throw away unprocessed arg
+                    *) false;;
+                esac
+            }
+    then
+        set -- "$@" "${_ARG}"
+    fi
+done
+
+
+main \
+    "${_RUN_MODE}" \
+    "${_FRAME_MODE}" \
+    "${_OPEN_BUFFER}" \
+    "${_OPEN_BUFFER_MODE}" \
+    "$@"
