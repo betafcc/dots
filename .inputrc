@@ -1,0 +1,19 @@
+# References:
+# https://www.topbug.net/blog/2017/07/31/inputrc-for-humans/
+# http://www.linuxfromscratch.org/blfs/view/5.1/postlfs/inputrc.html
+
+# TODO:
+# add an if statement to check if its on emacs mode
+# $if ...
+
+"\C-p":history-search-backward
+"\C-n":history-search-forward
+
+set colored-stats On
+set completion-ignore-case On
+set completion-prefix-display-length 5
+set mark-symlinked-directories On
+set show-all-if-ambiguous On
+set show-all-if-unmodified On
+set visible-stats On
+set bell-style none
