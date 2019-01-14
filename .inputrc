@@ -6,8 +6,23 @@
 # add an if statement to check if its on emacs mode
 # $if ...
 
+"\er":redraw-current-line
+"\e^":history-expand-line
 "\C-p":history-search-backward
 "\C-n":history-search-forward
+"\C-x\C-p":print-last-kbd-macro
+# # alt-left
+"\e[1;3D":" \C-a\C-kcd ..\C-m\C-y\C-b\C-d"
+# # alt-right
+"\e[1;3C":"\C-e \C-a\C-k$( M-down )\e\C-e\er\C-m\C-y\C-b\C-d"
+# alt-up
+# "\e[1;3A":
+# alt-down
+# "\e[1;3B":
+# ctrl-left
+# "\e[1;5D":
+# ctrl-right
+# "\e[1;5C":
 
 set colored-stats On
 set completion-ignore-case On
@@ -16,4 +31,4 @@ set mark-symlinked-directories On
 set show-all-if-ambiguous On
 set show-all-if-unmodified On
 set visible-stats On
-set bell-style none
+# set bell-style none

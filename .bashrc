@@ -1,5 +1,6 @@
 if command -v pyenv 1>/dev/null 2>&1; then eval "$(pyenv init -)"; fi
 
+
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 [ -s "$HOME/.jabba/jabba.sh" ] && . "$HOME/.jabba/jabba.sh"
@@ -50,5 +51,5 @@ if [ $(command -v pipenv) ]; then eval "$(pipenv --completion)"; fi
 [ -s "$HOME/localrc.bash" ] && . "$HOME/localrc.bash"
 
 
-source "${HOME}/.betafcc/bash/modes.sh"
+source "$HOME/.betafcc/bash/modes.sh"
 +prompt powerline
