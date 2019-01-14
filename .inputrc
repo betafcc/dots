@@ -14,7 +14,7 @@
 # # alt-left
 "\e[1;3D":" \C-a\C-kcd ..\C-m\C-y\C-b\C-d"
 # # alt-right
-"\e[1;3C":"\C-e \C-a\C-k$( M-down )\e\C-e\er\C-m\C-y\C-b\C-d"
+"\e[1;3C":"\C-e \C-a\C-k$( 📂 )\e\C-e\er\C-m\C-y\C-b\C-d"
 # alt-up
 # "\e[1;3A":
 # alt-down

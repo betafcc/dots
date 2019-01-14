@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+# Mostly POSIX, just the printf that needs bash, because of the '%q' directive
+# hard link to /usr/bin/printf works, but is not portable nor posix
+
 
 if [ "$#" -ge 1 ]; then
     set -- --query "$@"
