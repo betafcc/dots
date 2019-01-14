@@ -2,11 +2,26 @@
 # Mostly POSIX, just the printf that needs bash, because of the '%q' directive
 # hard link to /usr/bin/printf works, but is not portable nor posix
 
+# if under home, got to home and pretify path
+# if above, go to root
 
-if [ "$#" -ge 1 ]; then
-    set -- --query "$@"
-fi
+# echo "${PWD//${HOME}/\~}"
 
+
+_FROM="./"; _PREFIX="./"; _QUERY="./"
+for _ARG
+do
+    case "${_ARG}" in
+        -v)
+            case "$PWD" in
+                ${HOME}*) _FROM="${HOME}"; _PREFIX='~/'; _QUERY="${PWD//${HOME}/\~}";;
+                *) _FROM="${PWD}"; _PREFIX='/'; _QUERY="${PWD}";;
+            esac
+    esac
+done
+
+
+cd "${_FROM}"
 
 fd \
     --type d \
@@ -14,7 +29,8 @@ fd \
     --no-ignore \
     --exclude '.git' \
     --exclude 'node_modules' \
-    | sed 's_$_/_' \
+    | sed 's:$:/:' \
+    | sed "s:^:${_PREFIX}:" \
     | fzf \
           --color 'dark' \
           --height 80% \
@@ -25,7 +41,7 @@ fd \
           --filepath-word \
           --bind 'tab:replace-query+top,shift-tab:backward-kill-word+top' \
           --expect='alt-m,alt-e,ctrl-g,esc,ctrl-m,enter' \
-          "$@" \
+          --query "${_QUERY}" \
     | (
     set --
     while IFS= read -r REPLY; do
@@ -33,9 +49,9 @@ fd \
     done
 
     case "${1}" in
-        'alt-m') printf 'setsid xdg-open %q </dev/null >/dev/null 2>&1' "${2}";;
-        'alt-e') printf 'pushd %q >/dev/null; "${EDITOR}" .' "${2}";;
+        'alt-m') printf 'setsid xdg-open %q </dev/null >/dev/null 2>&1' "${2/\~/${HOME}}";;
+        'alt-e') printf 'pushd %q >/dev/null; "${EDITOR}" .' "${2/\~/${HOME}}";;
         'ctrl-g'|'esc') printf '';;
-        'ctrl-m'|'enter') printf 'pushd %q >/dev/null' "${2}";;
+        'ctrl-m'|'enter') printf 'pushd %q >/dev/null' "${2/\~/${HOME}}";;
     esac
 )
