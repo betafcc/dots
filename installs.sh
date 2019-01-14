@@ -358,6 +358,11 @@ cargo install
 cd .. && rm -rf exa
 
 
+# Fucking Rust and their awesome community
+# https://github.com/sharkdp/bat
+# better than cat
+cargo install bat
+
 
 # Awesome file manager https://github.com/ranger/ranger
 python -m pip install pillow  # for image-preview
