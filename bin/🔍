@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+
+#  Inputs:
+#   env:
+#     command 'exa'
+#     command 'bat'
+#     command __generic_finder
+
+
+_preview() {
+    if [ -d "$@" ]; then
+        exa --color=always --icons --group-directories-first "$@"
+    else
+        bat \
+            --style 'numbers,changes' \
+            --color always \
+            --italic-text always \
+            "$@"
+    fi
+}
+
+
+_format() {
+    while read -r; do
+        if [ -d "${REPLY}" ]; then
+            printf '%s/\n' "${_PREFIX}${REPLY}"
+        else
+            printf '%s\n' "${_PREFIX}${REPLY}"
+        fi
+    done
+}
+
+
+# export _fd_extra_args=''
+# export _fzf_extra_args=''
+export -f _preview
+export -f _format
+
+
+__generic_finder "$@"

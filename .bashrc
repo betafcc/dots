@@ -32,6 +32,15 @@ shopt -s autocd
 shopt -s checkwinsize
 shopt -s globstar
 
+bind -x '"\201":"cd .."'
+bind '"\e[1;3D":" \C-u \C-a\C-k\201\C-m\C-y\C-a\C-y\ey\C-d\C-h\C-e\er \C-h"'
+bind -x '"\202":"eval $( 📂 )"'
+bind '"\e[1;3C":" \C-u \C-a\C-k\202\C-m\C-y\C-a\C-y\ey\C-d\C-h\C-e\er \C-h"'
+bind -x '"\203":"eval $( 📂 -v )"'
+bind '"\C-x\C-d":" \C-u \C-a\C-k\203\C-m\C-y\C-a\C-y\ey\C-d\C-h\C-e\er \C-h"'
+bind -x '"\204":"eval $( 🔍 )"'
+bind '"\C-x\C-f":" \C-u \C-a\C-k\204\C-m\C-y\C-a\C-y\ey\C-d\C-h\C-e\er \C-h"'
+
 
 # Completions
 if ! shopt -oq posix; then
@@ -53,10 +62,3 @@ if [ $(command -v pipenv) ]; then eval "$(pipenv --completion)"; fi
 
 source "$HOME/.betafcc/bash/modes.sh"
 +prompt powerline
-
-bind -x '"\201":"cd .."'
-bind '"\e[1;3D":" \C-u \C-a\C-k\201\C-m\C-y\C-a\C-y\ey\C-d\C-h\C-e\er \C-h"'
-bind -x '"\202":"eval $( 📂 )"'
-bind '"\e[1;3C":" \C-u \C-a\C-k\202\C-m\C-y\C-a\C-y\ey\C-d\C-h\C-e\er \C-h"'
-bind -x '"\203":"eval $( 📂 -v )"'
-bind '"\C-x\C-d":" \C-u \C-a\C-k\203\C-m\C-y\C-a\C-y\ey\C-d\C-h\C-e\er \C-h"'
