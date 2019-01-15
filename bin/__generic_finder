@@ -1,67 +1,38 @@
 #!/usr/bin/env bash
-
-# Inputs:
-#   argv: '-v|--verbose'
-#   env:
-#     command 'fd'
-#     command 'fzf'
+# TODO:
+#    Add --header to fzf
+#    Customize --prompt in fzf
+#    Customize --border settings in fzf
 #
-#     command '_format'
-#     command '_preview'
-#
-#     optional string '_fd_extra_args'
-#     optional string '_fzf_extra_args'
-#
-#     super global 'PWD'
-#     super global 'HOME'
-
-_FROM='./'
-_PREFIX='./'
-_QUERY='./'
-# If -v (verbose)
-#     if under home, go to home and tildify path
-#     else, go to root
-for _ARG in "$@"; do
-    case "${_ARG}" in
-        -v|--verbose)
-            case "$PWD" in
-                ${HOME}*)
-                    _FROM="${HOME}"
-                    _PREFIX='~/'
-                    _QUERY="${PWD//${HOME}/\~}"
-                    ;;
-                *)
-                    _FROM="${PWD}"
-                    _PREFIX='/'
-                    _QUERY="${PWD}"
-                    ;;
-            esac
-    esac
-done
 
 
-# _fd :: command
-# _format :: command taken from env
-# _fzf :: command
-# _generate_command :: command
-# _fd_extra_args :: string taken from env
-# _fzf_extra_args :: string taken from env
-# no positional args, takes all from env
-main() {
-    cd "${_FROM}" \
-        && _fd  ${_fd_extra_args[@]} \
-            | _format  \
-            | _fzf ${_fzf_extra_args[@]} \
+main() (
+    if [ -z ${_SEARCH_ROOT_PATH+x} ]; then
+        _SEARCH_ROOT_PATH="${PWD}"
+    fi
+
+    _inner_format() {
+        _format "${HOME}" "${_SEARCH_ROOT_PATH}"
+    }
+
+    if [ -z ${_INITIAL_QUERY+x} ]; then
+        _INITIAL_QUERY=$(echo "${PWD}" | _inner_format)
+    fi
+
+    cd "${_SEARCH_ROOT_PATH}" \
+        && _fd ${_fd_extra_args[@]} \
+            | _inner_format \
+            | _fzf --query "${_INITIAL_QUERY}" ${_fzf_extra_args[@]} \
             | \
             (
                 # the 'safe' way I know to spread stdin lines to positional arguments
                 set --
-                while IFS= read -r REPLY; do
-                    set -- "$@" "${REPLY}"
+                while IFS= read -r line; do
+                    set -- "$@" "${line}"
                 done
                 _generate_command "$@"
             )
-}
+)
 
 
 _fd() {
@@ -72,6 +43,7 @@ _fd() {
         --exclude 'node_modules' \
         "$@"
 }
+
 
 
 _fzf() {
@@ -85,8 +57,45 @@ _fzf() {
         --filepath-word \
         --bind 'tab:replace-query+top,shift-tab:backward-kill-word+top' \
         --expect='alt-m,alt-e,ctrl-g,esc,ctrl-m,enter' \
-        --query "${_QUERY}" \
         "$@"
+}
+
+
+_preview() {
+    if [ -d "$@" ]; then
+        exa --color=always --icons --group-directories-first "$@"
+    else
+        bat \
+            --style 'numbers,changes' \
+            --color always \
+            --italic-text always \
+            "$@"
+    fi
+}
+
+
+# Will format the relative paths given by _fd
+# handle if prefix with root '/', home '~' or relative './'
+# will also add trailing '/' when its directory
+_format() {
+    local home_path search_root_path prefix line
+    home_path="${1}"
+    search_root_path="${2}"
+    prefix
+
+    case "${search_root_path}" in
+        "${home_path}") prefix='~';;
+        '/') prefix='';;
+        *) prefix='.';;
+    esac
+
+    while read -r line; do
+        if [ -d "${line}" ]; then
+            printf '%s/\n' "${prefix}/${line}"
+        else
+            printf '%s\n' "${prefix}/${line}"
+        fi
+    done
 }
 
 
