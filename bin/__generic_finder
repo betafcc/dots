@@ -7,21 +7,26 @@
 
 
 main() (
-    if [ -z ${_SEARCH_ROOT_PATH+x} ]; then
+    # +debug
+
+    if [ -z "${_SEARCH_ROOT_PATH}" ]; then
         _SEARCH_ROOT_PATH="${PWD}"
     fi
 
-    _inner_format() {
-        _format "${HOME}" "${_SEARCH_ROOT_PATH}"
-    }
+    _RELATIVE_PWD="${PWD/#${_SEARCH_ROOT_PATH}/}"  # Remove common prefix
+    _RELATIVE_PWD="${_RELATIVE_PWD/#\//}"  # Remove beginning slash
 
-    if [ -z ${_INITIAL_QUERY+x} ]; then
-        _INITIAL_QUERY=$(echo "${PWD}" | _inner_format)
-    fi
+    _INITIAL_QUERY=$(echo "${_RELATIVE_PWD}" | _format "${_SEARCH_ROOT_PATH}")
+
+    # exit 0
 
     cd "${_SEARCH_ROOT_PATH}" \
-        && _fd ${_fd_extra_args[@]} \
-            | _inner_format \
+        && \
+        {
+            echo "${_RELATIVE_PWD}"  # include current in list of choices
+            _fd ${_fd_extra_args[@]}
+        } \
+            | _format "${_SEARCH_ROOT_PATH}" \
             | _fzf --query "${_INITIAL_QUERY}" ${_fzf_extra_args[@]} \
             | \
             (
@@ -48,7 +53,7 @@ _fd() {
 
 _fzf() {
     fzf \
-        --color 'dark' \
+        --color 'light' \
         --height 80% \
         --layout reverse \
         --no-multi \
@@ -62,41 +67,55 @@ _fzf() {
 
 
 _preview() {
-    if [ -d "$@" ]; then
-        exa --color=always --icons --group-directories-first "$@"
-    else
+    local path="${1/#\~/$HOME}"
+
+    if [ -f "${path}" ]; then
         bat \
             --style 'numbers,changes' \
             --color always \
             --italic-text always \
-            "$@"
+            "${path}"
+    else
+        exa --color=always --icons --group-directories-first -all "${path}"
     fi
 }
+export -f _preview
 
 
 # Will format the relative paths given by _fd
 # handle if prefix with root '/', home '~' or relative './'
 # will also add trailing '/' when its directory
 _format() {
-    local home_path search_root_path prefix line
-    home_path="${1}"
-    search_root_path="${2}"
-    prefix
+    local search_root_path prefix line
+    search_root_path="${1}"
 
     case "${search_root_path}" in
-        "${home_path}") prefix='~';;
-        '/') prefix='';;
-        *) prefix='.';;
+        "${HOME}") prefix='~/';;
+        '/') prefix='/';;
+        *) prefix='./';;
     esac
 
     while read -r line; do
-        if [ -d "${line}" ]; then
-            printf '%s/\n' "${prefix}/${line}"
+        if [ -z "${line}" ]; then
+            printf '%s\n' "${prefix}"
+        elif [ -d "${line}" ]; then
+            printf '%s/\n' "${prefix}${line}"
         else
-            printf '%s\n' "${prefix}/${line}"
+            printf '%s\n' "${prefix}${line}"
         fi
     done
 }
+export -f _format
+
+
+# Needed to expand '~' and relative paths for commands used insine fzf (like the preview)
+_unformat() {
+    "${1/#\~/$HOME}"
+    echo "${1}"
+
+}
+export -f _unformat
+
 
 
 # ( exited_command, ...selected_files ) -> command_to_execute

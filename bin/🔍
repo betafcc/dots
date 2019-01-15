@@ -21,11 +21,14 @@ _preview() {
 
 
 _format() {
-    while read -r; do
+    local prefix line
+    prefix="${1}"; shift
+
+    while read -r line; do
         if [ -d "${REPLY}" ]; then
-            printf '%s/\n' "${_PREFIX}${REPLY}"
+            printf '%s/\n' "${prefix}${line}"
         else
-            printf '%s\n' "${_PREFIX}${REPLY}"
+            printf '%s\n' "${prefix}${line}"
         fi
     done
 }

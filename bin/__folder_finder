@@ -10,4 +10,7 @@ for _ARG in "$@"; do
 done
 export _fd_extra_args='--type d'
 
-exec __generic_finder
+
+echo "${_SEARCH_ROOT_PATH}"
+
+# exec __generic_finder
