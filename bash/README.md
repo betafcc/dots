@@ -111,3 +111,5 @@ Use `set -- "$@" 'other arg'` and continuation-style as much as possible
 [POSIX reference](http://pubs.opengroup.org/onlinepubs/9699919799/utilities/contents.html)
 
 [What is the exact meaning of IFS=$'\n'?](https://stackoverflow.com/a/4128305)
+
+[Amazing explanation on ANSI color codes](https://stackoverflow.com/a/33206814)
