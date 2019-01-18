@@ -6,8 +6,8 @@ edit() (
 )
 
 
-# keep redoing $action after waiting $delay
-repeat() (
+# keep redoing $action after each $delay
+set_interval() (
     delay="$1"
     action="${@:2}"
     while true; do
@@ -18,14 +18,14 @@ repeat() (
 
 
 # executes $command after every change in $files
-watch() {
-    command="${1}"
-    files="${@:2}"
+watch() (
+    command="${1}"; shift
     while true; do
-        eval "${command}"
-        inotifywait -qqe close_write "${files}"
+        clear
+        "${command}"
+        inotifywait -qqe modify "${@}"
     done
-}
+)
 
 
 # creates a IElixir project
@@ -74,6 +74,16 @@ docker_here() (
     docker run --rm "$@" "${img}" "${CMD}"
     docker rmi "${img}"
 )
+
+
+which_shell() {
+    ps -o cmd $$ \
+        | tail -1 \
+        | cut -f1 -d' ' \
+        | rev \
+        | cut -f1 -d'/' \
+        | rev
+}
 
 
 # works in bash and sh
