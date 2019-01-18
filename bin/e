@@ -72,15 +72,12 @@ main() {
             else
                 tempfile=$(mktemp); (cat - > "$tempfile")
             fi
-            set -- "$@" --eval "$(to_eval "${_OPEN_BUFFER_MODE}" "$tempfile")"
+            set -- "$@" --eval "$(to_eval "$tempfile" "${_OPEN_BUFFER_MODE}")"
             ;;
     esac
 
 
-    if _debug_mode; then
-        for arg; do echo "${arg} "; done
-        exit 0
-    fi
+    # printf 'arg: %s\n' "$@"; exit 0
 
 
     set_env
@@ -114,6 +111,7 @@ set_env() {
 # _PATH : string
 # _MODE : Maybe string
 to_eval() ( # _PATH -> Maybe _MODE -> string
+    # printf 'arg1: %s\n' "$@"
     _PATH="${1}"; shift
     case "$(_type "${1}")" in
         'NOTHING') _APPEND='';;
@@ -129,7 +127,7 @@ to_eval() ( # _PATH -> Maybe _MODE -> string
             ;;
     esac; shift
 
-    echo '(progn
+    printf '%s' '(progn
      (find-file "'"${_PATH}"'")
      (set-visited-file-name nil)
      (rename-buffer "*stdin*" t)
@@ -138,18 +136,23 @@ to_eval() ( # _PATH -> Maybe _MODE -> string
 )
 
 
-_payload() {
-    shift
+_type() {
     echo "${1}"
 }
 
 
-should_restore_tty() (
-    _OPEN_BUFFER="${1}";       shift
-    _RUN_MODE="${1}";   shift
-    _FRAME_MODE="${1}"; shift
+_payload() {
+    shift
+    echo "$@"
+}
 
-    [ "${_OPEN_BUFFER}" != 'STDIN' ] &&
+
+should_restore_tty() (
+    _OPEN_BUFFER="${1}"; shift
+    _RUN_MODE="${1}";    shift
+    _FRAME_MODE="${1}";  shift
+
+    [ "${_OPEN_BUFFER}" = 'STDIN' ] &&
         [ "${_RUN_MODE}" = 'INDEPENDENT' ] &&
         [ "${_FRAME_MODE}" = 'TERMINAL' ]
 )
@@ -173,9 +176,12 @@ do
                     -oi|--open-init) _OPEN_BUFFER='INIT';;
                     -|--stdin) _OPEN_BUFFER='STDIN';
                                case "${1}" in
-                                   -*) _OPEN_BUFFER_MODE='NOTHING' ;;
-                                   *) _OPEN_BUFFER_MODE="JUST ${1}"; shift;;
-                               esac;;
+                                   -*|'') _OPEN_BUFFER_MODE='NOTHING';;
+                                   *) _OPEN_BUFFER_MODE="JUST ${1}"
+                                      [ "${#}" -ge 1 ] && shift;;
+                               esac
+                               true
+                               ;;
                     # Do not process after '--', and don't throw it away also
                     --) _OPEN_BUFFER='FILES'; _CONTINUE=false; false;;
 
