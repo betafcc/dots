@@ -16,6 +16,7 @@ alias la='_l -a'
 alias r='ranger'
 alias icat="kitty +kitten icat" # TODO: maybe check if running in kitty?
 alias poetry_shell='. "$(dirname $(poetry run which python))/activate"'
+mkcd() { mkdir "${1}"; cd "${1}"; }
 
 
 # End here if not in interactive mode
@@ -59,6 +60,7 @@ if [ $(command -v pipenv) ]; then eval "$(pipenv --completion)"; fi
 
 [ -s "$HOME/localrc.bash" ] && . "$HOME/localrc.bash"
 
-
 source "$HOME/.betafcc/bash/modes.sh"
-+prompt powerline
+export -f '+debug'
+export -f '+strict'
+# +prompt powerline
