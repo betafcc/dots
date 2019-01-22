@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+set -e
+set -E
+set -u
+set -o noclobber
+set -o pipefail
+
+
+separator='='
+declare -a words
+declare -a codes
+while [ $# -gt 0 ]; do
+  case "${1}" in
+    -i|--info) shift; set -- "$@" '--bold';;
+    -w|--warn|--warning) shift; set -- "$@" '--bold' '--fg' 'yellow';;
+    -e|--error) shift; set -- "$@" '--bold' '--fg' 'red';;
+
+    -s|--separator) shift; separator="${1}"; shift;;
+    -b|--bold) shift; codes+=('1');;
+    -f|--fg)
+      shift
+      case "${1}" in
+        red) codes+=('31');;
+        green) codes+=('32');;
+        yellow) codes+=('33');;
+        blue) codes+=('34');;
+      esac
+      shift
+      ;;
+    *) words+=("${1}"); shift;;
+  esac
+done
+
+title="$(printf '%s\n' "${words[@]}" | paste -sd ' ')"
+n_separator=$(( ( ($(tput cols) - ${#title}) / 2 ) - 1 ))
+
+printf '\e[%bm' "$(printf '%b\n' "${codes[@]}" | paste -sd ';')"
+
+printf '%*s' "${n_separator}" '' | tr ' ' "${separator}"
+printf ' %s ' "${title}"
+printf '%*s\n' "$((${n_separator} + (${#title} % 2) ))" '' | tr ' ' "${separator}"
+
+printf '\e[0m'
