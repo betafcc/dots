@@ -1,0 +1,3 @@
+[submodule "bin/clc"]
+	path = bin/clc
+	url = git@github.com:betafcc/clc
