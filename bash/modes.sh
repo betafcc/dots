@@ -89,6 +89,6 @@
     }
 
     +ps1::powerline() {
-        PS1=$(powerline-rs --shell bash $?)
+        PS1=$(powerline-shell $1)
     }
 }

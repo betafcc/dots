@@ -8,9 +8,10 @@
 
 "\er":redraw-current-line
 "\e^":history-expand-line
-"\C-p":history-search-backward
-"\C-n":history-search-forward
-"\C-x\C-p":print-last-kbd-macro
+# Actually kind of annoying, disable for now
+# "\C-p;":history-search-backward
+# "\C-n;":history-search-forward
+# "\C-x\C-p":print-last-kbd-macro
 
 # # alt-left
 # "\e[1;3D":
