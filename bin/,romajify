@@ -1,0 +1,12 @@
+#!/usr/bin/env perl
+# perl -Mopen=locale -Mutf8 -pe 'y/0-9a-zA-Z/０-９ａ-ｚＡ-Ｚ/'
+# tr limitations:
+# https://unix.stackexchange.com/questions/228558
+# https://unix.stackexchange.com/questions/389615
+use open ':locale';
+use utf8;
+
+while (<>) {
+    y/0-9a-zA-Z/０-９ａ-ｚＡ-Ｚ/;
+    print;
+}
