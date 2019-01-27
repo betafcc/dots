@@ -1,5 +1,5 @@
 # shellcheck disable=SC1090
-source "$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )/prelude.sh"
+source "$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )/prelude.bash"
 
 
 filez() ( # () -> string
@@ -26,11 +26,6 @@ filez() ( # () -> string
         # 'ctrl-m') shift; printf '%q ' "$@";;
     esac
 )
-
-🙇() {
-    filez "$@"
-}
-
 
 _dirs() {  # TODO: auto select on only one
     local old_IFS arg

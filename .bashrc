@@ -62,7 +62,7 @@ if [ $(command -v pipenv) ]; then eval "$(pipenv --completion)"; fi
 
 [ -s "$HOME/localrc.bash" ] && . "$HOME/localrc.bash"
 
-source "$HOME/.betafcc/bash/modes.sh"
+source "$HOME/.betafcc/bash/modes.bash"
 export -f '+debug'
 export -f '+strict'
 # +prompt powerline
