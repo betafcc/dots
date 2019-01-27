@@ -1,7 +1,7 @@
-export PYENV_ROOT="$HOME/.pyenv"
-PATH="$PYENV_ROOT/bin:$HOME/.poetry/bin:$PATH"
-PATH="$HOME/.cargo/bin:$PATH"
-PATH="$HOME/bin:$HOME/.local/bin:$PATH"
+export PYENV_ROOT="${HOME}/.pyenv"
+PATH="${PYENV_ROOT}/bin:${HOME}/.poetry/bin:${PATH}"
+PATH="${HOME}/.cargo/bin:${PATH}"
+PATH="${HOME}/bin:${HOME}/.local/bin:${PATH}"
 export PATH
 
 export EDITOR="e"
@@ -19,6 +19,7 @@ export LESS_TERMCAP_ue=$'\E[0m'        # reset underline
 
 export BAT_THEME=OneHalfLight
 
-
-[ -s "/home/betafcc/.jabba/jabba.sh" ] && . "/home/betafcc/.jabba/jabba.sh"
-[ -n "$BASH_VERSION" ] && [ -f "$HOME/.bashrc" ] && . "$HOME/.bashrc"
+export HISTSIZE=
+export HISTFILESIZE=
+export HISTTIMEFORMAT="[%F %T] "
+export HISTFILE="${HOME}/.bash_eternal_history"

@@ -32,6 +32,8 @@ esac
 shopt -s autocd
 shopt -s checkwinsize
 shopt -s globstar
+shopt -s histappend
+
 
 bind -x '"\201":"cd .."'
 bind '"\e[1;3D":" \C-u \C-a\C-k\201\C-m\C-y\C-a\C-y\ey\C-d\C-h\C-e\er \C-h"'
