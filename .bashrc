@@ -16,7 +16,7 @@ alias la='_l -a'
 alias r='ranger'
 alias icat="kitty +kitten icat" # TODO: maybe check if running in kitty?
 alias poetry_shell='. "$(dirname $(poetry run which python))/activate"'
-mkcd() { mkdir "${1}"; cd "${1}"; }
+mkcd() { mkdir -p "${1}"; cd "${1}"; }
 
 
 # End here if not in interactive mode
