@@ -1,5 +1,11 @@
 ## Notes to self
 
+### References for .bashrc
+
+- [bash-sensible](https://github.com/mrzool/bash-sensible/blob/master/sensible.bash)
+
+- [paul irish dotfiles](https://github.com/paulirish/dotfiles)
+
 
 ### On evaluated rc-files
 
