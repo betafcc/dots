@@ -23,3 +23,7 @@ export HISTSIZE=
 export HISTFILESIZE=
 export HISTTIMEFORMAT="[%F %T] "
 export HISTFILE="${HOME}/.bash_eternal_history"
+
+# let npm installed apps are available to the system
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
