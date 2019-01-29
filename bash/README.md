@@ -119,3 +119,13 @@ Use `set -- "$@" 'other arg'` and continuation-style as much as possible
 [What is the exact meaning of IFS=$'\n'?](https://stackoverflow.com/a/4128305)
 
 [Amazing explanation on ANSI color codes](https://stackoverflow.com/a/33206814)
+
+[bash bible (nice section about escape codes)](https://github.com/dylanaraps/pure-bash-bible)
+
+[bash guide (nice idiomatic hints)](https://github.com/Idnan/bash-guide)
+
+[good escape codes reference for building clis interfaces](http://www.lihaoyi.com/post/BuildyourownCommandLinewithANSIescapecodes.html)
+
+[amazing wikipedia article about ansi codes](https://en.wikipedia.org/wiki/ANSI_escape_code#CSI_codes)
+
+[nice explanation about cleaning the screen with ansi codes](https://stackoverflow.com/questions/37774983/clearing-the-screen-by-printing-a-character)
