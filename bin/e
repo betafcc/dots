@@ -48,8 +48,8 @@ main() {
     case "${_RUN_MODE}" in
         'INDEPENDENT')
             case "${_FRAME_MODE}" in
-                'TERMINAL') set -- "$(which emacs26)" -nw "$@";;
-                'GUI')      set -- "$(which emacs26)" "$@";;
+                'TERMINAL') set -- "$(which emacs26)" --no-window-system "$@";;
+                'GUI')      set -- "$(which emacs26)" --no-x-resources "$@";;
             esac
             ;;
 
