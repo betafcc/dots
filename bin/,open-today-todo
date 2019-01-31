@@ -1,0 +1,2 @@
+#!/usr/bin/env sh
+e --gui "${HOME}/primer/todos/$(date -I).org"
