@@ -1,0 +1,73 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# https://stackoverflow.com/questions/59895
+SOURCE="${BASH_SOURCE[0]}"
+while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symlink
+  DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null 2>&1 && pwd )"
+  SOURCE="$(readlink "$SOURCE")"
+  [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE" # if $SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
+done
+DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null 2>&1 && pwd )"
+
+CONFIGS_DIR="${DIR}/configs"
+CURRENT=$(cat "${DIR}/current")
+
+main() {
+  if [ $# -eq 0 ]; then
+    select_option
+  else
+    case "${1}" in
+      ls) ls "${CONFIGS_DIR}";;
+      backup) backup;;
+      current) echo "${CURRENT}";;
+      *) echo invalid option;;
+    esac
+  fi
+}
+
+
+select_option() {
+  echo "Current is '${CURRENT}'"
+  PS3="choose: "
+  select option in $(ls "${CONFIGS_DIR}"); do
+    if [ -z "${option}" ]; then
+      echo invalid option
+      continue
+    fi
+
+    printf '%s' "confirm '${option}'? "
+    if confirm; then
+      set -Tx
+
+      backup && rm -rf "${HOME}/.emacs.d"
+      activate "${option}"
+      break
+    fi
+  done
+}
+
+
+confirm() {
+  printf %s '(y/n): '
+  while IFS= read -n 1 -d '' char; do
+    printf '\n'
+    case "${char}" in
+      y) return 0;;
+      n) return 1;;
+      *) printf '%s' 'invalid option, y or n: ';;
+    esac
+  done
+}
+
+backup() {
+  rm -rf "${CONFIGS_DIR}/${CURRENT}" \
+    && cp -r "${HOME}/.emacs.d" "${CONFIGS_DIR}/${CURRENT}"
+}
+
+activate() {
+  cp -r "${CONFIGS_DIR}/${1}" "${HOME}/.emacs.d" \
+     && echo "${1}" >| "${DIR}/current"
+}
+
+main "$@"
