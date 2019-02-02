@@ -27,3 +27,4 @@ export HISTFILE="${HOME}/.bash_eternal_history"
 # let npm installed apps are available to the system
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+if [ -e /home/betafcc/.nix-profile/etc/profile.d/nix.sh ]; then . /home/betafcc/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
