@@ -6,16 +6,14 @@ if command -v pyenv 1>/dev/null 2>&1; then eval "$(pyenv init -)"; fi
 [ -s "$HOME/.asdf/asdf.sh" ] && . "$HOME/.asdf/asdf.sh"
 [ -s "$HOME/.fzf.bash" ] && . "$HOME/.fzf.bash"
 
+[ -s "$HOME/.betafcc/bash/functions.bash" ] && . "$HOME/.betafcc/bash/functions.bash"
 
-# default dir lister
-_l() { exa --color=always --icons --group-directories-first "$@" | less -RXF; }
-alias l='_l'
-alias la='_l -a'
+alias l=',ls'
+alias la=',ls -a'
 alias r='ranger'
 alias icat="kitty +kitten icat" # TODO: maybe check if running in kitty?
 alias poetry_shell='. "$(dirname $(poetry run which python))/activate"'
-mkcd() { mkdir -p "${1}"; cd "${1}"; }
-
+alias mkcd=',mkcd'
 
 # End here if not in interactive mode
 case $- in
