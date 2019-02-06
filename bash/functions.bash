@@ -68,3 +68,15 @@
     done
   done
 }
+
+
+,meta-x() {
+  ,completions \
+    | fzf \
+        --ansi \
+        --color light \
+        --layout reverse \
+        --height 80% \
+        --no-multi \
+    | sed -e 's/[[:space:]]\+\(.\+\)//'
+}
