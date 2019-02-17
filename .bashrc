@@ -68,4 +68,8 @@ if [ $(command -v pipenv) ]; then eval "$(pipenv --completion)"; fi
 source "$HOME/.betafcc/bash/modes.bash"
 export -f '+debug'
 export -f '+strict'
-# +prompt powerline
+
+
+if [ -s "${HOME}/.betafcc/bash/kitsune/kitsune" ]; then
+  source "${HOME}/.betafcc/bash/kitsune/kitsune" activate
+fi

@@ -1,3 +1,6 @@
 [submodule "bin/clc"]
 	path = bin/clc
 	url = git@github.com:betafcc/clc
+[submodule "bash/kitsune"]
+	path = bash/kitsune
+	url = git@github.com:betafcc/kitsune
