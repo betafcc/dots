@@ -36,15 +36,15 @@ bind '"\e^": history-expand-line'
 bind -x '"\201":"cd .."'
 bind '"\e[1;3D":" \C-u \C-a\C-k\201\C-m\C-y\C-a\C-y\ey\C-d\C-h\C-e\er \C-h"'
 # M-<right> : select descendent dir
-bind -x '"\202":"eval $( 📂 )"'
+bind -x '"\202":"eval $( ,goto-folder --descend )"'
 bind '"\e[1;3C":" \C-u \C-a\C-k\202\C-m\C-y\C-a\C-y\ey\C-d\C-h\C-e\er \C-h"'
 # C-x C-d : find dir
-bind -x '"\203":"eval $( 📂 -v )"'
+bind -x '"\203":"eval $( ,goto-folder --find )"'
 bind '"\C-x\C-d":" \C-u \C-a\C-k\203\C-m\C-y\C-a\C-y\ey\C-d\C-h\C-e\er \C-h"'
-# C-x C-f : find
-bind -x '"\204":"eval $( 🔍 )"'
-bind '"\C-x\C-f":" \C-u \C-a\C-k\204\C-m\C-y\C-a\C-y\ey\C-d\C-h\C-e\er \C-h"'
-# M-x : paste command
+# # C-x C-f : find
+# bind -x '"\204":"eval $( 🔍 )"'
+# bind '"\C-x\C-f":" \C-u \C-a\C-k\204\C-m\C-y\C-a\C-y\ey\C-d\C-h\C-e\er \C-h"'
+# M-x : paste extended command
 bind '"\ex": "`,meta-x`\e\C-e\er"'
 
 
