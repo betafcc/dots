@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 set -euo pipefail
 
 __main() {
@@ -19,7 +20,7 @@ __main() {
     *) prompt="${PWD}/";;
   esac
 
-  printf 'cd %q\n' "${prompt}$(__fd | __fzf --prompt "${prompt}")"
+  printf 'cd %q\n' "${prompt/#\~/${HOME}}$(__fd | __fzf --prompt "${prompt}")"
 }
 
 __fd() {
