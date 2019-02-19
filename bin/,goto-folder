@@ -1,0 +1,58 @@
+set -euo pipefail
+
+__main() {
+  local query
+  case "${1:---descend}" in
+    --find) case "${PWD}" in
+              "${HOME}"|"${HOME}/"*) query="${PWD/#${HOME}\/}"; cd "${HOME}";;
+              *) query= ; cd /;;
+            esac
+            ;;
+    --descend) query='';;
+  esac
+
+  local prompt
+  case "${PWD}" in
+    '/') prompt='/';;
+    "${HOME}") prompt='~/';;
+    "${HOME}/"*) prompt='./';;
+    *) prompt="${PWD}/";;
+  esac
+
+  printf 'cd %q\n' "${prompt}$(__fd | __fzf --prompt "${prompt}")"
+}
+
+__fd() {
+  fd \
+    --hidden \
+    --no-ignore \
+    --exclude '.git' \
+    --exclude 'node_modules' \
+    --type d \
+    "${@}"
+}
+
+__fzf() {
+    fzf \
+        --color 'light' \
+        --height 80% \
+        --layout reverse \
+        --no-multi \
+        --preview '__preview {}' \
+        --preview-window 'right:60%' \
+        --filepath-word \
+        --bind 'tab:replace-query+top,shift-tab:backward-kill-word+top' \
+        "$@"
+        # --expect='alt-m,alt-e,ctrl-g,esc,ctrl-m,enter' \
+}
+
+__preview() {
+  exa \
+    --color=always \
+    --icons \
+    --group-directories-first -a1 \
+    "${1}"
+}; export -f __preview
+
+
+__main "${@}"
