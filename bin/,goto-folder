@@ -5,8 +5,10 @@ __main() {
   local query
   case "${1:---descend}" in
     --find) case "${PWD}" in
-              "${HOME}"|"${HOME}/"*) query="${PWD/#${HOME}\/}"; cd "${HOME}";;
-              *) query= ; cd /;;
+              "${HOME}") query="${PWD/#${HOME}}"; cd "${HOME}";;
+              "${HOME}/"*) query="${PWD/#${HOME}\/}"; cd "${HOME}";;
+              '/') query='';;
+              '/'*) query="${PWD/#\/}/"; cd /;;
             esac
             ;;
     --descend) query='';;
@@ -20,7 +22,13 @@ __main() {
     *) prompt="${PWD}/";;
   esac
 
-  printf 'cd %q\n' "${prompt/#\~/${HOME}}$(__fd | __fzf --prompt "${prompt}")"
+  local result="$(__fd | __fzf --prompt "${prompt}" --query "${query}")"
+  if [ -z "${result}" ]; then
+    printf ''
+  else
+    printf 'cd %q\n' "${prompt/#\~/${HOME}}${result}"
+  fi
+
 }
 
 __fd() {
