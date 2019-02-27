@@ -6,7 +6,7 @@ __main() {
   case "${1:---descend}" in
     --find) case "${PWD}" in
               "${HOME}") query="${PWD/#${HOME}}"; cd "${HOME}";;
-              "${HOME}/"*) query="${PWD/#${HOME}\/}"; cd "${HOME}";;
+              "${HOME}/"*) query="${PWD/#${HOME}\/}/"; cd "${HOME}";;
               '/') query='';;
               '/'*) query="${PWD/#\/}/"; cd /;;
             esac
@@ -38,7 +38,8 @@ __fd() {
     --exclude '.git' \
     --exclude 'node_modules' \
     --type d \
-    "${@}"
+    "${@}" \
+    | sed 's:$:/:'
 }
 
 __fzf() {
