@@ -61,6 +61,7 @@ fi
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 eval "$(stack --bash-completion-script stack)"
 if [ $(command -v pipenv) ]; then eval "$(pipenv --completion)"; fi
+source $(dirname $(gem which colorls))/tab_complete.sh
 
 
 [ -s "$HOME/localrc.bash" ] && . "$HOME/localrc.bash"

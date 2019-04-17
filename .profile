@@ -1,10 +1,17 @@
+# -- PATH
 export PYENV_ROOT="${HOME}/.pyenv"
 PATH="${PYENV_ROOT}/bin:${HOME}/.poetry/bin:${PATH}"
+PATH="${HOME}/.deno/bin:${PATH}"
+PATH="${HOME}/.rvm/bin:${PATH}"
 PATH="${HOME}/.cargo/bin:${PATH}"
+PATH="${HOME}/.config/composer/vendor/bin:${PATH}"
 PATH="${HOME}/bin:${HOME}/.local/bin:${PATH}"
 export PATH
+# --
 
-export EDITOR="e"
+
+# -- THEMING
+# TODO: how to do cross-shell but terminal-dependent theming?
 
 # awesome less presets from
 # https://www.topbug.net/blog/2016/09/27/make-gnu-less-more-powerful/
@@ -18,13 +25,21 @@ export LESS_TERMCAP_us=$'\E[1;32m'     # begin underline
 export LESS_TERMCAP_ue=$'\E[0m'        # reset underline
 
 export BAT_THEME=OneHalfLight
+# --
 
+# -- HISTORY
+# TODO: is this bash-specific?
 export HISTSIZE=
 export HISTFILESIZE=
 export HISTTIMEFORMAT="[%F %T] "
 export HISTFILE="${HOME}/.bash_eternal_history"
+# --
+
+
+export EDITOR="e"
 
 # let npm installed apps are available to the system
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-if [ -e /home/betafcc/.nix-profile/etc/profile.d/nix.sh ]; then . /home/betafcc/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
