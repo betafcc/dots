@@ -57,9 +57,9 @@ __fzf() {
 }
 
 __preview() {
-  exa \
+  colorls \
     --color=always \
-    --icons \
+    --light \
     --group-directories-first -a1 \
     "${1}"
 }; export -f __preview

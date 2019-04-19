@@ -1,8 +1,8 @@
 ,ls() {
-  exa \
+  colorls \
     --color=always \
-    --icons \
     --group-directories-first \
+    --light \
     "$@" \
     | less -RXF
 }
