@@ -48,15 +48,15 @@ main() {
     case "${_RUN_MODE}" in
         'INDEPENDENT')
             case "${_FRAME_MODE}" in
-                'TERMINAL') set -- "$(which emacs26)" --no-window-system "$@";;
-                'GUI')      set -- "$(which emacs26)" "$@";;
+                'TERMINAL') set -- "$(which emacs)" --no-window-system "$@";;
+                'GUI')      set -- "$(which emacs)" "$@";;
             esac
             ;;
 
         'CLIENT')
             case "${_FRAME_MODE}" in
-                'TERMINAL') set -- "$(which emacsclient26)" -a='' -t "$@";;
-                'GUI')      set -- "$(which emacsclient26)" -a='' -c "$@";;
+                'TERMINAL') set -- "$(which emacsclient)" -a='' -t "$@";;
+                'GUI')      set -- "$(which emacsclient)" -a='' -c "$@";;
             esac
             ;;
     esac
