@@ -1,10 +1,11 @@
+# -- 'env' languages tools
 if command -v pyenv 1>/dev/null 2>&1; then eval "$(pyenv init -)"; fi
-
-
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 [ -s "$HOME/.jabba/jabba.sh" ] && . "$HOME/.jabba/jabba.sh"
 [ -s "$HOME/.phpbrew/bashrc" ] && . "$HOME/.phpbrew/bashrc"
 [ -s "$HOME/.asdf/asdf.sh" ] && . "$HOME/.asdf/asdf.sh"
-[ -s "$HOME/.fzf.bash" ] && . "$HOME/.fzf.bash"
+# --
 
 [ -s "$HOME/.betafcc/bash/functions.bash" ] && . "$HOME/.betafcc/bash/functions.bash"
 

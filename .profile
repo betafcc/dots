@@ -1,4 +1,5 @@
 # -- PATH
+export NVM_DIR="$HOME/.nvm"
 export PYENV_ROOT="${HOME}/.pyenv"
 PATH="${PYENV_ROOT}/bin:${HOME}/.poetry/bin:${PATH}"
 PATH="${HOME}/.deno/bin:${PATH}"
@@ -37,9 +38,3 @@ export HISTFILE="${HOME}/.bash_eternal_history"
 
 
 export EDITOR="e"
-
-# let npm installed apps are available to the system
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
