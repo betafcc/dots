@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+if [ "${#}" -gt 0 ]; then
+  cat "${@}" | xclip -selection clipboard -i
+else
+  xclip -selection clipboard -i
+fi
