@@ -1,8 +1,8 @@
 # -- PATH
-export NVM_DIR="$HOME/.nvm"
 export PYENV_ROOT="${HOME}/.pyenv"
 PATH="${PYENV_ROOT}/bin:${HOME}/.poetry/bin:${PATH}"
 PATH="${HOME}/.deno/bin:${PATH}"
+PATH="${HOME}/.fnm:${PATH}"
 PATH="${HOME}/.rvm/bin:${PATH}"
 PATH="${HOME}/.cargo/bin:${PATH}"
 PATH="${HOME}/.config/composer/vendor/bin:${PATH}"
