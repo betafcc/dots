@@ -79,43 +79,41 @@
 }
 
 ,py() {
-  case "${1}" in
-  init)
-    if [ $# -le 1 ]; then
-      ,py i --python 3.7 && pipenv shell
-    else
-      shift
-      case "${1}" in
-      simple) ,py i --python 3.7 && ,py i --pre vscode && pipenv shell ;;
-      jupyter) ,py i --python 3.7 && ,py i --pre jupyter && pipenv run jupyter lab --browser='google-chrome --app=%s' ;;
-      esac
-    fi
-    ;;
-
-  i | install)
-    shift
     case "${1}" in
-    --pre)
-      shift
-      case "${1}" in
-      vscode) ,py i --dev ipython mypy black flake8 ;;
-      jupyter) ,py i --pre vscode && ,py i --dev jupyterlab ;;
-      esac
-      ;;
-    --dev)
-      shift
-      pipenv install --skip-lock --dev "${@}"
-      ;;
-    *)
-      pipenv install --skip-lock "${@}"
-      ;;
-    esac
-    ;;
-  esac
-}
+        init)
+            if [ $# -le 1 ]; then
+                ,py i --python 3.7 && pipenv shell
+            else
+                shift
+                case "${1}" in
+                    simple) ,py i --python 3.7 && ,py i --pre vscode && pipenv shell ;;
+                    jupyter) ,py i --python 3.7 && ,py i --pre jupyter && ,py jupyter ;;
+                esac
+            fi
+            ;;
 
-# ,py init
-# ,py init jupyter|simple
-# ,py i
-# ,py i --dev
-# ,py i --pre
+        i | install)
+            shift
+            case "${1}" in
+                --pre)
+                    shift
+                    case "${1}" in
+                        vscode) ,py i --dev ipython mypy black flake8 ;;
+                        jupyter) ,py i --pre vscode && ,py i --dev jupyterlab ;;
+                    esac
+                    ;;
+                --dev)
+                    shift
+                    pipenv install --skip-lock --dev "${@}"
+                    ;;
+                *)
+                    pipenv install --skip-lock "${@}"
+                    ;;
+            esac
+            ;;
+
+        jupyter)
+            pipenv run jupyter lab --browser='google-chrome --app=%s'
+            ;;
+    esac
+}
