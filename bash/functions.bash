@@ -117,3 +117,9 @@
             ;;
     esac
 }
+
+,clone() {
+    local repo="${1}"; shift
+    git clone "git@github.com:${repo}"
+    cd "${repo#*/}"
+}
