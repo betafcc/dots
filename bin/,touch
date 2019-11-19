@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -e
+set -E
+set -u
+set -o noclobber
+set -o pipefail
+
+for file in "$@"
+do
+    mkdir -p "$(dirname "$file")"
+    touch "$file"
+done
