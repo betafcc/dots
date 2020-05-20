@@ -7,6 +7,7 @@ PATH="${HOME}/.rvm/bin:${PATH}"
 PATH="${HOME}/.cargo/bin:${PATH}"
 PATH="${HOME}/.config/composer/vendor/bin:${PATH}"
 PATH="${HOME}/bin:${HOME}/.local/bin:${PATH}"
+PATH="/opt/wine-stable/bin:${PATH}"
 export PATH
 # --
 
