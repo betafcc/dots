@@ -1,0 +1,25 @@
+#!/usr/bin/env electron
+const { app, BrowserWindow, TouchBar } = require("electron")
+
+app.whenReady().then(() => {
+  const window = new BrowserWindow({
+    titleBarStyle: "hiddenInset",
+    width: 0,
+    height: 0,
+  })
+  window.loadURL("about:blank")
+  window.setTouchBar(
+    new TouchBar({
+      items: process.argv.slice(2).map(
+        label =>
+          new TouchBar.TouchBarButton({
+            label,
+            click: () => {
+              console.log(label)
+              app.exit(0)
+            },
+          })
+      ),
+    })
+  )
+})
