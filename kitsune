@@ -1,0 +1,149 @@
+#!/usr/bin/env zsh
+
+typeset -A _ks_template=(
+  [prompt.PS1]=$(
+    for name in venv tag path git arrow; do
+      printf '${(e)_ks_template[%s.${_ks_model[%s.key]}]}' "${name}" "${name}"
+    done
+  )
+  [prompt.PS2]='▐ '
+  [prompt.PS4]='▐ <bold+#2aa198:${FUNCNAME[0]}<#b58900::${LINENO}:>> '
+
+  [venv.on]='<bold+#2aa198:[<#b58900:>]>'
+  [venv.off]=''
+
+  [tag.${HOME}/Desktop]='<bold:【<#2aa198:今>】>'
+  [tag.${HOME}]='<bold:【<#b58900:家>】>'
+  [tag.\/]='<bold:【<red:本>】>'
+
+  [path.no_untagged]=''
+  [path.single_untagged]='<bold:${_ks_model[sys.W]} >'
+  [path.multi_untagged]='<bold:$(printf "❯%.0s" $(seq $((${_ks_model[tag.untagged_levels]} - 1)))) ${_ks_model[sys.W]} >'
+
+  [git.modified]='<bold+red: ${_ks_model[git.branch]} >'
+  [git.staged]='<bold+red: ${_ks_model[git.branch]} >'
+  [git.untracked]='<bold+red: ${_ks_model[git.branch]} >'
+  [git.behind_ahead]='<bold+#b58900: ${_ks_model[git.branch]} >'
+  [git.ok]='<bold+#2aa198: ${_ks_model[git.branch]} >'
+  [git.not_repo]=''
+
+  [arrow.erroed_last]='<bold+#dc322f:❱ >'
+  [arrow.has_jobs]='<bold+#b58900:❱ >'
+  [arrow.ok]='<bold:❱ >'
+)
+
+for key in "${(@k)_ks_template}"; do
+  _ks_template[${key}]=$(clc --escape "${_ks_template[${key}]}")
+done
+
+typeset -A _ks_model=(
+  [venv.key]='off'
+  [sys.q]=''
+  [sys.j]=''
+  [sys.W]='%1d'
+
+  [tag.key]='/'
+  [tag.untagged_levels]=0
+  [path.key]=no_untagged
+  
+  [git.key]=not_repo
+  [git.branch]=''
+
+  [arrow.key]=ok
+)
+
+kitsune-render() {
+  kitsune-update all
+  printf %b "${(e)_ks_template[prompt.${(U)1:-ps1}]}"
+}
+
+kitsune-update() {
+  case "${1:-all}" in
+    all)
+      # sys need to be first, otherwise, return code won't be right
+      kitsune-update sys
+
+      kitsune-update venv
+      kitsune-update tag
+      kitsune-update path
+      kitsune-update git
+      kitsune-update arrow
+      ;;
+
+    venv)
+      if [ -n "$VIRTUAL_ENV" ]; then
+        _ks_model[venv.key]=on
+      else
+        _ks_model[venv.key]=off
+      fi
+      ;;
+
+    sys)
+      _ks_model[sys.q]=$?
+      _ks_model[sys.j]=$( (jobs) | wc -l | xargs )
+      ;;
+
+    tag)
+      local dir="${PWD}"
+      local untagged_levels=0
+
+      until [ ${_ks_template[tag.${dir}]+x} ] || [ -z "${dir}" ]; do
+        ((++untagged_levels))
+        dir="${dir%/*}"
+      done
+
+      _ks_model[tag.key]="${dir:-/}"
+      _ks_model[tag.untagged_levels]="${untagged_levels}"
+      ;;
+
+    path)
+      case "${_ks_model[tag.untagged_levels]}" in
+        0) _ks_model[path.key]=no_untagged;;
+        1) _ks_model[path.key]=single_untagged;;
+        *) _ks_model[path.key]=multi_untagged;;
+      esac
+      ;;
+
+    git)
+      _ks_model[git.branch]=$(git rev-parse --abbrev-ref HEAD 2> /dev/null)
+
+      if [ -n "${_ks_model[git.branch]}" ]; then
+        if [ ! "$(git diff --name-only --diff-filter=M 2> /dev/null | wc -l )" -eq "0" ]; then
+          _ks_model[git.key]=modified
+        elif [ ! "$(git diff --staged --name-only --diff-filter=AM 2> /dev/null | wc -l)" -eq "0" ]; then
+          _ks_model[git.key]=staged
+        elif [ ! "$(git ls-files --other --exclude-standard | wc -l)"  -eq "0" ]; then
+          _ks_model[git.key]=untracked
+        else
+          local number_behind_ahead
+          number_behind_ahead="$(git rev-list --count --left-right '@{upstream}...HEAD' 2>/dev/null)"
+          if [ ! "0${number_behind_ahead#*	}" -eq 0 -o ! "0${number_behind_ahead%	*}" -eq 0 ]; then
+            _ks_model[git.key]=behind_ahead
+          else
+            _ks_model[git.key]=ok
+          fi
+        fi
+      else
+        _ks_model[git.key]=not_repo
+      fi
+      ;;
+
+    arrow)
+      case "${_ks_model[sys.q]},${_ks_model[sys.j]}" in
+        0,0) _ks_model[arrow.key]=ok;;
+        0,*) _ks_model[arrow.key]=has_jobs;;
+        *,*) _ks_model[arrow.key]=erroed_last;;
+      esac
+      ;;
+  esac
+}
+
+
+kitsune-activate() {
+  setopt prompt_subst
+
+  PROMPT='$(kitsune-render ps1)'
+
+  # for venv module, don't mess with PS1 on venv activation
+  VIRTUAL_ENV_DISABLE_PROMPT=true
+}
