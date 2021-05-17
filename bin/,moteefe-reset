@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+MOTEEF_PATH="${HOME}/Desktop/moteefe/moteef"
+FRONTEND_LIBS_PATH="${HOME}/Desktop/moteefe/frontend-libs"
+
+reset_frontend_libs() {
+    cd "${FRONTEND_LIBS_PATH}" &&
+        git checkout master &&
+        git pull &&
+        yarn_install &&
+        yarn build
+}
+
+reset_moteef() {
+    cd "${MOTEEF_PATH}" &&
+        git checkout master &&
+        git pull &&
+        ( 
+            (migrate && git restore db/schema.rb) &
+            (cd client && yarn_install) &
+            (cd nextjs-client && yarn_install) &
+            wait
+        )
+}
+
+migrate() {
+    docker-compose run web rails db:migrate &&
+        docker-compose down
+}
+
+linkall() {
+    (cd "${MOTEEF_PATH}/client" && yarn linkall) &
+    (cd "${MOTEEF_PATH}/nextjs-client" && yarn linkall) &
+    wait
+}
+
+yarn_install() {
+    rm -rf node_modules && yarn install
+}
+
+(
+    reset_frontend_libs &
+    reset_moteef &
+    wait
+) && linkall
+
+echo "done"

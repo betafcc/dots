@@ -48,21 +48,12 @@ __fzf() {
         --height 80% \
         --layout reverse \
         --no-multi \
-        --preview '__preview {}' \
+        --preview ',ls {}' \
         --preview-window 'right:60%' \
         --filepath-word \
         --bind 'tab:replace-query+top,shift-tab:backward-kill-word+top' \
         "$@"
         # --expect='alt-m,alt-e,ctrl-g,esc,ctrl-m,enter' \
 }
-
-__preview() {
-  colorls \
-    --color=always \
-    --light \
-    --group-directories-first -a1 \
-    "${1}"
-}; export -f __preview
-
 
 __main "${@}"

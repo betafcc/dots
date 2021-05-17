@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+exa \
+    --color=always \
+    --group-directories-first \
+    --all \
+    --icons \
+    --oneline \
+    "$@"
