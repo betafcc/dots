@@ -7,7 +7,12 @@
 
 typeset -A _ks_template=(
   [prompt.PS1]=$(
-    for name in venv tag path git arrow; do
+    for name in tag path arrow; do
+      printf '${(e)_ks_template[%s.${_ks_model[%s.key]}]}' "${name}" "${name}"
+    done
+  )
+  [prompt.RPROMPT]=$(
+    for name in venv git; do
       printf '${(e)_ks_template[%s.${_ks_model[%s.key]}]}' "${name}" "${name}"
     done
   )
@@ -25,11 +30,11 @@ typeset -A _ks_template=(
   [path.single_untagged]='<bold:${_ks_model[sys.W]} >'
   [path.multi_untagged]='<bold:$(printf "❯%.0s" $(seq $((${_ks_model[tag.untagged_levels]} - 1)))) ${_ks_model[sys.W]} >'
 
-  [git.modified]='<bold+red: ${_ks_model[git.branch]} >'
-  [git.staged]='<bold+red: ${_ks_model[git.branch]} >'
-  [git.untracked]='<bold+red: ${_ks_model[git.branch]} >'
-  [git.behind_ahead]='<bold+#b58900: ${_ks_model[git.branch]} >'
-  [git.ok]='<bold+#2aa198: ${_ks_model[git.branch]} >'
+  [git.modified]='<bold:[<red: ${_ks_model[git.branch]}>]>'
+  [git.staged]='<bold:[<red: ${_ks_model[git.branch]}>]>'
+  [git.untracked]='<bold:[<red: ${_ks_model[git.branch]}>]>'
+  [git.behind_ahead]='<bold:[<#b58900: ${_ks_model[git.branch]}>]>'
+  [git.ok]='<bold:[<#2aa198: ${_ks_model[git.branch]}>]>'
   [git.not_repo]=''
 
   [arrow.erroed_last]='<bold+#dc322f:❱ >'
@@ -148,6 +153,7 @@ kitsune-activate() {
   setopt prompt_subst
 
   PROMPT='$(kitsune-render ps1)'
+  RPROMPT='$(kitsune-render rprompt)'
 
   # for venv module, don't mess with PS1 on venv activation
   VIRTUAL_ENV_DISABLE_PROMPT=true
