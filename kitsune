@@ -7,58 +7,60 @@
 
 KITSUNE_PATH="$0:A"
 
-typeset -A _ks_template=(
-  [prompt.PS1]=$(
+typeset -A _ks_template=()
+
+kitsune-compile() {
+  _ks_template[prompt.PS1]=$(
     for name in tag path arrow; do
       printf '${(e)_ks_template[%s.${_ks_model[%s.key]}]}' "${name}" "${name}"
     done
   )
-  [prompt.RPROMPT]=$(
+  _ks_template[prompt.RPROMPT]=$(
     for name in venv git; do
       printf '${(e)_ks_template[%s.${_ks_model[%s.key]}]}' "${name}" "${name}"
     done
   )
-  [prompt.PS2]='▐ '
-  [prompt.PS4]='▐ <bold+#2aa198:${FUNCNAME[0]}<#b58900::${LINENO}:>> '
+  _ks_template[prompt.PS2]='▐ '
+  _ks_template[prompt.PS4]='▐ <bold+#2aa198:${FUNCNAME[0]}<#b58900::${LINENO}:>> '
 
-  [tag.${HOME}/Desktop]='<bold:【<#2aa198:今>】>'
-  [tag.${HOME}]='<bold:【<#b58900:家>】>'
-  [tag.\/]='<bold:【<red:本>】>'
+  _ks_template[tag.${HOME}/Desktop]='<bold:【<#2aa198:今>】>'
+  _ks_template[tag.${HOME}]='<bold:【<#b58900:家>】>'
+  _ks_template[tag.\/]='<bold:【<red:本>】>'
 
-  [path.no_untagged]=''
-  [path.single_untagged]='<bold:${_ks_model[sys.W]} >'
-  [path.multi_untagged]='<bold:$(printf "❯%.0s" $(seq $((${_ks_model[tag.untagged_levels]} - 1)))) ${_ks_model[sys.W]} >'
+  _ks_template[path.no_untagged]=''
+  _ks_template[path.single_untagged]='<bold:${_ks_model[sys.W]} >'
+  _ks_template[path.multi_untagged]='<bold:$(printf "❯%.0s" $(seq $((${_ks_model[tag.untagged_levels]} - 1)))) ${_ks_model[sys.W]} >'
 
-  [arrow.erroed_last]='<bold+#dc322f:❱ >'
-  [arrow.has_jobs]='<bold+#b58900:❱ >'
-  [arrow.ok]='<bold:❱ >'
-)
+  _ks_template[arrow.erroed_last]='<bold+#dc322f:❱ >'
+  _ks_template[arrow.has_jobs]='<bold+#b58900:❱ >'
+  _ks_template[arrow.ok]='<bold:❱ >'
 
-if [ "${KITSUNE_VERBOSE}" = "true" ]; then
-  _ks_template[venv.on]='<bold+#2aa198:[<#b58900:> ${_ks_model[venv.name]}]>'
-  _ks_template[venv.off]=''
+  if [ "${KITSUNE_VERBOSE}" = "true" ]; then
+    _ks_template[venv.on]='<bold+#2aa198:[<#b58900:> ${_ks_model[venv.name]}]>'
+    _ks_template[venv.off]=''
 
-  _ks_template[git.modified]='<bold:[<red: ${_ks_model[git.branch]}>]>'
-  _ks_template[git.staged]='<bold:[<red: ${_ks_model[git.branch]}>]>'
-  _ks_template[git.untracked]='<bold:[<red: ${_ks_model[git.branch]}>]>'
-  _ks_template[git.behind_ahead]='<bold:[<#b58900: ${_ks_model[git.branch]}>]>'
-  _ks_template[git.ok]='<bold:[<#2aa198: ${_ks_model[git.branch]}>]>'
-  _ks_template[git.not_repo]=''
-else
-  _ks_template[venv.on]='<bold+#2aa198:[<#b58900:>]>'
-  _ks_template[venv.off]=''
+    _ks_template[git.modified]='<bold:[<red: ${_ks_model[git.branch]}>]>'
+    _ks_template[git.staged]='<bold:[<red: ${_ks_model[git.branch]}>]>'
+    _ks_template[git.untracked]='<bold:[<red: ${_ks_model[git.branch]}>]>'
+    _ks_template[git.behind_ahead]='<bold:[<#b58900: ${_ks_model[git.branch]}>]>'
+    _ks_template[git.ok]='<bold:[<#2aa198: ${_ks_model[git.branch]}>]>'
+    _ks_template[git.not_repo]=''
+  else
+    _ks_template[venv.on]='<bold+#2aa198:[<#b58900:>]>'
+    _ks_template[venv.off]=''
 
-  _ks_template[git.modified]='<bold:[<red:>]>'
-  _ks_template[git.staged]='<bold:[<red:>]>'
-  _ks_template[git.untracked]='<bold:[<red:>]>'
-  _ks_template[git.behind_ahead]='<bold:[<#b58900:>]>'
-  _ks_template[git.ok]='<bold:[<#2aa198:>]>'
-  _ks_template[git.not_repo]=''
-fi
+    _ks_template[git.modified]='<bold:[<red:>]>'
+    _ks_template[git.staged]='<bold:[<red:>]>'
+    _ks_template[git.untracked]='<bold:[<red:>]>'
+    _ks_template[git.behind_ahead]='<bold:[<#b58900:>]>'
+    _ks_template[git.ok]='<bold:[<#2aa198:>]>'
+    _ks_template[git.not_repo]=''
+  fi
 
-for key in "${(@k)_ks_template}"; do
-  _ks_template[${key}]=$(clc --escape zsh "${_ks_template[${key}]}")
-done
+  for key in "${(@k)_ks_template}"; do
+    _ks_template[${key}]=$(clc --escape zsh "${_ks_template[${key}]}")
+  done
+}
 
 typeset -A _ks_model=(
   [venv.key]='off'
@@ -170,6 +172,7 @@ kitsune-update() {
 
 
 kitsune-activate() {
+  kitsune-compile
   setopt prompt_subst
 
   PROMPT='$(kitsune-render ps1)'
