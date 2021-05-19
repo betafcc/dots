@@ -29,7 +29,7 @@ setopt HIST_BEEP              # Beep when accessing nonexistent history.
 }
 
 ,history() {
-    fc -i -l 1
+  fc -i -l 1
 }
 
 _,descend() {

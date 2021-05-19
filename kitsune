@@ -1,4 +1,9 @@
 #!/usr/bin/env zsh
+# https://unix.stackexchange.com/questions/157693/howto-include-output-of-a-script-into-the-zsh-prompt
+# http://zsh.sourceforge.net/Doc/Release/Parameters.html
+# https://books.google.pl/books?id=_q7ZgTUvft0C&pg=PA156&lpg=PA156&dq=psvar+escape+characters&source=bl&ots=IkvTl68QZh&sig=ACfU3U09u82ndrLmaW9oM6wBKCrHE4OoXw&hl=en&sa=X&ved=2ahUKEwighN7Wos_wAhUllIsKHeReBRAQ6AEwD3oECAYQAw#v=onepage&q=psvar%20escape%20characters&f=false
+# http://bolyai.cs.elte.hu/zsh-manual/zsh_15.html
+# https://stackoverflow.com/questions/36192523/zsh-prompt-customization
 
 typeset -A _ks_template=(
   [prompt.PS1]=$(
@@ -33,7 +38,7 @@ typeset -A _ks_template=(
 )
 
 for key in "${(@k)_ks_template}"; do
-  _ks_template[${key}]=$(clc --escape "${_ks_template[${key}]}")
+  _ks_template[${key}]=$(clc --escape zsh "${_ks_template[${key}]}")
 done
 
 typeset -A _ks_model=(

@@ -1,0 +1,48 @@
+#!/usr/bin/env electron
+const { app, BrowserWindow } = require("electron")
+
+const url =
+  "https://translate.google.com/?" +
+  Object.entries({ text: process.argv.slice(2).join(" ") })
+    .map(([key, val]) => `${key}=${encodeURI(val)}`)
+    .join("&")
+
+const css = `
+  @keyframes fadein { from { opacity: 0; } to { opacity: 94%; } }
+  body { opacity: 94%; animation: fadein 0.5s ease; -webkit-app-region: drag; }
+  div.pGxpHc { display: none; }
+  div.OlSOob {
+    width: 100vw; height: 100vh; padding: 0;
+    position: absolute; top: 0; left: 0;
+    margin: 0; z-index: 1000000000;
+  }
+  div.OPPzxe { height: calc(100vh - 48px); }
+`
+
+const js = `new Promise(resolve => {
+  document.head.insertAdjacentHTML("beforeend", \`<style>${css}</style>\`)
+  document.body.addEventListener("animationstart", function handle() {
+    document.body.removeEventListener("animationstart", handle)
+    resolve()
+  })
+})`
+
+app.whenReady().then(
+  () => {
+    const window = new BrowserWindow({
+      titleBarStyle: "customButtonsOnHover",
+      width: 800,
+      height: 400,
+      transparent: true,
+      frame: false,
+      show: false,
+      alwaysOnTop: true,
+    })
+    window.loadURL(url)
+    window.webContents.executeJavaScript(js).then(_ => window.show())
+    window.webContents.on("did-finish-load", () => {
+      window.webContents.insertCSS(css)
+    })
+  },
+  err => proces.exit(1)
+)
