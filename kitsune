@@ -5,6 +5,8 @@
 # http://bolyai.cs.elte.hu/zsh-manual/zsh_15.html
 # https://stackoverflow.com/questions/36192523/zsh-prompt-customization
 
+KITSUNE_PATH="$0:A"
+
 typeset -A _ks_template=(
   [prompt.PS1]=$(
     for name in tag path arrow; do
@@ -19,9 +21,6 @@ typeset -A _ks_template=(
   [prompt.PS2]='▐ '
   [prompt.PS4]='▐ <bold+#2aa198:${FUNCNAME[0]}<#b58900::${LINENO}:>> '
 
-  [venv.on]='<bold+#2aa198:[<#b58900:>]>'
-  [venv.off]=''
-
   [tag.${HOME}/Desktop]='<bold:【<#2aa198:今>】>'
   [tag.${HOME}]='<bold:【<#b58900:家>】>'
   [tag.\/]='<bold:【<red:本>】>'
@@ -30,17 +29,32 @@ typeset -A _ks_template=(
   [path.single_untagged]='<bold:${_ks_model[sys.W]} >'
   [path.multi_untagged]='<bold:$(printf "❯%.0s" $(seq $((${_ks_model[tag.untagged_levels]} - 1)))) ${_ks_model[sys.W]} >'
 
-  [git.modified]='<bold:[<red: ${_ks_model[git.branch]}>]>'
-  [git.staged]='<bold:[<red: ${_ks_model[git.branch]}>]>'
-  [git.untracked]='<bold:[<red: ${_ks_model[git.branch]}>]>'
-  [git.behind_ahead]='<bold:[<#b58900: ${_ks_model[git.branch]}>]>'
-  [git.ok]='<bold:[<#2aa198: ${_ks_model[git.branch]}>]>'
-  [git.not_repo]=''
-
   [arrow.erroed_last]='<bold+#dc322f:❱ >'
   [arrow.has_jobs]='<bold+#b58900:❱ >'
   [arrow.ok]='<bold:❱ >'
 )
+
+if [ "${KITSUNE_VERBOSE}" = "true" ]; then
+  _ks_template[venv.on]='<bold+#2aa198:[<#b58900:> ${_ks_model[venv.name]}]>'
+  _ks_template[venv.off]=''
+
+  _ks_template[git.modified]='<bold:[<red: ${_ks_model[git.branch]}>]>'
+  _ks_template[git.staged]='<bold:[<red: ${_ks_model[git.branch]}>]>'
+  _ks_template[git.untracked]='<bold:[<red: ${_ks_model[git.branch]}>]>'
+  _ks_template[git.behind_ahead]='<bold:[<#b58900: ${_ks_model[git.branch]}>]>'
+  _ks_template[git.ok]='<bold:[<#2aa198: ${_ks_model[git.branch]}>]>'
+  _ks_template[git.not_repo]=''
+else
+  _ks_template[venv.on]='<bold+#2aa198:[<#b58900:>]>'
+  _ks_template[venv.off]=''
+
+  _ks_template[git.modified]='<bold:[<red:>]>'
+  _ks_template[git.staged]='<bold:[<red:>]>'
+  _ks_template[git.untracked]='<bold:[<red:>]>'
+  _ks_template[git.behind_ahead]='<bold:[<#b58900:>]>'
+  _ks_template[git.ok]='<bold:[<#2aa198:>]>'
+  _ks_template[git.not_repo]=''
+fi
 
 for key in "${(@k)_ks_template}"; do
   _ks_template[${key}]=$(clc --escape zsh "${_ks_template[${key}]}")
@@ -48,6 +62,8 @@ done
 
 typeset -A _ks_model=(
   [venv.key]='off'
+  [venv.name]=''
+
   [sys.q]=''
   [sys.j]=''
   [sys.W]='%1d'
@@ -63,26 +79,30 @@ typeset -A _ks_model=(
 )
 
 kitsune-render() {
-  kitsune-update all
+  kitsune-update "${1}"
   printf %b "${(e)_ks_template[prompt.${(U)1:-ps1}]}"
 }
 
+
 kitsune-update() {
   case "${1:-all}" in
-    all)
+    ps1)
       # sys need to be first, otherwise, return code won't be right
       kitsune-update sys
-
-      kitsune-update venv
       kitsune-update tag
       kitsune-update path
-      kitsune-update git
       kitsune-update arrow
+      ;;
+
+    rprompt)
+      kitsune-update git
+      kitsune-update venv
       ;;
 
     venv)
       if [ -n "$VIRTUAL_ENV" ]; then
         _ks_model[venv.key]=on
+        _ks_model[venv.name]="${${VIRTUAL_ENV%-**}##*/}"
       else
         _ks_model[venv.key]=off
       fi
@@ -157,4 +177,8 @@ kitsune-activate() {
 
   # for venv module, don't mess with PS1 on venv activation
   VIRTUAL_ENV_DISABLE_PROMPT=true
+}
+
+kitsune-reload() {
+  exec "$SHELL"
 }
