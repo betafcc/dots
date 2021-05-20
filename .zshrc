@@ -32,21 +32,21 @@ setopt HIST_BEEP              # Beep when accessing nonexistent history.
   fc -i -l 1
 }
 
-_,descend() {
-  eval $( ,goto-folder --descend )
+zle -N M-right
+bindkey '^[[1;9C' M-right
+
+zle -N M-left
+bindkey '^[[1;9D' M-left
+
+M-right() {
+  eval $(,goto-folder --descend)
   zle reset-prompt
 }
 
-zle -N _,descend
-bindkey '^[[1;9C' _,descend
-
-_,ascend() {
+M-left() {
   cd ..
   zle reset-prompt
 }
-
-zle -N _,ascend
-bindkey '^[[1;9D' _,ascend
 
 alias mkcd=',mkcd'
 
