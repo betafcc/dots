@@ -175,13 +175,28 @@ kitsune-activate() {
   kitsune-compile
   setopt prompt_subst
 
+  preexec() {}
+  precmd() {}
+
   PROMPT='$(kitsune-render ps1)'
   RPROMPT='$(kitsune-render rprompt)'
 
+  if [ "${KITSUNE_LOCK}" = "up" ]; then
+    PROMPT=$'%{\e[H%}'"${PROMPT}"
+    preexec() {
+      clear
+      tput cup 1 0
+    }
+  elif [ "${KITSUNE_LOCK}" = "down" ]; then
+    preexec() {
+      clear
+      tput cup $(tput lines) 0
+    }
+  else
+    preexec() {}
+    precmd() {}
+  fi
+
   # for venv module, don't mess with PS1 on venv activation
   VIRTUAL_ENV_DISABLE_PROMPT=true
-}
-
-kitsune-reload() {
-  exec "$SHELL"
 }
