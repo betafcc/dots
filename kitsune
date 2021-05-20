@@ -181,13 +181,13 @@ kitsune-activate() {
   PROMPT='$(kitsune-render ps1)'
   RPROMPT='$(kitsune-render rprompt)'
 
-  if [ "${KITSUNE_LOCK}" = "up" ]; then
+  if [ "${KITSUNE_LOCK}" = "top" ]; then
     PROMPT=$'%{\e[H%}'"${PROMPT}"
     preexec() {
       clear
       tput cup 1 0
     }
-  elif [ "${KITSUNE_LOCK}" = "down" ]; then
+  elif [ "${KITSUNE_LOCK}" = "bottom" ]; then
     preexec() {
       clear
       tput cup $(tput lines) 0
@@ -199,4 +199,12 @@ kitsune-activate() {
 
   # for venv module, don't mess with PS1 on venv activation
   VIRTUAL_ENV_DISABLE_PROMPT=true
+}
+
+kitsune() {
+  case "${1:-activate}" in
+    activate) kitsune-activate;;
+    verbose) KITSUNE_VERBOSE="${2:-true}" kitsune;;
+    lock) KITSUNE_LOCK="${2}" kitsune && clear;;
+  esac
 }
