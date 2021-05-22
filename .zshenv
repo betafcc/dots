@@ -2,6 +2,7 @@ export EDITOR='emacs -nw'
 export DENO_INSTALL="${HOME}/.deno"
 export PYENV_ROOT="${HOME}/.pyenv"
 
+PATH="${PYENV_ROOT}/shims:${PATH}"
 PATH="${PATH}:${PYENV_ROOT}/bin"
 PATH="${PATH}:${DENO_INSTALL}/bin"
 PATH="${PATH}:${HOME}/.cargo/bin"
