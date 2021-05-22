@@ -51,4 +51,38 @@ M-left() {
 alias mkcd=',mkcd'
 
 source "${HOME}/.betafcc/kitsune"
-kitsune-activate
+kitsune activate
+
+,coverage() {
+  yarn jest --coverage &&
+    git diff origin/master...HEAD |
+    diff-test-coverage -c coverage/lcov.info -t lcov -l 80 -b 80 -f 80
+}
+
+fzf-history-widget() {
+  local selected num
+  setopt localoptions noglobsubst noposixbuiltins pipefail no_aliases 2> /dev/null
+  selected=(
+    $(
+      fc -rln 1 |
+      perl -ne 'print if !$seen{$_}++' |
+      FZF_DEFAULT_OPTS="\
+        --height ${FZF_TMUX_HEIGHT:-40%} \
+        $FZF_DEFAULT_OPTS \
+        -n2..,.. \
+        --tiebreak=index \
+        --bind=ctrl-r:toggle-sort  \
+        --bind=tab:replace-query+top \
+        --no-multi \
+        --layout=reverse" $(__fzfcmd)
+    )
+  )
+  local ret=$?
+  if [ -n "$selected" ]; then
+    LBUFFER="${LBUFFER}${selected}"
+  fi
+  zle reset-prompt
+  return $ret
+}
+zle     -N   fzf-history-widget
+bindkey '^R' fzf-history-widget

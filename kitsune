@@ -4,12 +4,13 @@
 # https://books.google.pl/books?id=_q7ZgTUvft0C&pg=PA156&lpg=PA156&dq=psvar+escape+characters&source=bl&ots=IkvTl68QZh&sig=ACfU3U09u82ndrLmaW9oM6wBKCrHE4OoXw&hl=en&sa=X&ved=2ahUKEwighN7Wos_wAhUllIsKHeReBRAQ6AEwD3oECAYQAw#v=onepage&q=psvar%20escape%20characters&f=false
 # http://bolyai.cs.elte.hu/zsh-manual/zsh_15.html
 # https://stackoverflow.com/questions/36192523/zsh-prompt-customization
+# https://unix.stackexchange.com/questions/153102/how-to-start-xterm-with-prompt-at-the-bottom
 
 KITSUNE_PATH="$0:A"
 
 typeset -A _ks_template=()
 
-kitsune-compile() {
+_kitsune-compile() {
   _ks_template[prompt.PS1]=$(
     for name in tag path arrow; do
       printf '${(e)_ks_template[%s.${_ks_model[%s.key]}]}' "${name}" "${name}"
@@ -35,10 +36,15 @@ kitsune-compile() {
   _ks_template[arrow.has_jobs]='<bold+#b58900:❱ >'
   _ks_template[arrow.ok]='<bold:❱ >'
 
-  if [ "${KITSUNE_VERBOSE}" = "true" ]; then
+  if [ "${_ks_model[venv.verbose]}" = "true" ]; then
     _ks_template[venv.on]='<bold+#2aa198:[<#b58900:> ${_ks_model[venv.name]}]>'
     _ks_template[venv.off]=''
+  else
+    _ks_template[venv.on]='<bold+#2aa198:[<#b58900:>]>'
+    _ks_template[venv.off]=''
+  fi
 
+  if [ "${_ks_model[git.verbose]}" = "true" ]; then
     _ks_template[git.modified]='<bold:[<red: ${_ks_model[git.branch]}>]>'
     _ks_template[git.staged]='<bold:[<red: ${_ks_model[git.branch]}>]>'
     _ks_template[git.untracked]='<bold:[<red: ${_ks_model[git.branch]}>]>'
@@ -46,9 +52,6 @@ kitsune-compile() {
     _ks_template[git.ok]='<bold:[<#2aa198: ${_ks_model[git.branch]}>]>'
     _ks_template[git.not_repo]=''
   else
-    _ks_template[venv.on]='<bold+#2aa198:[<#b58900:>]>'
-    _ks_template[venv.off]=''
-
     _ks_template[git.modified]='<bold:[<red:>]>'
     _ks_template[git.staged]='<bold:[<red:>]>'
     _ks_template[git.untracked]='<bold:[<red:>]>'
@@ -63,6 +66,7 @@ kitsune-compile() {
 }
 
 typeset -A _ks_model=(
+  [venv.verbose]=false
   [venv.key]='off'
   [venv.name]=''
 
@@ -73,32 +77,33 @@ typeset -A _ks_model=(
   [tag.key]='/'
   [tag.untagged_levels]=0
   [path.key]=no_untagged
-  
+
+  [git.verbose]=false
   [git.key]=not_repo
   [git.branch]=''
 
   [arrow.key]=ok
 )
 
-kitsune-render() {
-  kitsune-update "${1}"
+_kitsune-render() {
+  _kitsune-update "${1}"
   printf %b "${(e)_ks_template[prompt.${(U)1:-ps1}]}"
 }
 
 
-kitsune-update() {
+_kitsune-update() {
   case "${1:-all}" in
     ps1)
       # sys need to be first, otherwise, return code won't be right
-      kitsune-update sys
-      kitsune-update tag
-      kitsune-update path
-      kitsune-update arrow
+      _kitsune-update sys
+      _kitsune-update tag
+      _kitsune-update path
+      _kitsune-update arrow
       ;;
 
     rprompt)
-      kitsune-update git
-      kitsune-update venv
+      _kitsune-update git
+      _kitsune-update venv
       ;;
 
     venv)
@@ -171,15 +176,15 @@ kitsune-update() {
 }
 
 
-kitsune-activate() {
-  kitsune-compile
+_kitsune-activate() {
+  _kitsune-compile
   setopt prompt_subst
 
   preexec() {}
   precmd() {}
 
-  PROMPT='$(kitsune-render ps1)'
-  RPROMPT='$(kitsune-render rprompt)'
+  PROMPT='$(_kitsune-render ps1)'
+  RPROMPT='$(_kitsune-render rprompt)'
 
   if [ "${KITSUNE_LOCK}" = "top" ]; then
     PROMPT=$'%{\e[H%}'"${PROMPT}"
@@ -199,12 +204,46 @@ kitsune-activate() {
 
   # for venv module, don't mess with PS1 on venv activation
   VIRTUAL_ENV_DISABLE_PROMPT=true
+
+  # chpwd() {
+  #   if [ -f "${PWD}/Pipfile" ]; then
+  #     source "$(pipenv --venv 2>/dev/null)/bin/activate"
+  #   fi
+  # }
+}
+
+_not() {
+  if [ "${1:-false}" = "false" ]; then
+    echo -n true
+  else
+    echo -n false
+  fi
 }
 
 kitsune() {
   case "${1:-activate}" in
-    activate) kitsune-activate;;
-    verbose) KITSUNE_VERBOSE="${2:-true}" kitsune;;
-    lock) KITSUNE_LOCK="${2}" kitsune && clear;;
+    activate|reload) _kitsune-activate;;
+    lock) KITSUNE_LOCK="${2:-bottom}" kitsune reload;;
+    git)
+      case "${2:-none}" in
+        verbose)
+          _ks_model[git.verbose]=$(_not $_ks_model[git.verbose])
+          kitsune reload
+        ;;
+      esac
+    ;;
+    venv)
+      case "${2:-none}" in
+        verbose)
+          _ks_model[venv.verbose]=$(_not $_ks_model[venv.verbose])
+          kitsune reload
+        ;;
+      esac
+    ;;
+    theme)
+      case "${2:-dark}" in
+        dark) export BAT_THEME=gruvbox;;
+        light) export BAT_THEME=OneHalfLight;;
+      esac
   esac
 }

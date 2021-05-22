@@ -3,7 +3,11 @@ const { app, BrowserWindow } = require("electron")
 
 const url =
   "https://translate.google.com/?" +
-  Object.entries({ text: process.argv.slice(2).join(" ") })
+  Object.entries({
+    text: process.argv.slice(2).join(" "),
+    sl: 'auto',
+    tl: 'en',
+  })
     .map(([key, val]) => `${key}=${encodeURI(val)}`)
     .join("&")
 
