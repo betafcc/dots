@@ -5,4 +5,5 @@ exa \
     --all \
     --icons \
     --oneline \
-    "$@"
+    "$@" |
+    less

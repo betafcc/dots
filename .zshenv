@@ -12,6 +12,8 @@ PATH="${PATH}:${HOME}/.betafcc/bin"
 export PATH
 # --
 
+export PIPENV_VENV_IN_PROJECT=true
+
 # awesome less presets from
 # https://www.topbug.net/blog/2016/09/27/make-gnu-less-more-powerful/
 export LESS='-i -J -M -R -W -x4 -X -z-4'

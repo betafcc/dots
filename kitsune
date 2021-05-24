@@ -26,25 +26,25 @@ _kitsune-compile() {
 
   _ks_template[tag.${HOME}/Desktop]='<bold:【<#2aa198:今>】>'
   _ks_template[tag.${HOME}]='<bold:【<#b58900:家>】>'
-  _ks_template[tag.\/]='<bold:【<red:本>】>'
+  _ks_template[tag./]='<bold:【<red:本>】>'
 
   _ks_template[path.no_untagged]=''
   _ks_template[path.single_untagged]='<bold:${_ks_model[sys.W]} >'
-  _ks_template[path.multi_untagged]='<bold:$(printf "❯%.0s" $(seq $((${_ks_model[tag.untagged_levels]} - 1)))) ${_ks_model[sys.W]} >'
+  _ks_template[path.multi_untagged]='<bold:<#aaa:$(printf "❯%.0s" $(seq $((${_ks_model[tag.untagged_levels]} - 1))))> ${_ks_model[sys.W]} >'
 
   _ks_template[arrow.erroed_last]='<bold+#dc322f:❱ >'
   _ks_template[arrow.has_jobs]='<bold+#b58900:❱ >'
-  _ks_template[arrow.ok]='<bold:❱ >'
+  _ks_template[arrow.ok]='<bold+#aaa:❱ >'
 
-  if [ "${_ks_model[venv.verbose]}" = "true" ]; then
-    _ks_template[venv.on]='<bold+#2aa198:[<#b58900:> ${_ks_model[venv.name]}]>'
+  if [ "$KITSUNE_VENV_VERBOSE" = "true" ]; then
+    _ks_template[venv.on]='<bold+#2aa198:[<#b58900:> <white:${_ks_model[venv.name]}>]>'
     _ks_template[venv.off]=''
   else
     _ks_template[venv.on]='<bold+#2aa198:[<#b58900:>]>'
     _ks_template[venv.off]=''
   fi
 
-  if [ "${_ks_model[git.verbose]}" = "true" ]; then
+  if [ "$KITSUNE_GIT_VERBOSE" = "true" ]; then
     _ks_template[git.modified]='<bold:[<red: ${_ks_model[git.branch]}>]>'
     _ks_template[git.staged]='<bold:[<red: ${_ks_model[git.branch]}>]>'
     _ks_template[git.untracked]='<bold:[<red: ${_ks_model[git.branch]}>]>'
@@ -66,7 +66,6 @@ _kitsune-compile() {
 }
 
 typeset -A _ks_model=(
-  [venv.verbose]=false
   [venv.key]='off'
   [venv.name]=''
 
@@ -78,7 +77,6 @@ typeset -A _ks_model=(
   [tag.untagged_levels]=0
   [path.key]=no_untagged
 
-  [git.verbose]=false
   [git.key]=not_repo
   [git.branch]=''
 
@@ -223,11 +221,14 @@ _not() {
 kitsune() {
   case "${1:-activate}" in
     activate|reload) _kitsune-activate;;
-    lock) KITSUNE_LOCK="${2:-bottom}" kitsune reload;;
+    lock)
+      export KITSUNE_LOCK="${2:-bottom}"
+      kitsune reload
+    ;;
     git)
       case "${2:-none}" in
         verbose)
-          _ks_model[git.verbose]=$(_not $_ks_model[git.verbose])
+          export KITSUNE_GIT_VERBOSE=$(_not $KITSUNE_GIT_VERBOSE)
           kitsune reload
         ;;
       esac
@@ -235,7 +236,7 @@ kitsune() {
     venv)
       case "${2:-none}" in
         verbose)
-          _ks_model[venv.verbose]=$(_not $_ks_model[venv.verbose])
+          export KITSUNE_VENV_VERBOSE=$(_not $KITSUNE_VENV_VERBOSE)
           kitsune reload
         ;;
       esac
