@@ -28,7 +28,11 @@ export YVM_DIR=/usr/local/opt/yvm
 
 export YVM_DIR="${HOME}/.yvm"
 
-autoload -Uz compinit && compinit
+autoload -Uz compinit
+zstyle ':completion:*' menu select
+zmodload zsh/complist
+compinit
+_comp_options+=(globdots)
 
 # kitty + complete setup zsh | source /dev/stdin
 
