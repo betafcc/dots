@@ -1,4 +1,3 @@
-#!/usr/bin/env zsh
 # https://unix.stackexchange.com/questions/157693/howto-include-output-of-a-script-into-the-zsh-prompt
 # http://zsh.sourceforge.net/Doc/Release/Parameters.html
 # https://books.google.pl/books?id=_q7ZgTUvft0C&pg=PA156&lpg=PA156&dq=psvar+escape+characters&source=bl&ots=IkvTl68QZh&sig=ACfU3U09u82ndrLmaW9oM6wBKCrHE4OoXw&hl=en&sa=X&ved=2ahUKEwighN7Wos_wAhUllIsKHeReBRAQ6AEwD3oECAYQAw#v=onepage&q=psvar%20escape%20characters&f=false

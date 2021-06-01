@@ -31,10 +31,10 @@ while [ $# -gt 0 ]; do
   esac
 done
 
-title="$(printf '%s\n' "${words[@]}" | paste -sd ' ')"
+title="$(printf '%s\n' "${words[@]}" | paste -sd ' ' -)"
 n_separator=$(( ( ($(tput cols) - ${#title}) / 2 ) - 1 ))
 
-printf '\e[%bm' "$(printf '%b\n' "${codes[@]}" | paste -sd ';')"
+printf '\e[%bm' "$(printf '%b\n' "${codes[@]}" | paste -sd ';' -)"
 
 printf '%*s' "${n_separator}" '' | tr ' ' "${separator}"
 printf ' %s ' "${title}"
