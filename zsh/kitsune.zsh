@@ -25,6 +25,7 @@ _kitsune-compile() {
 
   _ks_template[tag.${HOME}/Desktop]='<bold:【<#2aa198:今>】>'
   _ks_template[tag.${HOME}]='<bold:【<#b58900:家>】>'
+  _ks_template[tag.${HOME}/.Trash]='<bold:【<#6339b3:圾>】>'
   _ks_template[tag./]='<bold:【<red:本>】>'
 
   _ks_template[path.no_untagged]=''
