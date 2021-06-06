@@ -1,4 +1,41 @@
 _DIRNAME=${0:a:h}
+export EDITOR=vim
+
+export DENO_INSTALL="${HOME}/.deno"
+export PYENV_ROOT="${HOME}/.pyenv"
+
+_PATH="${PYENV_ROOT}/shims"
+_PATH="${_PATH}:${PYENV_ROOT}/bin"
+_PATH="${_PATH}:${DENO_INSTALL}/bin"
+_PATH="${_PATH}:${HOME}/.cargo/bin"
+_PATH="${_PATH}:${HOME}/.rvm/bin"
+_PATH="${_PATH}:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+_PATH="${_PATH}:${HOME}/.betafcc/bin"
+export PATH="${_PATH}:${PATH}"
+# --
+
+export PIPENV_VENV_IN_PROJECT=true
+
+# awesome less presets from
+# https://www.topbug.net/blog/2016/09/27/make-gnu-less-more-powerful/
+export LESS='-i -J -M -R -W -x4 -X -z-4'
+export LESS_TERMCAP_mb=$'\E[1;31m'     # begin bold
+export LESS_TERMCAP_md=$'\E[1;36m'     # begin blink
+export LESS_TERMCAP_me=$'\E[0m'        # reset bold/blink
+export LESS_TERMCAP_so=$'\E[01;44;33m' # begin reverse video
+export LESS_TERMCAP_se=$'\E[0m'        # reset reverse video
+export LESS_TERMCAP_us=$'\E[1;32m'     # begin underline
+export LESS_TERMCAP_ue=$'\E[0m'        # reset underline
+
+# --
+
+# For kitty, see: https://github.com/kovidgoyal/kitty/issues/469#issuecomment-419406438
+export GLFW_IM_MODULE=ibus
+
+# https://stackoverflow.com/questions/49436922/getting-error-while-trying-to-run-this-command-pipenv-install-requests-in-ma
+export LANG="en_US.UTF-8"
+export LC_ALL="en_US.UTF-8"
+export LC_CTYPE="en_US.UTF-8"
 
 # reference: https://unix.stackexchange.com/a/273863
 HISTFILE="${HOME}/.zsh_my_history"
@@ -46,5 +83,7 @@ source "${_DIRNAME}/keybindings.zsh"
 
 source "${_DIRNAME}/kitsune.zsh"
 kitsune activate
+
+unsetopt BEEP
 
 source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
