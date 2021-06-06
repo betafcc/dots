@@ -1,5 +1,10 @@
 _DIRNAME=${0:a:h}
-export EDITOR=vim
+
+# this messes up my keymap,
+# but only when I enter another instance of zsh for some reason
+# (ie, when I'm on zsh and then run 'zsh' again)
+# why?
+# export EDITOR=vim
 
 export DENO_INSTALL="${HOME}/.deno"
 export PYENV_ROOT="${HOME}/.pyenv"
