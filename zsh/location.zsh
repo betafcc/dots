@@ -1,5 +1,9 @@
 location() {
-  case "${1:-activate}" in
+  case "${1:-select}" in
+  select)
+    printf '%q\n' "${_location_history[@]}"
+    ;;
+
   activate)
     typeset -g -a _location_history=()
     typeset -g _location_index=0
@@ -17,9 +21,11 @@ location() {
     ;;
 
   push)
-    _location_history=(${_location_history[@]:0:$_location_index})
-    _location_history+=($2)
-    _location_index=$((${#_location_history[@]}))
+    if [ "$2" != "${_location_history[-1]}" ]; then
+      _location_history=(${_location_history[@]:0:$_location_index})
+      _location_history+=($2)
+      _location_index=$((${#_location_history[@]}))
+    fi
     ;;
 
   back)
