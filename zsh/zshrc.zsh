@@ -89,6 +89,9 @@ source "${_DIRNAME}/keybindings.zsh"
 source "${_DIRNAME}/kitsune.zsh"
 kitsune activate
 
+source "${_DIRNAME}/location.zsh"
+location activate
+
 unsetopt BEEP
 
 source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

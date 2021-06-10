@@ -1,10 +1,22 @@
+# typeset -A keys=(
+#   'right' '^[[C'
+#   'up' '^[[A'
+#   'left' '^[[D'
+#   'down' '^[[B'
+
+#   'M-right' '^[[1;3C'
+#   'M-up' '^[[1;3A'
+#   'M-left' '^[[1;3D'
+#   'M-down' '^[[1;3B'
+# )
+
 _,descend() {
   eval $(,goto-folder --descend)
   zle reset-prompt
 }
 
 zle -N _,descend
-bindkey '^[[1;9C' _,descend
+bindkey '^[[1;9B' _,descend
 
 _,ascend() {
   cd ..
@@ -12,9 +24,9 @@ _,ascend() {
 }
 
 zle -N _,ascend
-bindkey '^[[1;9D' _,ascend
+bindkey '^[[1;9A' _,ascend
 
-fzf-history-widget() {
+_,fzf-history-widget() {
   local selected num
   setopt localoptions noglobsubst noposixbuiltins pipefail no_aliases 2>/dev/null
   selected=(
@@ -40,8 +52,24 @@ fzf-history-widget() {
   return $ret
 }
 
-zle -N fzf-history-widget
-bindkey '^R' fzf-history-widget
+zle -N _,fzf-history-widget
+bindkey '^R' _,fzf-history-widget
 
 bindkey '^[[z' undo
 bindkey '^[[Z' redo
+
+_,location-back() {
+  location back
+  zle reset-prompt
+}
+
+zle -N _,location-back
+bindkey '^[[1;9D' _,location-back
+
+_,location-forward() {
+  location forward
+  zle reset-prompt
+}
+
+zle -N _,location-forward
+bindkey '^[[1;9C' _,location-forward
