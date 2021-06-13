@@ -3,10 +3,17 @@ typeset -A _keys=(
   'up' '^[[A'
   'left' '^[[D'
   'down' '^[[B'
+
   'alt+right' '^[[1;9C'
   'alt+up' '^[[1;9A'
   'alt+left' '^[[1;9D'
   'alt+down' '^[[1;9B'
+
+  'cmd+right' '^[[1;5C'
+  'cmd+up' '^[[1;5A'
+  'cmd+left' '^[[1;5D'
+  'cmd+down' '^[[1;5B'
+
   'ctrl+r' '^R'
   'cmd+z' '^[[z'
   'cmd+shift+z' '^[[Z'
@@ -48,10 +55,10 @@ _,fzf-history-widget() {
   return $ret
 }
 
-,bindkey -N alt+down 'eval $(,goto-folder --descend); zle reset-prompt'
-,bindkey -N alt+up 'cd ..; zle reset-prompt'
-,bindkey -N alt+left 'location history back; zle reset-prompt'
-,bindkey -N alt+right 'location history forward; zle reset-prompt'
+,bindkey -N cmd+down 'eval $(,goto-folder --descend); zle reset-prompt'
+,bindkey -N cmd+up 'cd ..; zle reset-prompt'
+,bindkey -N cmd+left 'location history back; zle reset-prompt'
+,bindkey -N cmd+right 'location history forward; zle reset-prompt'
 ,bindkey -N ctrl+r _,fzf-history-widget
 ,bindkey cmd+z undo
 ,bindkey cmd+shift+z redo
