@@ -50,8 +50,8 @@ _,fzf-history-widget() {
 
 ,bindkey -N alt+down 'eval $(,goto-folder --descend); zle reset-prompt'
 ,bindkey -N alt+up 'cd ..; zle reset-prompt'
-,bindkey -N alt+left 'location back; zle reset-prompt'
-,bindkey -N alt+right 'location forward; zle reset-prompt'
+,bindkey -N alt+left 'location history back; zle reset-prompt'
+,bindkey -N alt+right 'location history forward; zle reset-prompt'
 ,bindkey -N ctrl+r _,fzf-history-widget
 ,bindkey cmd+z undo
 ,bindkey cmd+shift+z redo

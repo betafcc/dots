@@ -30,7 +30,7 @@ _kitsune-compile() {
 
   _ks_template[path.no_untagged]=''
   _ks_template[path.single_untagged]='<bold:${_ks_model[sys.W]} >'
-  _ks_template[path.multi_untagged]='<bold:<#aaa:$(printf "❯%.0s" $(seq $((${_ks_model[tag.untagged_levels]} - 1))))> ${_ks_model[sys.W]} >'
+  _ks_template[path.multi_untagged]='<bold:<#aaa:$(printf "❯%%.0s" $(seq $((${_ks_model[tag.untagged_levels]} - 1))))> ${_ks_model[sys.W]} >'
 
   _ks_template[arrow.erroed_last]='<bold+#dc322f:❱ >'
   _ks_template[arrow.has_jobs]='<bold+#b58900:❱ >'

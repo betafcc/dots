@@ -1,7 +1,44 @@
+# LOCATION_HISTORY_FILE="${HOME}/.betafcc/zsh/.location_history"
+# location history
+# location history list
+# location history activate
+# location history push "./foo"
+# location history back
+# location history forward
+
+# LOCATION_TAG_FILE="${HOME}/.betafcc/zsh/.location_tag"
+# location tag
+# location tag list
+# location tag add $(clc '<red:【犬】>') .
+# location tag remove .
+
 location() {
-  case "${1:-select}" in
+  local command="${1:-help}"
+  [ $# -gt 0 ] && shift
+
+  case "${command}" in
+  history) _location-history "${@}" ;;
+  tag) _location-tag "${@}" ;;
+  *) echo "usage: location [history|tag]" ;;
+  esac
+}
+
+_location-history() {
+  local command="${1:-select}"
+  [ $# -gt 0 ] && shift
+
+  case "${command}" in
   select)
-    printf '%q\n' "${_location_history[@]}"
+    local dir
+    local i=1
+    for dir in "${_location_history[@]}"; do
+      if [ $i -eq $_location_index ]; then
+        clc "-><bold:${dir}>\n"
+      else
+        printf '%q\n' "${dir}"
+      fi
+      i=$((i + 1))
+    done
     ;;
 
   activate)
@@ -11,19 +48,22 @@ location() {
 
     chpwd() {
       if [ $_location_push = true ]; then
-        location push "$(pwd)"
+        location history push "$(pwd)"
       else
         _location_push=true
       fi
     }
 
-    location push "$(pwd)"
+    location history push "$(pwd)"
     ;;
 
   push)
-    if [ "$2" != "${_location_history[-1]}" ]; then
+    local path="${1}"
+    [ $# -gt 0 ] && shift
+
+    if [ "${path}" != "${_location_history[-1]}" ]; then
       _location_history=(${_location_history[@]:0:$_location_index})
-      _location_history+=($2)
+      _location_history+=(${path})
       _location_index=$((${#_location_history[@]}))
     fi
     ;;
@@ -42,4 +82,9 @@ location() {
     cd "${_location_history[$_location_index]}"
     ;;
   esac
+}
+
+_location-tag() {
+  local command="${1:-select}"
+  [ $# -gt 0 ] && shift
 }

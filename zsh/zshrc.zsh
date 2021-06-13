@@ -90,7 +90,7 @@ source "${_DIRNAME}/kitsune.zsh"
 kitsune activate
 
 source "${_DIRNAME}/location.zsh"
-location activate
+location history activate
 
 unsetopt BEEP
 
