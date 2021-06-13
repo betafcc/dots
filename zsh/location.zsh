@@ -33,7 +33,7 @@ _location-history() {
     local i=1
     for dir in "${_location_history[@]}"; do
       if [ $i -eq $_location_index ]; then
-        clc "-%> <bold:${dir}>\n"
+        clc "<bold+green:${dir}>\n"
       else
         printf '%q\n' "${dir}"
       fi
