@@ -8,6 +8,8 @@ _DIRNAME=${0:a:h}
 
 export DENO_INSTALL="${HOME}/.deno"
 export PYENV_ROOT="${HOME}/.pyenv"
+export ANDROID_HOME="${HOME}/Library/Android/sdk"
+
 
 _PATH="${PYENV_ROOT}/shims"
 _PATH="${_PATH}:${PYENV_ROOT}/bin"
@@ -16,6 +18,10 @@ _PATH="${_PATH}:${HOME}/.cargo/bin"
 _PATH="${_PATH}:${HOME}/.rvm/bin"
 _PATH="${_PATH}:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 _PATH="${_PATH}:${HOME}/.betafcc/bin"
+_PATH="${_PATH}:${ANDROID_HOME}/emulator"
+_PATH="${_PATH}:${ANDROID_HOME}/tools"
+_PATH="${_PATH}:${ANDROID_HOME}/tools/bin"
+_PATH="${_PATH}:${ANDROID_HOME}/platform-tools"
 export PATH="${_PATH}:${PATH}"
 # --
 

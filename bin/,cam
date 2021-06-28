@@ -1,0 +1,90 @@
+#!/usr/bin/env electron
+const { app, BrowserWindow, TouchBar } = require("electron")
+const path = require("path")
+const { spawn } = require("child_process")
+
+// https://www.myinstants.com/search/
+
+const play = (url) => spawn("ffplay", ["-nodisp", "-autoexit", url])
+
+const playButton = (label, url) => {
+  let process = null
+  let playing = false
+
+  const button = new TouchBar.TouchBarButton({
+    label,
+    click: () => {
+      if (playing) {
+        process.kill()
+      } else {
+        process = play(url)
+        playing = true
+
+        process.once("close", () => {
+          button.label = label
+          playing = false
+        })
+
+        button.label = `(${label})`
+      }
+    },
+  })
+
+  return button
+}
+
+
+app.on("ready", () => {
+  const mainWindow = new BrowserWindow({
+    // titleBarStyle: "hiddenInset",
+    alwaysOnTop: true,
+    width: 400,
+    height: 400,
+    x: 0,
+    y: 0,
+    transparent: true,
+    frame: false,
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
+    },
+  })
+
+  mainWindow.setAspectRatio(1)
+
+  mainWindow.loadFile(path.join(__dirname, "./cam.html"))
+  // mainWindow.loadURL(`data:text/html;charset=utf-8,${encodeURI(html)}`)
+
+  mainWindow.setTouchBar(
+    new TouchBar({
+      items: [
+        new TouchBar.TouchBarButton({
+          label: "webcam",
+          click: () => {
+            mainWindow.webContents.send("setFeed", "webcam")
+          },
+        }),
+        new TouchBar.TouchBarButton({
+          label: "android",
+          click: () => {
+            mainWindow.webContents.send("setFeed", "android")
+          },
+        }),
+        new TouchBar.TouchBarButton({
+          label: "mirror",
+          click: () => {
+            mainWindow.webContents.send("mirror")
+          },
+        }),
+        playButton(
+          "horn",
+          "https://www.myinstants.com/media/sounds/mlg-airhorn.mp3"
+        ),
+      ],
+    })
+  )
+})
+
+app.on("window-all-closed", () => {
+  app.quit()
+})

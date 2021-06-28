@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+
+# notes:
+#   use gtimeout to run the builds
+
+run() {
+    case "$1" in
+    'python') cat <(printf 'print(') - <(printf ')') | "${HOME}/.pyenv/shims/python" ;;
+    'node') cat <(printf 'console.log(') - <(printf ')') | node ;;
+    esac
+}

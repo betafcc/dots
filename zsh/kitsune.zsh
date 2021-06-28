@@ -34,7 +34,7 @@ _kitsune-compile() {
 
   _ks_template[arrow.erroed_last]='<bold+#dc322f:❱ >'
   _ks_template[arrow.has_jobs]='<bold+#b58900:❱ >'
-  _ks_template[arrow.ok]='<bold+#aaa:❱ >'
+  _ks_template[arrow.ok]='<bold+#2aa198:❱ >'
 
   if [ "$KITSUNE_VENV_VERBOSE" = "true" ]; then
     _ks_template[venv.on]='<bold+#2aa198:[<#b58900:> <white:${_ks_model[venv.name]}>]>'

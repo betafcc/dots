@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Webcam</title>
+    <style>
+      html,
+      body,
+      #root {
+        box-sizing: border-box;
+        border: none;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+      body {
+        -webkit-app-region: drag;
+        cursor: grab;
+      }
+
+      body:active {
+        cursor: grabbing;
+      }
+
+      #root {
+        background-color: rgba(0, 0, 0, 0);
+      }
+
+      #root > .feed {
+        /* box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23); */
+        box-sizing: border-box;
+        display: block;
+        background-color: black;
+        border: 1px solid black;
+        border-radius: 50%;
+        width: 100vmin;
+        height: 100vmin;
+        object-fit: cover;
+        pointer-events: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+      const { ipcRenderer } = require("electron")
+      const init = async () => {
+        const root = document.querySelector("#root")
+        const img = document.createElement("img")
+        img.classList.add("feed")
+        img.setAttribute("src", "http://192.168.3.4:8080/video")
+
+        const video = document.createElement("video")
+        video.classList.add("feed")
+        video.setAttribute("autoplay", true)
+        video.srcObject = await navigator.mediaDevices.getUserMedia({
+          video: true,
+        })
+
+        root.appendChild(video)
+
+        const setFeed = feed => {
+          switch (feed) {
+            case "webcam": {
+              root.removeChild(root.firstChild)
+              root.appendChild(video)
+              video.play()
+              return
+            }
+            case "android": {
+              root.removeChild(root.firstChild)
+              root.appendChild(img)
+              return
+            }
+          }
+        }
+
+        let mirror = false
+
+        ipcRenderer.on("setFeed", (_, feed) => setFeed(feed))
+        ipcRenderer.on("mirror", (_, feed) => {
+          if (mirror) {
+            video.style.transform = 'scale(1, 1)'
+            img.style.transform = 'scale(1, 1)'
+          } else {
+            video.style.transform = 'scale(-1, 1)'
+            img.style.transform = 'scale(-1, 1)'
+          }
+          mirror = !mirror
+        })
+      }
+
+      init()
+    </script>
+  </body>
+</html>
