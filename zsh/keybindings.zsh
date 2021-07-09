@@ -17,6 +17,7 @@ typeset -A _keys=(
   'ctrl+r' '^R'
   'cmd+z' '^[[z'
   'cmd+shift+z' '^[[Z'
+  'cmd+shift+f' '^[[F'
 )
 
 ,bindkey() {
@@ -62,3 +63,4 @@ _,fzf-history-widget() {
 ,bindkey -N ctrl+r _,fzf-history-widget
 ,bindkey cmd+z undo
 ,bindkey cmd+shift+z redo
+,bindkey -N cmd+shift+f ',rg; zle reset-prompt'

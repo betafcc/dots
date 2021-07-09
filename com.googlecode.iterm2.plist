@@ -839,6 +839,15 @@
 					<key>Text</key>
 					<string>0x1f</string>
 				</dict>
+				<key>0x46-0x120000-0x3</key>
+				<dict>
+					<key>Action</key>
+					<integer>10</integer>
+					<key>Label</key>
+					<string></string>
+					<key>Text</key>
+					<string>[F</string>
+				</dict>
 				<key>0x52-0x120000-0xf</key>
 				<dict>
 					<key>Action</key>
