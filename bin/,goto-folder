@@ -4,22 +4,32 @@ set -euo pipefail
 __main() {
   local query
   case "${1:---descend}" in
-    --find) case "${PWD}" in
-              "${HOME}") query="${PWD/#${HOME}}"; cd "${HOME}";;
-              "${HOME}/"*) query="${PWD/#${HOME}\/}/"; cd "${HOME}";;
-              '/') query='';;
-              '/'*) query="${PWD/#\/}/"; cd /;;
-            esac
-            ;;
-    --descend) query='';;
+  --find)
+    case "${PWD}" in
+    "${HOME}")
+      query="${PWD/#${HOME}/}"
+      cd "${HOME}"
+      ;;
+    "${HOME}/"*)
+      query="${PWD/#${HOME}\//}/"
+      cd "${HOME}"
+      ;;
+    '/') query='' ;;
+    '/'*)
+      query="${PWD/#\//}/"
+      cd /
+      ;;
+    esac
+    ;;
+  --descend) query='' ;;
   esac
 
   local prompt
   case "${PWD}" in
-    '/') prompt='/';;
-    "${HOME}") prompt='~/';;
-    "${HOME}/"*) prompt='./';;
-    *) prompt="${PWD}/";;
+  '/') prompt='/' ;;
+  "${HOME}") prompt='~/' ;;
+  "${HOME}/"*) prompt='./' ;;
+  *) prompt="${PWD}/" ;;
   esac
 
   local result="$(__fd | __fzf --prompt "${prompt}" --query "${query}")"
@@ -33,27 +43,38 @@ __main() {
 
 __fd() {
   fd \
+    --one-file-system \
     --hidden \
+    --type d \
     --no-ignore \
     --exclude '.git' \
     --exclude 'node_modules' \
-    --type d \
-    "${@}" \
-    | sed 's:$:/:'
+    "${@}" |
+    sed 's:$:/:'
 }
 
 __fzf() {
-    fzf \
-        --color 'light' \
-        --height 80% \
-        --layout reverse \
-        --no-multi \
-        --preview ',ls {}' \
-        --preview-window 'right:60%' \
-        --filepath-word \
-        --bind 'tab:replace-query+top,shift-tab:backward-kill-word+top' \
-        "$@"
-        # --expect='alt-m,alt-e,ctrl-g,esc,ctrl-m,enter' \
+  local preview_cmd="exa \
+    --color=always \
+    --group-directories-first \
+    --all \
+    --icons \
+    --oneline \
+    {}
+  "
+  fzf \
+    --info hidden \
+    --color 'light' \
+    --height 80% \
+    --layout reverse \
+    --no-multi \
+    --preview "${preview_cmd}" \
+    --preview-window 'right:60%' \
+    --filepath-word \
+    --color 'gutter:-1,bg+:#ff6666,fg+:-1:bold,hl:#66ff66:bold' \
+    --bind 'tab:replace-query+top,shift-tab:backward-kill-word+top' \
+    "$@"
+  # --expect='alt-m,alt-e,ctrl-g,esc,ctrl-m,enter' \
 }
 
 __main "${@}"

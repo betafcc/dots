@@ -1,7 +1,12 @@
 #!/bin/sh
 ROOT="${HOME}/.betafcc/node"
 
-"${HOME}/.fnm/node-versions/v12.3.1/installation/bin/node" \
+# "${HOME}/.nvm/node-versions/v12.3.1/installation/bin/node" \
+#     "${ROOT}/node_modules/.bin/babel-node" \
+#     --config-file "${ROOT}/babel.config.js" \
+#     "${@}"
+
+node \
     "${ROOT}/node_modules/.bin/babel-node" \
     --config-file "${ROOT}/babel.config.js" \
     "${@}"

@@ -10,7 +10,6 @@ export DENO_INSTALL="${HOME}/.deno"
 export PYENV_ROOT="${HOME}/.pyenv"
 export ANDROID_HOME="${HOME}/Library/Android/sdk"
 
-
 _PATH="${PYENV_ROOT}/shims"
 _PATH="${_PATH}:${PYENV_ROOT}/bin"
 _PATH="${_PATH}:${DENO_INSTALL}/bin"
@@ -76,8 +75,32 @@ export YVM_DIR=/usr/local/opt/yvm
 
 export YVM_DIR="${HOME}/.yvm"
 
+export PYENV_SHELL=zsh
+source "${PYENV_ROOT}/completions/pyenv.zsh"
+command pyenv rehash 2>/dev/null
+pyenv() {
+    local command
+    command="${1:-}"
+    if [ "$#" -gt 0 ]; then
+        shift
+    fi
+
+    case "$command" in
+    rehash | shell)
+        eval "$(pyenv "sh-$command" "$@")"
+        ;;
+    *)
+        command pyenv "$command" "$@"
+        ;;
+    esac
+}
+
 autoload -Uz compinit
 zstyle ':completion:*' menu select
+# case insensitive path-completion
+zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*'
+# partial completion suggestions
+zstyle ':completion:*' list-suffixeszstyle ':completion:*' expand prefix suffix
 zmodload zsh/complist
 compinit
 _comp_options+=(globdots)

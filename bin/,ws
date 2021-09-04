@@ -1,0 +1,2 @@
+#!/usr/bin/env zsh
+node "$(dirname "$0")/ws-server/index.js" "$@"

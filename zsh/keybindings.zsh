@@ -56,7 +56,7 @@ _,fzf-history-widget() {
   return $ret
 }
 
-,bindkey -N cmd+down 'eval $(,goto-folder --descend); zle reset-prompt'
+,bindkey -N cmd+down 'print -n "\r"; eval $(,goto-folder --descend); zle reset-prompt'
 ,bindkey -N cmd+up 'cd ..; zle reset-prompt'
 ,bindkey -N cmd+left 'location history back; zle reset-prompt'
 ,bindkey -N cmd+right 'location history forward; zle reset-prompt'

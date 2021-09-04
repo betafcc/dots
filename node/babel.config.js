@@ -1,6 +1,9 @@
 module.exports = {
   plugins: [
-    ['@babel/plugin-proposal-pipeline-operator', { proposal: 'smart' }],
+    ['@babel/plugin-proposal-pipeline-operator', {
+      proposal: 'hack',
+      topicToken: '#',
+    }],
     [
       'module-resolver',
       {

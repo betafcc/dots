@@ -85,8 +85,9 @@ alias mkcd=',mkcd'
     --query "$INITIAL_QUERY" \
     --layout=reverse \
     --delimiter : \
+    --color 'gutter:-1,bg+:#333333,fg+:-1:bold,hl:#66ff66:bold' \
     --bind 'alt-e:execute(e +{2}:{3} {1})' \
     --bind 'alt-o:execute(code {1})' \
-    --preview 'bat --style=numbers --color=always --highlight-line {2} {1}' \
+    --preview 'BAT_THEME=gruvbox bat --style=numbers --color=always --highlight-line {2} {1}' \
     --preview-window +{2}-/2
 }
