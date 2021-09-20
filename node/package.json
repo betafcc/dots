@@ -18,7 +18,7 @@
     "express": "^4.17.1",
     "fast-glob": "^2.2.7",
     "glob": "^7.1.4",
-    "prismjs": "^1.16.0",
+    "prismjs": "^1.25.0",
     "xml-formatter": "^1.1.0"
   }
 }
