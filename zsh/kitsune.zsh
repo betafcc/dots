@@ -182,6 +182,7 @@ _kitsune-activate() {
   precmd() {}
 
   PROMPT='$(_kitsune-render ps1)'
+  PS2='$(_kitsune-render ps2)'
   RPROMPT='$(_kitsune-render rprompt)'
 
   if [ "${KITSUNE_LOCK}" = "top" ]; then

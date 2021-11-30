@@ -21,6 +21,7 @@ _PATH="${_PATH}:${ANDROID_HOME}/emulator"
 _PATH="${_PATH}:${ANDROID_HOME}/tools"
 _PATH="${_PATH}:${ANDROID_HOME}/tools/bin"
 _PATH="${_PATH}:${ANDROID_HOME}/platform-tools"
+_PATH="${_PATH}:${HOME}/.local/bin"
 export PATH="${_PATH}:${PATH}"
 # --
 

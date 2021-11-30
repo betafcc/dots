@@ -47,5 +47,5 @@ app.whenReady().then(
       window.webContents.insertCSS(css)
     })
   },
-  err => proces.exit(1)
+  err => process.exit(1)
 )

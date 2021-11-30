@@ -41,15 +41,25 @@ __main() {
 
 }
 
+# __fd() {
+#   fd \
+#     --one-file-system \
+#     --hidden \
+#     --type d \
+#     --no-ignore \
+#     --exclude '.git' \
+#     --exclude 'node_modules' \
+#     "${@}" |
+#     sed 's:$:/:'
+# }
+
 __fd() {
-  fd \
-    --one-file-system \
-    --hidden \
-    --type d \
-    --no-ignore \
-    --exclude '.git' \
-    --exclude 'node_modules' \
-    "${@}" |
+  bfs \
+    -x \
+    -type d -readable -o -prune \
+    -exclude -name '.git' \
+    -exclude -name 'node_modules' \
+    "${@}" 2> /dev/null |
     sed 's:$:/:'
 }
 
