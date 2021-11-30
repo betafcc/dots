@@ -4,6 +4,14 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+sympy = "*"
+matplotlib = "*"
+ipympl = "*"
+nb-black = "*"
+opencv-python = "*"
+callgraph = "*"
+graphviz = "*"
+ipython = "*"
 
 [dev-packages]
 jupyterlab = "*"

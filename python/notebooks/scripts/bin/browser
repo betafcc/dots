@@ -1,0 +1,107 @@
+#!/usr/bin/env electron
+const { app, BrowserWindow } = require("electron")
+
+
+const css = `
+:root {
+  --jp-private-menubar-height: 0px !important;
+  --jp-private-menu-panel-height: 0px !important;
+  --jp-private-sidebar-tab-width: 0px !important;
+  --jp-private-toolbar-height: 0px !important;
+  --jp-cell-collapser-width: 4px !important;
+   /* --jp-cell-prompt-width: 0px !important; */
+   /* --jp-border-width: 0px !important; */
+  /* --jp-code-padding: 0px !important; */
+  /* --jp-cell-editor-background: transparent !important; */
+  --jp-input-box-shadow: unset !important;
+  /* --jp-cell-editor-border-color: unset !important; */
+  --jp-notebook-toolbar-padding: 0px !important;
+  /* --jp-notebook-padding: 0px !important; */
+}
+
+.lm-Widget.p-Widget.jp-Toolbar.jp-Toolbar-micro {
+  height: 0px !important;
+  min-height: 0px !important;
+  padding: 0px !important;
+}
+
+
+.lm-DockPanel-tabBar .lm-TabBar-tab.jp-mod-current:before {
+  top: unset !important;
+  bottom: calc(-1 * var(--jp-border-width) + 1px);
+}
+ 
+#jp-main-dock-panel {
+  padding: 0 !important;
+}
+
+.CodeMirror.cm-s-jupyter {
+  background: var(--jp-cell-editor-background) !important;
+}
+
+.jp-Cell.jp-mod-selected .jp-InputArea-editor:not(.jp-mod-focused) {
+  border-color: #d6d !important;
+}
+
+.CodeMirror.cm-s-jupyter:not(:focus-within) {
+  opacity: 0.7;
+}
+
+.jp-mod-selected .CodeMirror.cm-s-jupyter:not(:focus-within) {
+  opacity: 1 !important;
+}
+
+
+.jd-mod-active .jp-InputArea-editor {
+    border-width: 0px 0px 0px 3px !important;
+}
+
+.jp-Cell-inputCollapser, .jp-Cell-outputCollapser {
+    display: none;
+}
+  
+  
+  .jp-Cell {
+  }
+.jp-Cell-inputCollapser, .jp-Cell-outputCollapser {
+      display: none;
+  }
+  
+  .jp-InputArea-editor {
+      border-width: 0px 0px 0px 3px !important;
+  }
+
+  .jp-Notebook {
+  }
+
+  .jp-SideBar {
+      overflow: hidden;
+      opacity: 0;
+  }
+
+  .jp-Cell {
+    padding: 3px 0 3px 3px !important;
+  }
+
+  .jp-InputPrompt, .jp-OutputPrompt {
+    display: none;
+  }
+
+  .jp-Cell-inputWrapper, .jp-Cell-outputWrapper {
+    flex-direction: row-reverse !important;
+  }
+
+  .jp-Collapser {
+    border-radius: 0 4px 4px 0px !important;
+  }
+`
+
+app.whenReady().then(() => {
+  const window = new BrowserWindow({
+    titleBarStyle: 'customButtonsOnHover',
+  })
+  window.webContents.on("did-finish-load", () => {
+    window.webContents.insertCSS(css)
+  })
+window.loadURL(process.argv[2])
+})

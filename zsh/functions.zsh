@@ -9,7 +9,8 @@ alias mkcd=',mkcd'
   # pipenv run jupyter lab \
   #   --browser='/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --app="%s"'
   pipenv run jupyter lab \
-    --browser=',browser %s'
+    --browser=',browser %s' \
+    "$@"
 }
 
 ,history() {
