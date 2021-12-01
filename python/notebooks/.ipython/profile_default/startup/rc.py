@@ -1,6 +1,6 @@
 def __rc():
     from IPython import get_ipython
-    from IPython.core.magic import needs_local_scope, register_line_magic
+    from IPython.core.magic import needs_local_scope, register_line_magic, register_cell_magic
     from IPython.terminal.prompts import Prompts, Token
     from prompt_toolkit.enums import DEFAULT_BUFFER
     from prompt_toolkit.filters import (
@@ -78,6 +78,25 @@ def __rc():
     @needs_local_scope
     def sp(line, local_ns):
         return sympy_parse(line, local_ns, locals=local_ns)
+
+    @register_cell_magic
+    @needs_local_scope
+    def interact(line, cell, local_ns):
+        import ipywidgets
+        decorator = eval(
+            'ipywidgets.interact(' + line + ')',
+            globals(),
+            { **local_ns, 'ipywidgets': ipywidgets }
+        )
+        lines = cell.strip().split('\n')
+        last = 'return ' + lines[-1]
+        src = (
+            '\n@__interact_decorator'
+            '\ndef __interact_f(' + ', '.join(decorator.kwargs) + '):'
+            + '\n    ' + '\n    '.join([*lines, last])
+        )
+
+        exec(src, globals(), { **local_ns, '__interact_decorator': decorator })
 
     ip = get_ipython()
     ip.prompts = MyPrompt(ip)
