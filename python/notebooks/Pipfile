@@ -12,6 +12,8 @@ opencv-python = "*"
 callgraph = "*"
 graphviz = "*"
 ipython = "*"
+pandas = "*"
+gvmagic = "*"
 
 [dev-packages]
 jupyterlab = "*"

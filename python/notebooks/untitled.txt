@@ -1,0 +1,4 @@
+TODO:
+    different colors of indicator for diferent modes
+    loading indicator
+    errored cell indicator

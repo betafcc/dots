@@ -1,0 +1,2 @@
+#!/usr/bin/env sh
+echo "$@" | dot -Tpng -Gsize=9\! | imgcat

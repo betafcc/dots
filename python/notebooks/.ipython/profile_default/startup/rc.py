@@ -3,6 +3,7 @@ def __rc():
     from IPython.core.magic import needs_local_scope, register_line_magic, register_cell_magic
     from IPython.terminal.prompts import Prompts, Token
     from prompt_toolkit.enums import DEFAULT_BUFFER
+    from IPython.display import HTML, display
     from prompt_toolkit.filters import (
         HasFocus,
         HasSelection,
@@ -89,18 +90,42 @@ def __rc():
             { **local_ns, 'ipywidgets': ipywidgets }
         )
         lines = cell.strip().split('\n')
-        last = 'return ' + lines[-1]
+        last = '_result = ' + lines[-1]
+
+        local_ns['__interact_decorator'] = decorator
         src = (
             '\n@__interact_decorator'
             '\ndef __interact_f(' + ', '.join(decorator.kwargs) + '):'
             + '\n    ' + '\n    '.join([*lines, last])
+            + '\n    return _result'
         )
 
-        exec(src, globals(), { **local_ns, '__interact_decorator': decorator })
+        ip.run_cell(src, store_history=False)
+
+    def pre_run_cell(info):
+        display(HTML(f'''
+            <script
+                id="output-{id(info)}"
+            >pre_run_cell && pre_run_cell('{id(info)}')</script>
+        '''))
+
+    def post_run_cell(result):
+        display(HTML(f'''
+            <script>post_run_cell && post_run_cell('{id(result.info)}', '{result.success}')</script>
+        '''))
+
+    def clear():
+        display(HTML(f'''
+            <script>shell_initialized(); console.log('called')</script>
+        '''))
+
+
 
     ip = get_ipython()
     ip.prompts = MyPrompt(ip)
-
+    ip.events.register('pre_run_cell', pre_run_cell)
+    ip.events.register('post_run_cell', post_run_cell)
+    # ip.events.register('shell_initialized', shell_initialized)
 
 __rc()
 del __rc
