@@ -1,0 +1,30 @@
+[tool.poetry]
+name = "notebooks"
+version = "0.1.0"
+description = ""
+authors = ["Beta Faccion <betafcc@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = ">=3.9,<3.11"
+sympy = "^1.9"
+matplotlib = "^3.5.0"
+ipympl = "^0.8.2"
+opencv-python = "^4.5.4"
+callgraph = "^1.0.0"
+manimgl = "^1.2.0"
+ipython = "^7.30.1"
+pandas = "^1.3.4"
+gvmagic = "^0.5"
+PyOpenGL-accelerate = "^3.1.5"
+manim = "^0.12.0"
+
+[tool.poetry.dev-dependencies]
+jupyterlab = "^3.2.4"
+black = "^21.11b1"
+flake8 = "^4.0.1"
+pytest = "^6.2.5"
+mypy = "^0.910"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
