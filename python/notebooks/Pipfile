@@ -14,6 +14,9 @@ graphviz = "*"
 ipython = "*"
 pandas = "*"
 gvmagic = "*"
+pycairo = "*"
+pyopengl = "*"
+manimgl = "*"
 
 [dev-packages]
 jupyterlab = "*"
