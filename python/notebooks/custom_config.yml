@@ -16,10 +16,10 @@ camera_qualities:
 directories:
   mirror_module_path: false
   output: ./.manimgl_data/output
-  raster_images: ./manimgl_data/raster_images
-  sounds: ./manimgl_data/sounds
-  temporary_storage: ./manimgl_data/temporary_storage
-  vector_images: ./manimgl_data/vector_images
+  raster_images: ./.manimgl_data/raster_images
+  sounds: ./.manimgl_data/sounds
+  temporary_storage: ./.manimgl_data/temporary_storage
+  vector_images: ./.manimgl_data/vector_images
 style:
   background_color: '#333333'
   font: Consolas

@@ -1,6 +1,10 @@
 def __rc():
     from IPython import get_ipython
-    from IPython.core.magic import needs_local_scope, register_line_magic, register_cell_magic
+    from IPython.core.magic import (
+        needs_local_scope,
+        register_line_magic,
+        register_cell_magic,
+    )
     from IPython.terminal.prompts import Prompts, Token
     from prompt_toolkit.enums import DEFAULT_BUFFER
     from IPython.display import HTML, display
@@ -19,7 +23,7 @@ def __rc():
 
         @registry.add_binding(
             "escape",
-            u"m",
+            "m",
             filter=(HasFocus(DEFAULT_BUFFER) & ~HasSelection() & insert_mode),
         )
         def _(event):
@@ -45,28 +49,29 @@ def __rc():
     @needs_local_scope
     def var(line, local_ns):
         import sympy
-        
-        match sympy.symbols(line):
-            case (*xs,):
-                for x in xs:
-                    local_ns[x.name] = x
-                return sympy.Matrix([xs])
-            case x:
+
+        result = sympy.symbols(line)
+        try:
+            for x in result:
                 local_ns[x.name] = x
-                return x
+            return sympy.Matrix([result])
+        except TypeError:
+            local_ns[x.name] = x
+            return x
 
     def sympy_parse(line, local_ns, *args, **kwargs):
         import sympy
+
         try:
             return sympy.S(line, *args, **kwargs)
         except ValueError as err:
-            if ':=' in line:
-                name, expr = line.split(':=')
+            if ":=" in line:
+                name, expr = line.split(":=")
                 result = sympy_parse(expr, local_ns, *args, **kwargs)
                 local_ns[name.strip()] = result
                 return result
-            elif '=' in line:
-                return sympy.S('Eq(' + ','.join(line.split('='))  + ')', *args, **kwargs)
+            elif "=" in line:
+                return sympy.S("Eq(" + ",".join(line.split("=")) + ")", *args, **kwargs)
             else:
                 raise err
 
@@ -84,48 +89,63 @@ def __rc():
     @needs_local_scope
     def interact(line, cell, local_ns):
         import ipywidgets
-        decorator = eval(
-            'ipywidgets.interact(' + line + ')',
-            globals(),
-            { **local_ns, 'ipywidgets': ipywidgets }
-        )
-        lines = cell.strip().split('\n')
-        last = '_result = ' + lines[-1]
 
-        local_ns['__interact_decorator'] = decorator
+        decorator = eval(
+            "ipywidgets.interact(" + line + ")",
+            globals(),
+            {**local_ns, "ipywidgets": ipywidgets},
+        )
+        lines = cell.strip().split("\n")
+        last = "_result = " + lines[-1]
+
+        local_ns["__interact_decorator"] = decorator
         src = (
-            '\n@__interact_decorator'
-            '\ndef __interact_f(' + ', '.join(decorator.kwargs) + '):'
-            + '\n    ' + '\n    '.join([*lines, last])
-            + '\n    return _result'
+            "\n@__interact_decorator"
+            "\ndef __interact_f("
+            + ", ".join(decorator.kwargs)
+            + "):"
+            + "\n    "
+            + "\n    ".join([*lines, last])
+            + "\n    return _result"
         )
 
         ip.run_cell(src, store_history=False)
 
     def pre_run_cell(info):
-        display(HTML(f'''
+        display(
+            HTML(
+                f"""
             <script
                 id="output-{id(info)}"
             >pre_run_cell && pre_run_cell('{id(info)}')</script>
-        '''))
+        """
+            )
+        )
 
     def post_run_cell(result):
-        display(HTML(f'''
+        display(
+            HTML(
+                f"""
             <script>post_run_cell && post_run_cell('{id(result.info)}', '{result.success}')</script>
-        '''))
+        """
+            )
+        )
 
     def clear():
-        display(HTML(f'''
+        display(
+            HTML(
+                f"""
             <script>shell_initialized(); console.log('called')</script>
-        '''))
-
-
+        """
+            )
+        )
 
     ip = get_ipython()
     ip.prompts = MyPrompt(ip)
-    ip.events.register('pre_run_cell', pre_run_cell)
-    ip.events.register('post_run_cell', post_run_cell)
+    ip.events.register("pre_run_cell", pre_run_cell)
+    ip.events.register("post_run_cell", post_run_cell)
     # ip.events.register('shell_initialized', shell_initialized)
+
 
 __rc()
 del __rc

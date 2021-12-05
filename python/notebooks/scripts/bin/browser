@@ -19,12 +19,10 @@ app.whenReady().then(() => {
   })
 
   window.webContents.on('did-finish-load', async () => {
-    try {
-      await window.webContents.insertCSS(await css)
-      await window.webContents.executeJavaScript(await js)
-    } catch (err) {
-      console.error({ err })
-    }
+    return Promise.all([
+      css.then(r => window.webContents.insertCSS(r)),
+      js.then(r => window.webContents.executeJavaScript(r)),
+    ]).catch(console.error)
   })
   window.loadURL(process.argv[2])
 })
