@@ -17,6 +17,8 @@ gvmagic = "^0.5"
 PyOpenGL-accelerate = "^3.1.5"
 manimgl = "^1.2.0"
 manim = "^0.12.0"
+toolz = "^0.11.2"
+wolframclient = "^1.1.7"
 
 [tool.poetry.dev-dependencies]
 jupyterlab = "^3.2.4"
@@ -24,7 +26,29 @@ black = "^21.11b1"
 flake8 = "^4.0.1"
 pytest = "^6.2.5"
 mypy = "^0.910"
+isort = "^5.10.1"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+
+[tool.black]
+line-length = 99 # override black's default line-length
+exclude = '''
+/(
+    \.git
+  | \.mypy_cache
+  | \.tox
+  | venv
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+)/
+'''
+
+[tool.isort]
+# make it compatible with black
+profile = "black"

@@ -1,18 +1,30 @@
+from dataclasses import dataclass
+
+import ipywidgets as widgets
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+import sympy as sp
+from ipywidgets import interact
+
+x, y, z = sp.symbols("x, y, z")
+
+
 def __rc():
+    import sys
+    from pathlib import Path
+
     from IPython import get_ipython
     from IPython.core.magic import (
         needs_local_scope,
-        register_line_magic,
         register_cell_magic,
+        register_line_magic,
     )
+    from IPython.display import HTML, display
     from IPython.terminal.prompts import Prompts, Token
     from prompt_toolkit.enums import DEFAULT_BUFFER
-    from IPython.display import HTML, display
-    from prompt_toolkit.filters import (
-        HasFocus,
-        HasSelection,
-        EmacsInsertMode,
-    )
+    from prompt_toolkit.filters import EmacsInsertMode, HasFocus, HasSelection
+
+    sys.path.append(str(Path(__file__).parents[3]))
 
     ip = get_ipython()
     insert_mode = EmacsInsertMode()
