@@ -1,7 +1,10 @@
 #!/usr/bin/env zsh
 # export DENO_INSTALL="${HOME}/.deno"
+NOTEBOOKS="${HOME}/.betafcc/python/notebooks"
+
 export PYENV_ROOT="${HOME}/.pyenv"
-export IPYTHONDIR="${HOME}/.betafcc/python/notebooks/.ipython"
+export IPYTHONDIR="${NOTEBOOKS}/.ipython"
+export MATPLOTLIBRC="${NOTEBOOKS}/config/matplotlibrc"
 
 _PATH="${PYENV_ROOT}/shims"
 # _PATH="${_PATH}:${PYENV_ROOT}/bin"
@@ -20,8 +23,8 @@ _PATH="${_PATH}:${HOME}/.local/bin"
 _PATH="${_PATH}:${HOME}/.pyenv/versions/3.10.0/bin"
 _PATH="${_PATH}:${HOME}/.poetry/bin"
 _PATH="${_PATH}:${HOME}/.betafcc/bin"
-_PATH="${_PATH}:${HOME}/.betafcc/python/notebooks/scripts/bin"
+_PATH="${_PATH}:${NOTEBOOKS}/scripts/bin"
 export PATH="${_PATH}:${PATH}"
-source "${HOME}/.betafcc/python/notebooks/.venv/bin/activate"
+source "${NOTEBOOKS}/.venv/bin/activate"
 #   --jp-private-toolbar-height: calc(
-exec jupyter lab --expose-app-in-browser --browser='browser %s' "${HOME}/.betafcc/python/notebooks"
+exec jupyter lab --expose-app-in-browser --browser='browser %s' "${NOTEBOOKS}"

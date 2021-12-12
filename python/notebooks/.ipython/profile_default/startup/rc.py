@@ -156,6 +156,10 @@ def __rc():
     ip.prompts = MyPrompt(ip)
     ip.events.register("pre_run_cell", pre_run_cell)
     ip.events.register("post_run_cell", post_run_cell)
+
+    # matplotlib doesn't get my custom rc file if I don't run this
+    # https://github.com/jupyter/notebook/issues/3385
+    ip.run_line_magic("matplotlib", "notebook")
     # ip.events.register('shell_initialized', shell_initialized)
 
 
