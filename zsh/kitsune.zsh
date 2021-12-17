@@ -7,8 +7,6 @@
 
 KITSUNE_PATH="$0:A"
 
-typeset -A _ks_template=()
-
 _kitsune-compile() {
   _ks_template[prompt.PS1]=$(
     for name in tag path arrow; do
@@ -174,8 +172,7 @@ _kitsune-update() {
 }
 
 
-_kitsune-activate() {
-  _kitsune-compile
+_kitsune-bind-shell() {
   setopt prompt_subst
 
   preexec() {}
@@ -221,7 +218,23 @@ _not() {
 
 kitsune() {
   case "${1:-activate}" in
-    activate|reload) _kitsune-activate;;
+    activate)
+      if [ ! -f "${HOME}/.kitsunedump" ]; then
+        (
+          typeset -g -A _ks_template=()
+          _kitsune-compile
+          declare -p _ks_template > "${HOME}/.kitsunedump"
+        )
+      fi
+
+      source "${HOME}/.kitsunedump"
+      _kitsune-bind-shell
+    ;;
+    reload)
+      _kitsune-compile
+      declare -p _ks_template > "${HOME}/.kitsunedump"
+      _kitsune-bind-shell
+    ;;
     lock)
       export KITSUNE_LOCK="${2:-bottom}"
       kitsune reload

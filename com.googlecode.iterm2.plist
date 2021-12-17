@@ -4,6 +4,8 @@
 <dict>
 	<key>AdjustWindowForFontSizeChange</key>
 	<false/>
+	<key>Command</key>
+	<string>/bin/zsh</string>
 	<key>Control</key>
 	<integer>1</integer>
 	<key>Custom Color Presets</key>
@@ -454,6 +456,10 @@
 	<key>NeverWarnAboutShortLivedSessions_28FDC619-0B00-46BB-9D02-9E38B2616FAC</key>
 	<true/>
 	<key>NeverWarnAboutShortLivedSessions_28FDC619-0B00-46BB-9D02-9E38B2616FAC_selection</key>
+	<integer>0</integer>
+	<key>NeverWarnAboutShortLivedSessions_C396DAC6-4F63-4242-8D35-388727B6D40D</key>
+	<true/>
+	<key>NeverWarnAboutShortLivedSessions_C396DAC6-4F63-4242-8D35-388727B6D40D_selection</key>
 	<integer>0</integer>
 	<key>New Bookmarks</key>
 	<array>
@@ -1947,7 +1953,7 @@
 			<key>Columns</key>
 			<integer>80</integer>
 			<key>Command</key>
-			<string></string>
+			<string>/bin/zsh</string>
 			<key>Cursor Boost</key>
 			<real>0.0</real>
 			<key>Cursor Color</key>
