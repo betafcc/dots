@@ -24,19 +24,19 @@ alias mkcd=',mkcd'
     git commit -m "${2}"
 }
 
-,moteef() {
-  local moteef="${HOME}/Desktop/moteefe/moteef"
-  cd "${moteef}"
+# ,moteef() {
+#   local moteef="${HOME}/Desktop/moteefe/moteef"
+#   cd "${moteef}"
 
-  case "${1}" in
-  db) docker-compose up db redis elasticsearch ;;
-  web) docker-compose up web jobs ;;
-  migrate) docker-compose run web rails db:migrate ;;
-  client) cd client && yarn start ;;
-  nextjs) cd nextjs-client && yarn run dev ;;
-  libs) cd ../frontend-libs && yarn start ;;
-  esac
-}
+#   case "${1}" in
+#   db) docker-compose up db redis elasticsearch ;;
+#   web) docker-compose up web jobs ;;
+#   migrate) docker-compose run web rails db:migrate ;;
+#   client) cd client && yarn start ;;
+#   nextjs) cd nextjs-client && yarn run dev ;;
+#   libs) cd ../frontend-libs && yarn start ;;
+#   esac
+# }
 
 ,watch() {
   while true; do

@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# depends on:
+#   - bash 5.1
+#   - fzf
+#   - exa
+#   - bfs
+
 __main() {
   local query
   case "${1:---descend}" in

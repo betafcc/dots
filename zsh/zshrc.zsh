@@ -40,7 +40,7 @@ _comp_options+=(globdots)
 zstyle ':completion:*:*:git:*' script ~/.zsh/git-completion.bash
 fpath=(~/.zsh $fpath)
 
-source "${PYENV_ROOT}/completions/pyenv.zsh"
+# source "${PYENV_ROOT}/completions/pyenv.zsh"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 

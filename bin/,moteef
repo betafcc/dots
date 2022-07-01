@@ -1,0 +1,2 @@
+#!/usr/bin/env sh
+authy generate brendon@moteefe.com | grep code | grep -o '[0-9]\+'
