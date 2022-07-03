@@ -1,0 +1,34 @@
+{
+  "shortcuts": [
+    {
+      "command": "application:close",
+      "keys": ["Accel W"],
+      "selector": ".jp-Activity"
+    },
+    {
+      "command": "application:close-all",
+      "keys": ["Accel Shift W"],
+      "selector": ".jp-Activity"
+    },
+    {
+      "command": "apputils:activate-command-palette",
+      "keys": ["Accel P"],
+      "selector": "body"
+    },
+    {
+      "command": "application:activate-next-tab",
+      "keys": ["Ctrl Tab"],
+      "selector": "body"
+    },
+    {
+      "command": "application:activate-previous-tab",
+      "keys": ["Ctrl Shift Tab"],
+      "selector": "body"
+    },
+    {
+      "command": "launcher:create",
+      "keys": ["Accel N"],
+      "selector": "body"
+    }
+  ]
+}
