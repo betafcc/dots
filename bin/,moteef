@@ -1,2 +1,22 @@
-#!/usr/bin/env sh
-authy generate brendon@moteefe.com | grep code | grep -o '[0-9]\+'
+#!/usr/bin/env bash
+
+totp() {
+  case "${1}" in
+  -v) authy generate brendon@moteefe.com ;;
+  -s) totp -v | grep code | grep -o '[0-9]\+' | tr -d '\n' ;;
+  -c) totp -s | pbcopy;;
+  -g)
+    local code="$(totp -s)"
+    echo -e -n "${code}" | pbcopy
+    osascript -e 'display notification "'"${code}"' copied" with title "Authy totp" subtitle "brendon@moteefe.com"'
+  ;;
+  *) totp -s ;;
+  esac
+}
+
+case "${1}" in
+totp)
+  shift
+  totp "${@}"
+  ;;
+esac

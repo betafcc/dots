@@ -45,7 +45,7 @@ _,fzf-history-widget() {
         --bind=ctrl-r:toggle-sort  \
         --bind=tab:replace-query+top \
         --no-multi \
-        --layout=reverse" $(__fzfcmd)
+        --layout=reverse" fzf
     )
   )
   local ret=$?

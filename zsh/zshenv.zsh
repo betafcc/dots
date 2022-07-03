@@ -55,3 +55,6 @@ export LESS_TERMCAP_ue=$'\E[0m'        # reset underline
 # export LANG="en_US.UTF-8"
 # export LC_ALL="en_US.UTF-8"
 # export LC_CTYPE="en_US.UTF-8"
+
+
+export POETRY_VIRTUALENVS_IN_PROJECT=true
