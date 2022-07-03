@@ -1,6 +1,7 @@
 media/
 .manimgl_data/
 jam/
+.jupyter/lab/workspaces/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
