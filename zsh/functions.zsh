@@ -92,3 +92,13 @@ alias mkcd=',mkcd'
     --preview 'BAT_THEME=gruvbox bat --style=numbers --color=always --highlight-line {2} {1}' \
     --preview-window +{2}-/2
 }
+
+,source-export() {
+  local file
+  # https://stackoverflow.com/questions/19331497/set-environment-variables-from-file-of-key-value-pairs
+  for file in "${@}"; do
+    set -a
+    . ./"${file}"
+    set +a
+  done
+}
