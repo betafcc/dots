@@ -25,10 +25,7 @@ class Secrets:
 
     def re_filter(self, regex: str):
         compiled = re.compile(regex, flags=re.IGNORECASE)
-
-        return Secrets(
-            client=self.client, name_predicate=lambda s: bool(compiled.findall(s))
-        )
+        return self.filter(lambda s: bool(compiled.findall(s)))
 
     def names(self) -> Iterator[str]:
         for page in self.client.get_paginator("list_secrets").paginate():
