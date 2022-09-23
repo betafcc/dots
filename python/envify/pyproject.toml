@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "envify"
+version = "0.1.0"
+description = ""
+authors = ["Betani <betafcc@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+boto3 = "^1.24.79"
+PyYAML = "^6.0"
+tqdm = "^4.64.1"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+ipykernel = "^6.15.3"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

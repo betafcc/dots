@@ -1,22 +1,39 @@
 #!/usr/bin/env bash
 
 totp() {
+  # from https://github.com/alexj212/authy
   case "${1}" in
   -v) authy generate brendon@moteefe.com ;;
   -s) totp -v | grep code | grep -o '[0-9]\+' | tr -d '\n' ;;
-  -c) totp -s | pbcopy;;
+  -c) totp -s | pbcopy ;;
+  -t) osascript -e "tell application \"System Events\" to keystroke \"$(totp -s)\"" ;;
   -g)
     local code="$(totp -s)"
     echo -e -n "${code}" | pbcopy
     osascript -e 'display notification "'"${code}"' copied" with title "Authy totp" subtitle "brendon@moteefe.com"'
-  ;;
+    ;;
   *) totp -s ;;
   esac
 }
+
+envify() (
+  cwd="$(pwd)"
+  cd /Users/betani/.betafcc/python/envify
+  source .venv/bin/activate
+  cd "${cwd}"
+  python -m envify "${@}"
+)
+
 
 case "${1}" in
 totp)
   shift
   totp "${@}"
   ;;
+envify)
+  shift
+  envify "${@}"
+  ;;
 esac
+# export PATH="/usr/local/bin:${HOME}/.betafcc/bin:${PATH}"
+# ,moteef totp -t
