@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "envify"
+name = "utils"
 version = "0.1.0"
 description = ""
 authors = ["Betani <betafcc@gmail.com>"]

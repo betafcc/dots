@@ -4,7 +4,7 @@ from typing import Any
 import boto3
 import yaml
 
-client = boto3.session.Session().client(
+create_client = lambda: boto3.session.Session().client(
     service_name="secretsmanager",
     region_name="eu-west-1",
 )
@@ -37,6 +37,6 @@ if __name__ == "__main__":
     import sys
 
     _ = load(sys.argv[-1])
-    _ = reveal(client, _)
+    _ = reveal(create_client(), _)
     _ = encode(_)
     print(_)

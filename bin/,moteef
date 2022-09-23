@@ -18,22 +18,36 @@ totp() {
 
 envify() (
   cwd="$(pwd)"
-  cd /Users/betani/.betafcc/python/envify
+  cd /Users/betani/.betafcc/python/utils
   source .venv/bin/activate
   cd "${cwd}"
-  python -m envify "${@}"
+  python -m utils.envify "${@}"
 )
 
+secrets() (
+  cwd="$(pwd)"
+  cd /Users/betani/.betafcc/python/utils
+  source .venv/bin/activate
+  cd "${cwd}"
+  python -m utils.secrets "${@}"
+)
 
 case "${1}" in
 totp)
   shift
   totp "${@}"
   ;;
+
 envify)
   shift
   envify "${@}"
   ;;
+
+secrets)
+  shift
+  secrets "${@}"
+  ;;
+
 esac
 # export PATH="/usr/local/bin:${HOME}/.betafcc/bin:${PATH}"
 # ,moteef totp -t
