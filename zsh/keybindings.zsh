@@ -1,3 +1,15 @@
+
+# cheatsheet:
+#   `zle -al` to list all zle commands
+#   `bindkey -L` to list all keybindings
+#   `bindkey -l` to list keymaps
+#   `bindkey -v` to activate vi mode
+#   `bindkey -e` to activate emacs mode
+#   `bindkey -M emacs` to list all emacs keybindings
+#   `bindkey -M viins` to list all viins keybindings
+
+# Some useful key codes,
+# do note that 'cmd' was mapped to '^[[' in iterm
 typeset -A _keys=(
   'right' '^[[C'
   'up' '^[[A'

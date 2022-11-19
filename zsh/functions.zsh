@@ -102,3 +102,18 @@ alias mkcd=',mkcd'
     set +a
   done
 }
+
+# TODO: not possible to use this in config?
+alias ghci='ghci -v0'
+# -v0: disable GHCi banner
+
+
+# ,toggle-inline-edit-mode() {
+#   if [[ "${_INLINE_EDIT}" == "true" ]]; then
+
+#     _INLINE_EDIT="true"
+#   else
+#     _INLINE_EDIT="false"
+#   fi
+#   fi
+# }
