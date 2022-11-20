@@ -1,10 +1,7 @@
 # zmodload zsh/zprof
 
-# this messes up my keymap,
-# but only when I enter another instance of zsh for some reason
-# (ie, when I'm on zsh and then run 'zsh' again)
-# why?
-# export EDITOR=vim
+export VISUAL="emacs -Q -nw"
+export EDITOR="emacs -Q -nw"
 
 export VOLTA_HOME="${HOME}/.volta"
 export PYENV_ROOT="${HOME}/.pyenv"
@@ -19,9 +16,6 @@ export PATH="${_PATH}:${PATH}"
 
 # ghcup paths setup
 [ -f "${HOME}/.ghcup/env" ] && source "/Users/betani/.ghcup/env" # ghcup-env
-# --
-
-export PIPENV_VENV_IN_PROJECT=true
 
 # awesome less presets from
 # https://www.topbug.net/blog/2016/09/27/make-gnu-less-more-powerful/
@@ -34,8 +28,6 @@ export LESS_TERMCAP_se=$'\E[0m'        # reset reverse video
 export LESS_TERMCAP_us=$'\E[1;32m'     # begin underline
 export LESS_TERMCAP_ue=$'\E[0m'        # reset underline
 
-# --
-
 # # For kitty, see: https://github.com/kovidgoyal/kitty/issues/469#issuecomment-419406438
 # export GLFW_IM_MODULE=ibus
 
@@ -44,6 +36,7 @@ export LESS_TERMCAP_ue=$'\E[0m'        # reset underline
 # export LC_ALL="en_US.UTF-8"
 # export LC_CTYPE="en_US.UTF-8"
 
+export PIPENV_VENV_IN_PROJECT=true
 export POETRY_VIRTUALENVS_IN_PROJECT=true
 
 # export LDFLAGS="-L/opt/homebrew/opt/llvm/lib"

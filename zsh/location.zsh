@@ -1,3 +1,7 @@
+# TODO: seems in part it reimplemented similar to
+# https://github.com/ohmyzsh/ohmyzsh/blob/master/plugins/dirhistory/dirhistory.plugin.zsh
+# See if there is something to learn there
+
 # LOCATION_HISTORY_FILE="${HOME}/.betafcc/zsh/.location_history"
 # location history
 # location history list

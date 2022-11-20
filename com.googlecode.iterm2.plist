@@ -5,7 +5,7 @@
 	<key>AdjustWindowForFontSizeChange</key>
 	<false/>
 	<key>Command</key>
-	<string></string>
+	<string>/opt/homebrew/bin/fish</string>
 	<key>Control</key>
 	<integer>1</integer>
 	<key>Custom Color Presets</key>
@@ -884,6 +884,17 @@
 					<integer>11</integer>
 					<key>Text</key>
 					<string>0x1e</string>
+				</dict>
+				<key>0x70-0x100000-0x23</key>
+				<dict>
+					<key>Action</key>
+					<integer>10</integer>
+					<key>Label</key>
+					<string></string>
+					<key>Text</key>
+					<string>[p</string>
+					<key>Version</key>
+					<integer>1</integer>
 				</dict>
 				<key>0x7a-0x100000-0x6</key>
 				<dict>
