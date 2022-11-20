@@ -11,6 +11,7 @@ _PATH="${_PATH}:${PYENV_ROOT}/bin"
 _PATH="${_PATH}:${HOME}/.poetry/bin"
 _PATH="${_PATH}:${VOLTA_HOME}/bin"
 _PATH="${_PATH}:${HOME}/.betafcc/bin"
+_PATH="${_PATH}:${HOME}/.betafcc/bin/fzf-scripts"
 _PATH="${_PATH}:${HOME}/.local/bin"
 export PATH="${_PATH}:${PATH}"
 

@@ -58,11 +58,10 @@ typeset -A _keys=(
 _,fzf-history-widget() {
   local selected num
   setopt localoptions noglobsubst noposixbuiltins pipefail no_aliases 2>/dev/null
-  selected=(
-    $(
-      fc -rln 1 |
-        perl -ne 'print if !$seen{$_}++' |
-        FZF_DEFAULT_OPTS="\
+  selected=$(
+    fc -rln 1 |
+      perl -ne 'print if !$seen{$_}++' |
+      FZF_DEFAULT_OPTS="\
         --height ${FZF_TMUX_HEIGHT:-40%} \
         $FZF_DEFAULT_OPTS \
         -n2..,.. \
@@ -71,8 +70,34 @@ _,fzf-history-widget() {
         --bind=tab:replace-query+top \
         --no-multi \
         --layout=reverse" fzf
-    )
   )
+
+  local ret=$?
+  if [ -n "$selected" ]; then
+    LBUFFER="${LBUFFER}${selected}"
+  fi
+  zle reset-prompt
+  return $ret
+}
+
+_,find-file-widget() {
+  local fzf_prompt preview_cmd selected
+  setopt localoptions noglobsubst noposixbuiltins pipefail no_aliases 2>/dev/null
+  case "${PWD}" in
+  '/') fzf_prompt='/' ;;
+  "${HOME}") fzf_prompt='~/' ;;
+  "${HOME}/"*) fzf_prompt='./' ;;
+  *) fzf_prompt="${PWD}/" ;;
+  esac
+  preview_cmd="BAT_THEME=gruvbox-dark bat --style=numbers --color=always {}"
+  selected=$(
+    bfs -x -type f -exclude -name '.git' -exclude -name 'node_modules' 2>/dev/null |
+      FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%} $FZF_DEFAULT_OPTS --info hidden --filepath-word \
+        --layout reverse --color 'light' --color 'gutter:-1,bg+:#ff6666,fg+:-1:bold,hl:#66ff66:bold' \
+        --no-sort --tiebreak=index --no-multi --bind 'tab:replace-query+top,shift-tab:backward-kill-word+top' \
+      " fzf --prompt "${fzf_prompt}" --query "" --preview "${preview_cmd}" --preview-window 'right:60%'
+  )
+
   local ret=$?
   if [ -n "$selected" ]; then
     LBUFFER="${LBUFFER}${selected}"
@@ -82,23 +107,23 @@ _,fzf-history-widget() {
 }
 
 _,descend() {
-  local prompt preview_cmd result
+  local fzf_prompt preview_cmd selected
   case "${PWD}" in
-  '/') prompt='/' ;;
-  "${HOME}") prompt='~/' ;;
-  "${HOME}/"*) prompt='./' ;;
-  *) prompt="${PWD}/" ;;
+  '/') fzf_prompt='/' ;;
+  "${HOME}") fzf_prompt='~/' ;;
+  "${HOME}/"*) fzf_prompt='./' ;;
+  *) fzf_prompt="${PWD}/" ;;
   esac
   preview_cmd="exa --color=always --group-directories-first --all --icons --oneline {}"
-  result=$(
+  selected=$(
     bfs -x -type d -exclude -name '.git' -exclude -name 'node_modules' 2>/dev/null |
       sed 's:$:/:' |
-      fzf --prompt "${prompt}" --query "" --info hidden --filepath-word \
+      fzf --prompt "${fzf_prompt}" --query "" --info hidden --filepath-word \
         --height 80% --layout reverse --preview "${preview_cmd}" --preview-window 'right:60%' \
         --color 'light' --color 'gutter:-1,bg+:#ff6666,fg+:-1:bold,hl:#66ff66:bold' \
         --no-sort --tiebreak=index --no-multi --bind 'tab:replace-query+top,shift-tab:backward-kill-word+top'
   )
-  [ -z "${result}" ] && printf '' || printf 'cd %q\n' "${prompt/#\~/${HOME}}${result}"
+  [ -z "${selected}" ] && printf '' || printf 'cd %q\n' "${fzf_prompt/#\~/${HOME}}${selected}"
 }
 
 _,rg() {
@@ -124,11 +149,12 @@ autoload -U edit-command-line
 zle -N edit-command-line
 bindkey '\C-x\C-e' edit-command-line
 
+,bindkey -N cmd+p _,find-file-widget
+,bindkey -N ctrl+r _,fzf-history-widget
 ,bindkey -N cmd+down 'print -n "\r"; eval $(_,descend); zle reset-prompt'
 ,bindkey -N cmd+up 'cd ..; zle reset-prompt'
 ,bindkey -N cmd+left 'location history back; zle reset-prompt'
 ,bindkey -N cmd+right 'location history forward; zle reset-prompt'
-,bindkey -N ctrl+r _,fzf-history-widget
+,bindkey -N cmd+shift+f '_,rg; zle reset-prompt'
 ,bindkey cmd+z undo
 ,bindkey cmd+shift+z redo
-,bindkey -N cmd+shift+f '_,rg; zle reset-prompt'

@@ -56,3 +56,6 @@ location history activate
 unsetopt BEEP
 
 source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# (fzf-tab)[https://github.com/Aloxaf/fzf-tab#manual]
+source "${_DIRNAME}/fzf-tab/fzf-tab.plugin.zsh"

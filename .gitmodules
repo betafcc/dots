@@ -4,3 +4,6 @@
 [submodule "bash/kitsune"]
 	path = bash/kitsune
 	url = git@github.com:betafcc/kitsune
+[submodule "zsh/fzf-tab"]
+	path = zsh/fzf-tab
+	url = git@github.com:Aloxaf/fzf-tab
