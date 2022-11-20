@@ -74,25 +74,6 @@ alias mkcd=',mkcd'
   fi
 }
 
-,rg() {
-  local INITIAL_QUERY="${1:-}"
-  local RG_PREFIX="rg --column --line-number --no-heading --color=always --smart-case "
-  FZF_DEFAULT_COMMAND="$RG_PREFIX '$INITIAL_QUERY'" \
-    fzf \
-    --bind \
-    "change:reload:$RG_PREFIX {q} || true" \
-    --ansi \
-    --disabled \
-    --query "$INITIAL_QUERY" \
-    --layout=reverse \
-    --delimiter : \
-    --color 'gutter:-1,bg+:#333333,fg+:-1:bold,hl:#66ff66:bold' \
-    --bind 'alt-e:execute(e +{2}:{3} {1})' \
-    --bind 'alt-o:execute(code {1})' \
-    --preview 'BAT_THEME=gruvbox-dark bat --style=numbers --color=always --highlight-line {2} {1}' \
-    --preview-window +{2}-/2
-}
-
 ,source-export() {
   local file
   # https://stackoverflow.com/questions/19331497/set-environment-variables-from-file-of-key-value-pairs
@@ -107,7 +88,6 @@ alias mkcd=',mkcd'
 alias ghci='ghci -v0'
 # -v0: disable GHCi banner
 
-
 # ,toggle-inline-edit-mode() {
 #   if [[ "${_INLINE_EDIT}" == "true" ]]; then
 
@@ -117,3 +97,17 @@ alias ghci='ghci -v0'
 #   fi
 #   fi
 # }
+
+# https://github.com/junegunn/fzf/blob/master/ADVANCED.md#log-tailing
+,pods() {
+  FZF_DEFAULT_COMMAND="kubectl get pods --all-namespaces" \
+    fzf --info=inline --layout=reverse --header-lines=1 \
+    --prompt "$(kubectl config current-context | sed 's/-context$//')> " \
+    --header $'╱ Enter (kubectl exec) ╱ CTRL-O (open log in editor) ╱ CTRL-R (reload) ╱\n\n' \
+    --bind 'ctrl-/:change-preview-window(80%,border-bottom|hidden|)' \
+    --bind 'enter:execute:kubectl exec -it --namespace {1} {2} -- bash > /dev/tty' \
+    --bind 'ctrl-o:execute:${EDITOR:-vim} <(kubectl logs --all-containers --namespace {1} {2}) > /dev/tty' \
+    --bind 'ctrl-r:reload:$FZF_DEFAULT_COMMAND' \
+    --preview-window up:follow \
+    --preview 'kubectl logs --follow --all-containers --tail=10000 --namespace {1} {2}' "$@"
+}

@@ -81,26 +81,54 @@ _,fzf-history-widget() {
   return $ret
 }
 
-# _,descend() {
-#   bfs \
-#     -x \
-#     -type d -readable -o -prune \
-#     -exclude -name '.git' \
-#     -exclude -name 'node_modules' \
-#     2>/dev/null |
-#     sed 's:$:/:'
-# }
+_,descend() {
+  local prompt preview_cmd result
+  case "${PWD}" in
+  '/') prompt='/' ;;
+  "${HOME}") prompt='~/' ;;
+  "${HOME}/"*) prompt='./' ;;
+  *) prompt="${PWD}/" ;;
+  esac
+  preview_cmd="exa --color=always --group-directories-first --all --icons --oneline {}"
+  result=$(
+    bfs -x -type d -exclude -name '.git' -exclude -name 'node_modules' 2>/dev/null |
+      sed 's:$:/:' |
+      fzf --prompt "${prompt}" --query "" --info hidden --filepath-word \
+        --height 80% --layout reverse --preview "${preview_cmd}" --preview-window 'right:60%' \
+        --color 'light' --color 'gutter:-1,bg+:#ff6666,fg+:-1:bold,hl:#66ff66:bold' \
+        --no-sort --tiebreak=index --no-multi --bind 'tab:replace-query+top,shift-tab:backward-kill-word+top'
+  )
+  [ -z "${result}" ] && printf '' || printf 'cd %q\n' "${prompt/#\~/${HOME}}${result}"
+}
+
+_,rg() {
+  local INITIAL_QUERY="${1:-}"
+  local RG_PREFIX="rg --column --line-number --no-heading --color=always --smart-case "
+  FZF_DEFAULT_COMMAND="$RG_PREFIX '$INITIAL_QUERY'" \
+    fzf \
+    --bind \
+    "change:reload:$RG_PREFIX {q} || true" \
+    --ansi \
+    --disabled \
+    --query "$INITIAL_QUERY" \
+    --layout=reverse \
+    --delimiter : \
+    --color 'gutter:-1,bg+:#333333,fg+:-1:bold,hl:#66ff66:bold' \
+    --bind 'alt-e:execute(vim +{2}:{3} {1})' \
+    --bind 'alt-o:execute(code --goto {1}:{2}:{3})' \
+    --preview 'BAT_THEME=gruvbox-dark bat --style=numbers --color=always --highlight-line {2} {1}' \
+    --preview-window 'right,70%,border-left,+{2}+3/3'
+}
 
 autoload -U edit-command-line
 zle -N edit-command-line
 bindkey '\C-x\C-e' edit-command-line
 
-# ,bindkey -N cmd+down '_,descend'
-,bindkey -N cmd+down 'print -n "\r"; eval $(,goto-folder --descend); zle reset-prompt'
+,bindkey -N cmd+down 'print -n "\r"; eval $(_,descend); zle reset-prompt'
 ,bindkey -N cmd+up 'cd ..; zle reset-prompt'
 ,bindkey -N cmd+left 'location history back; zle reset-prompt'
 ,bindkey -N cmd+right 'location history forward; zle reset-prompt'
 ,bindkey -N ctrl+r _,fzf-history-widget
 ,bindkey cmd+z undo
 ,bindkey cmd+shift+z redo
-,bindkey -N cmd+shift+f ',rg; zle reset-prompt'
+,bindkey -N cmd+shift+f '_,rg; zle reset-prompt'
