@@ -38,6 +38,7 @@ typeset -A _keys=(
   'cmd+left' '^[[1;5D'
   'cmd+down' '^[[1;5B'
 
+  'ctrl+h' '^H'
   'ctrl+r' '^R'
   'cmd+p' '^[[p'
   'cmd+z' '^[[z'
@@ -148,6 +149,10 @@ _,rg() {
 autoload -U edit-command-line
 zle -N edit-command-line
 bindkey '\C-x\C-e' edit-command-line
+
+_,test() {
+  zle autosuggest-suggest -- "hello"
+}
 
 ,bindkey -N cmd+p _,find-file-widget
 ,bindkey -N ctrl+r _,fzf-history-widget
