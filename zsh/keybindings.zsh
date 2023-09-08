@@ -44,6 +44,7 @@ typeset -A _keys=(
   'cmd+z' '^[[z'
   'cmd+shift+z' '^[[Z'
   'cmd+shift+f' '^[[F'
+  'option+space' '^[ '
 )
 
 ,bindkey() {
@@ -150,8 +151,14 @@ autoload -U edit-command-line
 zle -N edit-command-line
 bindkey '\C-x\C-e' edit-command-line
 
+# _,test() {
+#   zle autosuggest-suggest -- "hello"
+# }
+
 _,test() {
-  zle autosuggest-suggest -- "hello"
+  emulate -L zsh
+
+  POSTDISPLAY="hello world"
 }
 
 ,bindkey -N cmd+p _,find-file-widget
@@ -161,5 +168,6 @@ _,test() {
 ,bindkey -N cmd+left 'location history back; zle reset-prompt'
 ,bindkey -N cmd+right 'location history forward; zle reset-prompt'
 ,bindkey -N cmd+shift+f '_,rg; zle reset-prompt'
+# ,bindkey -N cmd+right '_,test; zle reset-prompt'
 ,bindkey cmd+z undo
 ,bindkey cmd+shift+z redo

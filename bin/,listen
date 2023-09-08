@@ -1,0 +1,21 @@
+#!/Users/betani/.pyenv/versions/3.10.10/bin/python
+from typing import Any
+import speech_recognition as sr  # type: ignore
+
+
+# def callback(recognizer: sr.Recognizer, audio: Any) -> None:
+#     try:
+#         print(recognizer.recognize_whisper(audio))  # type: ignore
+#     except Exception as e:
+#         print(e)
+
+r = sr.Recognizer()
+
+with sr.Microphone() as source:
+    # r.adjust_for_ambient_noise(source)
+    audio = r.listen(source)
+
+try:
+    print(r.recognize_whisper(audio))  # type: ignore
+except Exception as e:
+    pass

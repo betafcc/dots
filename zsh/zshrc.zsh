@@ -59,3 +59,7 @@ source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zs
 
 # # (fzf-tab)[https://github.com/Aloxaf/fzf-tab#manual]
 # source "${_DIRNAME}/fzf-tab/fzf-tab.plugin.zsh"
+
+ai() {
+  npx ts-node -T --compiler-options '{"module":"commonjs"}' './src/cli.ts' "$@"
+}

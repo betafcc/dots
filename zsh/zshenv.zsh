@@ -40,10 +40,11 @@ export LESS_TERMCAP_ue=$'\E[0m'        # reset underline
 export PIPENV_VENV_IN_PROJECT=true
 export POETRY_VIRTUALENVS_IN_PROJECT=true
 
-# export LDFLAGS="-L/opt/homebrew/opt/llvm/lib"
-# export CPPFLAGS="-I/opt/homebrew/opt/llvm/include"
+export LDFLAGS="-L/opt/homebrew/opt/llvm@14/lib"
+export CPPFLAGS="-I/opt/homebrew/opt/llvm@14/include"
 
-# cabal-fmt needed this version, idk if I should keep it here or just one-off there
-export LDFLAGS="-L/opt/homebrew/opt/llvm@12/lib"
-export CPPFLAGS="-I/opt/homebrew/opt/llvm@12/include"
+# # cabal-fmt needed this version, idk if I should keep it here or just one-off there
+# export LDFLAGS="-L/opt/homebrew/opt/llvm@12/lib"
+# export CPPFLAGS="-I/opt/homebrew/opt/llvm@12/include"
+
 export PATH="/opt/homebrew/opt/llvm@12/bin:$PATH"
