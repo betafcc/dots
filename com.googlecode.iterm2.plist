@@ -467,7 +467,7 @@
 			<key>ASCII Anti Aliased</key>
 			<true/>
 			<key>ASCII Ligatures</key>
-			<false/>
+			<true/>
 			<key>AWDS Pane Directory</key>
 			<string></string>
 			<key>AWDS Pane Option</key>
@@ -1024,7 +1024,7 @@
 			<key>Non-ASCII Ligatures</key>
 			<false/>
 			<key>Normal Font</key>
-			<string>FiraCodeNerdFontCompleteM-Regular 11</string>
+			<string>FiraCode-Regular 11</string>
 			<key>Only The Default BG Color Uses Transparency</key>
 			<true/>
 			<key>Option Key Sends</key>
