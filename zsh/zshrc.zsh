@@ -19,6 +19,8 @@ setopt HIST_REDUCE_BLANKS     # Remove superfluous blanks before recording entry
 setopt HIST_VERIFY            # Don't execute immediately upon history expansion.
 setopt HIST_BEEP              # Beep when accessing nonexistent history.
 
+FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+
 autoload -Uz compinit
 zstyle ':completion:*' menu select
 # case insensitive path-completion
@@ -41,6 +43,7 @@ zstyle ':completion:*:*:git:*' script ~/.zsh/git-completion.bash
 fpath=(~/.zsh $fpath)
 
 # source "${PYENV_ROOT}/completions/pyenv.zsh"
+eval "$(pyenv init -)"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
@@ -59,6 +62,8 @@ source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zs
 
 # # (fzf-tab)[https://github.com/Aloxaf/fzf-tab#manual]
 # source "${_DIRNAME}/fzf-tab/fzf-tab.plugin.zsh"
+
+source <(kubectl completion zsh)
 
 ai() {
   npx ts-node -T --compiler-options '{"module":"commonjs"}' './src/cli.ts' "$@"

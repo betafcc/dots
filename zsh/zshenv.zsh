@@ -7,6 +7,7 @@ export VOLTA_HOME="${HOME}/.volta"
 export PYENV_ROOT="${HOME}/.pyenv"
 export PYENV_SHELL=zsh
 
+_PATH="${_PATH}:/opt/homebrew/bin"
 _PATH="${_PATH}:${PYENV_ROOT}/bin"
 _PATH="${_PATH}:${HOME}/.poetry/bin"
 _PATH="${_PATH}:${VOLTA_HOME}/bin"
