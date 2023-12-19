@@ -1,0 +1,19 @@
+#!/usr/bin/env -S deno run -A --no-check --ext ts
+import * as path from 'https://deno.land/std/path/mod.ts'
+import { loadSync } from 'https://deno.land/std/dotenv/mod.ts'
+import { Agent } from './Agent.ts'
+
+loadSync({
+  export: true,
+  allowEmptyValues: true,
+  envPath: path.join(path.dirname(path.fromFileUrl(import.meta.url)), '.env'),
+})
+
+const input = Deno.args.join(' ').trim()
+
+if (input.length === 0) console.log('Empty input')
+else
+  Agent.createAzure()
+    .user(input)
+    .complete()
+    .then(r => console.log(r.messages.at(-1)?.content))

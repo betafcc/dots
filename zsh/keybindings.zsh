@@ -149,8 +149,8 @@ _,rg() {
     --preview-window 'right,70%,border-left,+{2}+3/3'
 }
 
-_,gpt-zsh() {
-  selected=$(= ${LBUFFER})
+_,run-lbuffer() {
+  selected=$(eval ${LBUFFER})
 
   local ret=$?
   if [ -n "$selected" ]; then
@@ -174,7 +174,7 @@ _,test() {
   POSTDISPLAY="hello world"
 }
 
-,bindkey -N cmd+e _,gpt-zsh
+,bindkey -N cmd+e _,run-lbuffer
 ,bindkey -N cmd+p _,find-file-widget
 ,bindkey -N ctrl+r _,fzf-history-widget
 ,bindkey -N cmd+down 'print -n "\r"; eval $(_,descend); zle reset-prompt'

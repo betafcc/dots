@@ -115,60 +115,60 @@ alias ghci='ghci -v0'
 # a command to mimic comment in shell and history
 \#() {}
 
-OPENAI_API_KEY_FILE="${HOME}/.openai/api_key"
+# OPENAI_API_KEY_FILE="${HOME}/.openai/api_key"
 
-,inline-suggest() {
-  local input=$(
-    tail -100 "${HISTFILE}" | sed -e 's/^[^;]*;\(.*\)/\1/'
-  )
-  local api_key=$(cat "${OPENAI_API_KEY_FILE}")
-  local prompt=$(echo -n "${input}" | jq -Rsa .)
+# ,inline-suggest() {
+#   local input=$(
+#     tail -100 "${HISTFILE}" | sed -e 's/^[^;]*;\(.*\)/\1/'
+#   )
+#   local api_key=$(cat "${OPENAI_API_KEY_FILE}")
+#   local prompt=$(echo -n "${input}" | jq -Rsa .)
 
-  # curl -s https://api.openai.com/v1/chat/completions \
-  #   -H 'Content-Type: application/json' \
-  #   -H "Authorization: Bearer ${api_key}" \
-  #   -d '{
-  #     "model": "gpt-3.5-turbo",
-  #     "messages": [{"role": "user", "content": '${prompt}'}],
-  #     "temperature": 0.7,
-  #     "n": 5
-  #   }' |
-  #   jq '.choices[].message.content' | fzf
+#   # curl -s https://api.openai.com/v1/chat/completions \
+#   #   -H 'Content-Type: application/json' \
+#   #   -H "Authorization: Bearer ${api_key}" \
+#   #   -d '{
+#   #     "model": "gpt-3.5-turbo",
+#   #     "messages": [{"role": "user", "content": '${prompt}'}],
+#   #     "temperature": 0.7,
+#   #     "n": 5
+#   #   }' |
+#   #   jq '.choices[].message.content' | fzf
 
-  curl https://api.openai.com/v1/completions \
-    -H 'Content-Type: application/json' \
-    -H "Authorization: Bearer ${api_key}" \
-    -d '{
-    "model": "code-davinci-002",
-    "prompt": '"${prompt}"',
-    "temperature": 0,
-    "max_tokens": 256,
-    "top_p": 1,
-    "frequency_penalty": 0,
-    "presence_penalty": 0
-  }' |
-    jq '.choices[].text'
-}
+#   curl https://api.openai.com/v1/completions \
+#     -H 'Content-Type: application/json' \
+#     -H "Authorization: Bearer ${api_key}" \
+#     -d '{
+#     "model": "code-davinci-002",
+#     "prompt": '"${prompt}"',
+#     "temperature": 0,
+#     "max_tokens": 256,
+#     "top_p": 1,
+#     "frequency_penalty": 0,
+#     "presence_penalty": 0
+#   }' |
+#     jq '.choices[].text'
+# }
 
-,gpt() {
-  local input="${1}" # string
-  local api_key=$(cat "${OPENAI_API_KEY_FILE}")
-  local prompt=$(echo -n "${input}" | jq -Rsa .)
+# ,gpt() {
+#   local input="${1}" # string
+#   local api_key=$(cat "${OPENAI_API_KEY_FILE}")
+#   local prompt=$(echo -n "${input}" | jq -Rsa .)
 
-  curl -s https://api.openai.com/v1/completions \
-    -H 'Content-Type: application/json' \
-    -H "Authorization: Bearer ${api_key}" \
-    -d '{
-    "model": "code-davinci-002",
-    "prompt": '"${prompt}"',
-    "temperature": 0,
-    "max_tokens": 256,
-    "top_p": 1,
-    "frequency_penalty": 0,
-    "presence_penalty": 0,
-    "stop": "\n"
-  }'
-}
+#   curl -s https://api.openai.com/v1/completions \
+#     -H 'Content-Type: application/json' \
+#     -H "Authorization: Bearer ${api_key}" \
+#     -d '{
+#     "model": "code-davinci-002",
+#     "prompt": '"${prompt}"',
+#     "temperature": 0,
+#     "max_tokens": 256,
+#     "top_p": 1,
+#     "frequency_penalty": 0,
+#     "presence_penalty": 0,
+#     "stop": "\n"
+#   }'
+# }
 
 ,qr-start() {
   cross-env NEXT_TELEMETRY_DEBUG=1 cross-env REACT_APP_API_PROXY_URL=http://localhost:3001 cross-env REACT_APP_FAQ_WP_API_ENDPOINT="https://tst.myqrcode.com/wp-json/myqrcode/v1/faq/" yarn run dev
