@@ -885,6 +885,17 @@
 					<key>Text</key>
 					<string>0x1e</string>
 				</dict>
+				<key>0x65-0x100000-0xe</key>
+				<dict>
+					<key>Action</key>
+					<integer>10</integer>
+					<key>Label</key>
+					<string></string>
+					<key>Text</key>
+					<string>[e</string>
+					<key>Version</key>
+					<integer>1</integer>
+				</dict>
 				<key>0x70-0x100000-0x23</key>
 				<dict>
 					<key>Action</key>

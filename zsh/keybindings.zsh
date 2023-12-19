@@ -37,7 +37,9 @@ typeset -A _keys=(
   'cmd+up' '^[[1;5A'
   'cmd+left' '^[[1;5D'
   'cmd+down' '^[[1;5B'
+  'cmd+e' '^[[e'
 
+  'ctrl+e' '^E'
   'ctrl+h' '^H'
   'ctrl+r' '^R'
   'cmd+p' '^[[p'
@@ -147,6 +149,17 @@ _,rg() {
     --preview-window 'right,70%,border-left,+{2}+3/3'
 }
 
+_,gpt-zsh() {
+  selected=$(= ${LBUFFER})
+
+  local ret=$?
+  if [ -n "$selected" ]; then
+    LBUFFER="${selected}"
+  fi
+  zle reset-prompt
+  return $ret
+}
+
 autoload -U edit-command-line
 zle -N edit-command-line
 bindkey '\C-x\C-e' edit-command-line
@@ -161,6 +174,7 @@ _,test() {
   POSTDISPLAY="hello world"
 }
 
+,bindkey -N cmd+e _,gpt-zsh
 ,bindkey -N cmd+p _,find-file-widget
 ,bindkey -N ctrl+r _,fzf-history-widget
 ,bindkey -N cmd+down 'print -n "\r"; eval $(_,descend); zle reset-prompt'
