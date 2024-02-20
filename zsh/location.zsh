@@ -65,7 +65,7 @@ _location-history() {
     local path="${1}"
     [ $# -gt 0 ] && shift
 
-    if [ "${path}" != "${_location_history[-1]}" ]; then
+    if [ "${#_location_history[@]}" -eq 0 ] || [ "${path}" != "${_location_history[-1]}" ]; then
       _location_history=(${_location_history[@]:0:$_location_index})
       _location_history+=(${path})
       _location_index=$((${#_location_history[@]}))

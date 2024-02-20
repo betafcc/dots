@@ -40,7 +40,7 @@ _comp_options+=(globdots)
 # kitty + complete setup zsh | source /dev/stdin
 
 zstyle ':completion:*:*:git:*' script ~/.zsh/git-completion.bash
-fpath=(~/.zsh $fpath)
+fpath=(~/.zsh ~/.zfunc $fpath)
 
 # source "${PYENV_ROOT}/completions/pyenv.zsh"
 eval "$(pyenv init -)"
@@ -63,7 +63,7 @@ source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zs
 # # (fzf-tab)[https://github.com/Aloxaf/fzf-tab#manual]
 # source "${_DIRNAME}/fzf-tab/fzf-tab.plugin.zsh"
 
-source <(kubectl completion zsh)
+#source <(kubectl completion zsh)
 
 ai() {
   npx ts-node -T --compiler-options '{"module":"commonjs"}' './src/cli.ts' "$@"

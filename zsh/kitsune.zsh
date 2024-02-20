@@ -6,6 +6,7 @@
 # https://unix.stackexchange.com/questions/153102/how-to-start-xterm-with-prompt-at-the-bottom
 
 KITSUNE_PATH="$0:A"
+KITSUNE_LOCK=""
 
 _kitsune-compile() {
   _ks_template[prompt.PS1]=$(
