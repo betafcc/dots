@@ -1,7 +1,7 @@
 # zmodload zsh/zprof
 
-export VISUAL="emacs -Q -nw"
-export EDITOR="emacs -Q -nw"
+# export VISUAL="emacs -Q -nw"
+# export EDITOR="emacs -Q -nw"
 
 export VOLTA_HOME="${HOME}/.volta"
 export PYENV_ROOT="${HOME}/.pyenv"
@@ -15,10 +15,13 @@ _PATH="${_PATH}:${HOME}/.betafcc/bin"
 _PATH="${_PATH}:${HOME}/.betafcc/deno"
 _PATH="${_PATH}:${HOME}/.betafcc/bin/fzf-scripts"
 _PATH="${_PATH}:${HOME}/.local/bin"
+_PATH="${_PATH}:${HOME}/.ghcup/bin"
+_PATH="${_PATH}:${HOME}/.cabal/bin"
 export PATH="${_PATH}:${PATH}"
 
-# ghcup paths setup
-[ -f "${HOME}/.ghcup/env" ] && source "/Users/betani/.ghcup/env" # ghcup-env
+# # ghcup paths setup
+# [ -f "${HOME}/.ghcup/env" ] && source "${HOME}/.ghcup/env" # ghcup-env
+# added manually up there instead
 
 # awesome less presets from
 # https://www.topbug.net/blog/2016/09/27/make-gnu-less-more-powerful/
