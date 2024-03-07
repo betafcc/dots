@@ -13,7 +13,9 @@ _PATH="${_PATH}:${HOME}/.poetry/bin"
 _PATH="${_PATH}:${VOLTA_HOME}/bin"
 _PATH="${_PATH}:${HOME}/.betafcc/bin"
 _PATH="${_PATH}:${HOME}/.betafcc/deno"
-_PATH="${_PATH}:${HOME}/.betafcc/bin/fzf-scripts"
+_PATH="${_PATH}:${HOME}/.betafcc/bin/fzf-scripts" # do i still need this?
+# CERN root bins, to avoid installing xcode i need to get preinstalled bins and expose here
+_PATH="${_PATH}:/Applications/root_v6.30.04/bin"
 _PATH="${_PATH}:${HOME}/.local/bin"
 _PATH="${_PATH}:${HOME}/.ghcup/bin"
 _PATH="${_PATH}:${HOME}/.cabal/bin"

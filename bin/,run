@@ -1,12 +1,18 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 
+if [ $# -eq 0 ]; then
+    temp_script=$(mktemp -p $PWD -t run)
 
-# notes:
-#   use gtimeout to run the builds
+    trap 'rm -f "$temp_script"' EXIT INT
 
-run() {
+    cat /dev/stdin >"$temp_script"
+
+    chmod +x "$temp_script"
+    "$temp_script"
+    exit
+else
     case "$1" in
     'python') cat <(printf 'print(') - <(printf ')') | "${HOME}/.pyenv/shims/python" ;;
     'node') cat <(printf 'console.log(') - <(printf ')') | node ;;
     esac
-}
+fi
